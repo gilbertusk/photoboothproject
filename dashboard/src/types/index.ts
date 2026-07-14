@@ -1,0 +1,88 @@
+export interface Admin {
+  id: string
+  email: string
+  name: string
+}
+
+export interface Template {
+  id: string
+  name: string
+  description?: string
+  layout: object
+  previewUrl?: string
+  slots: number
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface PricingPackage {
+  id: string
+  name: string
+  price: number
+  photoCount: number
+  duration: number
+  printCount: number
+  includeGif: boolean
+  includeEmail: boolean
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Voucher {
+  id: string
+  code: string
+  type: 'PERCENTAGE' | 'FIXED'
+  value: number
+  quota: number
+  used: number
+  expiredAt?: string
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Session {
+  id: string
+  package: PricingPackage
+  template?: Template
+  voucher?: Voucher
+  status: 'PENDING' | 'PAID' | 'IN_PROGRESS' | 'COMPLETED' | 'EXPIRED'
+  totalPrice: number
+  finalPrice: number
+  startedAt?: string
+  finishedAt?: string
+  createdAt: string
+}
+
+export interface Transaction {
+  id: string
+  session: Session
+  externalId?: string
+  status: 'PENDING' | 'PAID' | 'FAILED' | 'EXPIRED'
+  amount: number
+  paidAt?: string
+  createdAt: string
+}
+
+export interface Setting {
+  key: string
+  value: string
+}
+
+export interface ApiResponse<T> {
+  success: boolean
+  message: string
+  data?: T
+}
+
+export interface DashboardStats {
+  totalRevenue: number
+  totalSessions: number
+  totalCompletedSessions: number
+  revenueToday: number
+  sessionsToday: number
+  revenueByDay: { date: string; revenue: number }[]
+  popularPackages: { name: string; count: number }[]
+}

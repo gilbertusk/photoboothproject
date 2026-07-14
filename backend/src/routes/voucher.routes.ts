@@ -1,0 +1,21 @@
+import { Router } from 'express';
+import {
+  getVouchers,
+  createVoucher,
+  updateVoucher,
+  deleteVoucher,
+  toggleVoucher,
+} from '../controllers/voucher.controller';
+import { authMiddleware } from '../middlewares/auth.middleware';
+
+const router = Router();
+
+router.use(authMiddleware);
+
+router.get('/', getVouchers);
+router.post('/', createVoucher);
+router.put('/:id', updateVoucher);
+router.delete('/:id', deleteVoucher);
+router.patch('/:id/toggle', toggleVoucher);
+
+export default router;

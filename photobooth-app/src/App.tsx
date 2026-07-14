@@ -1,0 +1,51 @@
+import { useEffect } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
+
+import { AppLayout } from '@/components/layout/AppLayout'
+import { WelcomeScreen } from '@/screens/WelcomeScreen'
+import { PackageScreen } from '@/screens/PackageScreen'
+import { PaymentScreen } from '@/screens/PaymentScreen'
+import { TemplateScreen } from '@/screens/TemplateScreen'
+import { CameraScreen } from '@/screens/CameraScreen'
+import { PreviewScreen } from '@/screens/PreviewScreen'
+import { OutputScreen } from '@/screens/OutputScreen'
+import { ThankYouScreen } from '@/screens/ThankYouScreen'
+
+function App() {
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        const response = await fetch('/api/public/settings')
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const data = await response.json()
+        console.log('Backend berhasil terhubung:', data)
+      } catch (error: any) {
+        console.error('Backend gagal terhubung:', error)
+      }
+    }
+
+    checkBackend()
+  }, [])
+
+  return (
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<WelcomeScreen />} />
+        <Route path="/packages" element={<PackageScreen />} />
+        <Route path="/payment" element={<PaymentScreen />} />
+        <Route path="/template" element={<TemplateScreen />} />
+        <Route path="/camera" element={<CameraScreen />} />
+        <Route path="/preview" element={<PreviewScreen />} />
+        <Route path="/output" element={<OutputScreen />} />
+        <Route path="/thankyou" element={<ThankYouScreen />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
+  )
+}
+
+export default App
