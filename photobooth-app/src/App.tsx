@@ -11,6 +11,10 @@ import { PreviewScreen } from '@/screens/PreviewScreen'
 import { OutputScreen } from '@/screens/OutputScreen'
 import { ThankYouScreen } from '@/screens/ThankYouScreen'
 import { GalleryScreen } from '@/screens/GalleryScreen'
+import { PublicLayout } from '@/components/layout/PublicLayout'
+import { PricingPage } from '@/screens/PricingPage'
+import { BookingPage } from '@/screens/BookingPage'
+import { TestimonialPage } from '@/screens/TestimonialPage'
 
 function App() {
   useEffect(() => {
@@ -44,8 +48,16 @@ function App() {
         <Route path="/output" element={<OutputScreen />} />
         <Route path="/thankyou" element={<ThankYouScreen />} />
         <Route path="/gallery/:shareToken" element={<GalleryScreen />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
+
+      {/* Public marketing pages (no kiosk session required) */}
+      <Route element={<PublicLayout />}>
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/booking" element={<BookingPage />} />
+        <Route path="/testimonial" element={<TestimonialPage />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

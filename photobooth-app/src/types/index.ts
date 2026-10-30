@@ -93,6 +93,40 @@ export interface ApiResponse<T> {
   data?: T
 }
 
+export interface Booking {
+  _id: string
+  customerName: string
+  customerEmail: string
+  customerPhone: string
+  packageId: string | PricingPackage
+  eventDate: string
+  eventTime: string
+  eventLocation: string
+  eventType?: string
+  guestCount?: number
+  specialRequests?: string
+  status: 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED'
+  totalAmount: number
+  paymentStatus: 'UNPAID' | 'PAID' | 'REFUNDED'
+  paymentReference?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Testimonial {
+  _id: string
+  name: string
+  role?: string
+  eventType?: string
+  rating: number
+  message: string
+  imageUrl?: string
+  isActive: boolean
+  isFeatured: boolean
+  createdAt: string
+  updatedAt: string
+}
+
 export type FilterType = 'normal' | 'bw' | 'warm' | 'cool' | 'vintage'
 
 export const FILTERS: Record<FilterType, string> = {
