@@ -16,6 +16,7 @@ import sessionRoutes from './routes/session.routes';
 import settingRoutes from './routes/setting.routes';
 import uploadRoutes from './routes/upload.routes';
 import transactionRoutes from './routes/transaction.routes';
+import mediaRoutes from './routes/media.routes';
 
 // Import models for public routes
 import { PricingPackage } from './models/pricing.model';
@@ -119,6 +120,7 @@ app.use('/api/sessions', sessionRoutes);
 app.use('/api/settings', settingRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/media', mediaRoutes);
 
 // Public routes (no auth required, for photobooth app)
 app.get('/api/public/packages', async (_req, res) => {

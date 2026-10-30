@@ -19,6 +19,11 @@ interface SessionStore {
   localGifUrl: string | null
   stripDataUrl: string | null
 
+  // Gallery / sharing
+  shareToken: string | null
+  galleryUrl: string | null
+  mediaUrls: string[]
+
   // Camera settings
   isMirror: boolean
   selectedFilter: FilterType
@@ -58,6 +63,9 @@ const initialState = {
   localStripUrl: null,
   localGifUrl: null,
   stripDataUrl: null,
+  shareToken: null,
+  galleryUrl: null,
+  mediaUrls: [],
   isMirror: true,
   selectedFilter: 'normal' as FilterType,
 }
@@ -91,6 +99,9 @@ export const useSessionStore = create<SessionStore>((set) => ({
   setLocalStripUrl: (url) => set({ localStripUrl: url }),
   setLocalGifUrl: (url) => set({ localGifUrl: url }),
   setStripDataUrl: (url) => set({ stripDataUrl: url }),
+  setShareToken: (token: string | null) => set({ shareToken: token }),
+  setGalleryUrl: (url: string | null) => set({ galleryUrl: url }),
+  setMediaUrls: (urls: string[]) => set({ mediaUrls: urls }),
   toggleMirror: () => set((state) => ({ isMirror: !state.isMirror })),
   setFilter: (filter) => set({ selectedFilter: filter }),
   resetSession: () => set({ ...initialState }),

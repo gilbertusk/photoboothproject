@@ -10,6 +10,7 @@ import { CameraScreen } from '@/screens/CameraScreen'
 import { PreviewScreen } from '@/screens/PreviewScreen'
 import { OutputScreen } from '@/screens/OutputScreen'
 import { ThankYouScreen } from '@/screens/ThankYouScreen'
+import { GalleryScreen } from '@/screens/GalleryScreen'
 
 function App() {
   useEffect(() => {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/preview" element={<PreviewScreen />} />
         <Route path="/output" element={<OutputScreen />} />
         <Route path="/thankyou" element={<ThankYouScreen />} />
+        <Route path="/gallery/:shareToken" element={<GalleryScreen />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

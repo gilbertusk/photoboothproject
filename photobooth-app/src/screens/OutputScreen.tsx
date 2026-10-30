@@ -6,7 +6,7 @@ import { api } from '@/lib/api'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import { BottomBar } from '@/components/shared/BottomBar'
 import { Button } from '@/components/shared/Button'
-import { Printer, ArrowRight, Check, AlertTriangle } from 'lucide-react'
+import { Printer, ArrowRight, Check, AlertTriangle, Copy, Smartphone, Camera } from 'lucide-react'
 
 export function OutputScreen() {
   const navigate = useNavigate()
@@ -16,6 +16,8 @@ export function OutputScreen() {
     localStripUrl,
     stripDataUrl,
     selectedPackage,
+    galleryUrl,
+    shareToken,
   } = useSessionStore()
 
   // Prefer the in-memory composed strip: no network, no mixed-content (https page -> http LAN url)
@@ -237,6 +239,56 @@ export function OutputScreen() {
                 )}
               </div>
             )}
+
+            {/* Social Share */}
+            {galleryUrl && shareToken && (
+              <div className="bg-sway-card border border-sway-border-dim rounded p-4">
+                <span className="font-grotesk text-sway-dim uppercase tracking-widest block mb-2 text-[10px] font-bold">
+                  BAGIKAN KE SOSIAL MEDIA
+                </span>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => {
+                      const text = `Lihat hasil foto photobooth saya dari bertpixx: ${galleryUrl}`
+                      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
+                    }}
+                    variant="ghost"
+                    className="flex-1 h-11 flex items-center justify-center gap-2 font-bold font-grotesk text-[11px] uppercase"
+                  >
+                    <Smartphone className="w-4 h-4" />
+                    <span>WA</span>
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      window.open(`https://www.instagram.com/stories/?share_url=${encodeURIComponent(galleryUrl)}`, '_blank')
+                    }}
+                    variant="ghost"
+                    className="flex-1 h-11 flex items-center justify-center gap-2 font-bold font-grotesk text-[11px] uppercase"
+                  >
+                    <Camera className="w-4 h-4" />
+                    <span>IG</span>
+                  </Button>
+                  <Button
+                    onClick={async () => {
+                      try {
+                        await navigator.clipboard.writeText(galleryUrl)
+                      } catch (err) {
+                        console.error('Failed to copy:', err)
+                      }
+                    }}
+                    variant="ghost"
+                    className="flex-1 h-11 flex items-center justify-center gap-2 font-bold font-grotesk text-[11px] uppercase"
+                  >
+                    <Copy className="w-4 h-4" />
+                    <span>SALIN</span>
+                  </Button>
+                </div>
+                <p className="font-grotesk text-[9px] text-sway-ghost mt-3 break-all text-center uppercase tracking-wider">
+                  {galleryUrl}
+                </p>
+              </div>
+            )}
+
           </div>
 
         </div>

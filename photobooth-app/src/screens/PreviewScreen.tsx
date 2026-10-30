@@ -35,6 +35,9 @@ export function PreviewScreen() {
     setLocalStripUrl,
     setLocalGifUrl,
     setStripDataUrl,
+    setShareToken,
+    setGalleryUrl,
+    setMediaUrls,
     resetSession,
   } = useSessionStore()
 
@@ -129,7 +132,82 @@ export function PreviewScreen() {
         }
       }
 
-      // 4. Proceed to Output Screen
+      // 4. Upload individual photos and create media records for gallery
+      setProcessingStatus('Menyimpan galeri digital...')
+      const mediaUrls: string[] = [uploadedStripUrl]
+      if (uploadedGifUrl) mediaUrls.push(uploadedGifUrl)
+
+      // Upload each captured photo individually
+      for (let i = 0; i < capturedPhotos.length; i++) {
+        try {
+          setProcessingStatus(`Mengunggah foto ${i + 1} dari ${capturedPhotos.length}...`)
+          const photoBlob = dataURLtoBlob(capturedPhotos[i])
+          const photoFormData = new FormData()
+          photoFormData.append('image', photoBlob, `photo-${sessionId}-${i + 1}.jpg`)
+          const photoUploadRes = await api.post('/api/public/upload', photoFormData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+          })
+          const photoUrl = photoUploadRes.data.data?.url
+          if (photoUrl) {
+            mediaUrls.push(photoUrl)
+          }
+        } catch (err) {
+          console.error(`Failed to upload photo ${i + 1}:`, err)
+        }
+      }
+
+      // Create media records in backend (strip + photos + gif)
+      const createdMedia: Array<{ type: string; url: string; shareToken: string }> = []
+
+      // Strip media
+      const stripRes = await api.post('/api/media', {
+        sessionId,
+        type: 'STRIP',
+        url: uploadedStripUrl,
+      })
+      createdMedia.push({
+        type: 'STRIP',
+        url: uploadedStripUrl,
+        shareToken: stripRes.data.data.shareToken,
+      })
+
+      // Photo media
+      for (const photoUrl of mediaUrls.filter((u) => u !== uploadedStripUrl && u !== uploadedGifUrl)) {
+        const photoRes = await api.post('/api/media', {
+          sessionId,
+          type: 'PHOTO',
+          url: photoUrl,
+        })
+        createdMedia.push({
+          type: 'PHOTO',
+          url: photoUrl,
+          shareToken: photoRes.data.data.shareToken,
+        })
+      }
+
+      // GIF media
+      if (uploadedGifUrl) {
+        const gifRes = await api.post('/api/media', {
+          sessionId,
+          type: 'GIF',
+          url: uploadedGifUrl,
+        })
+        createdMedia.push({
+          type: 'GIF',
+          url: uploadedGifUrl,
+          shareToken: gifRes.data.data.shareToken,
+        })
+      }
+
+      // Use the strip's shareToken as the primary gallery token
+      const primaryShareToken = createdMedia.find((m) => m.type === 'STRIP')?.shareToken
+      const galleryUrl = `${window.location.origin}/gallery/${primaryShareToken}`
+
+      setShareToken(primaryShareToken || null)
+      setGalleryUrl(galleryUrl)
+      setMediaUrls(mediaUrls)
+
+      // 5. Proceed to Output Screen
       navigate('/output')
     } catch (e: any) {
       console.error(e)
