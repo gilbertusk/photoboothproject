@@ -6,12 +6,14 @@ import { Session } from '../models/session.model';
 import { createQrisTransaction, checkTransactionStatus } from '../services/payment.service';
 import { env } from '../config/env';
 import { sendSuccess, sendError, formatZodError } from '../utils/response';
+import { AuthRequest, KioskRequest } from '../types';
+import { branchFilter, kioskOwns } from '../utils/branch-scope';
 
 const createTransactionSchema = z.object({
   sessionId: z.string().min(1, 'Session ID is required'),
 });
 
-export const createTransaction = async (req: Request, res: Response): Promise<void> => {
+export const createTransaction = async (req: KioskRequest, res: Response): Promise<void> => {
   const parsed = createTransactionSchema.safeParse(req.body);
   if (!parsed.success) {
     sendError(res, formatZodError(parsed.error), 400);
@@ -24,6 +26,11 @@ export const createTransaction = async (req: Request, res: Response): Promise<vo
   const session = await Session.findById(sessionId);
   if (!session) {
     sendError(res, 'Session not found', 404);
+    return;
+  }
+
+  if (!kioskOwns(session, req)) {
+    sendError(res, 'Sesi ini milik kiosk lain', 403);
     return;
   }
 
@@ -45,6 +52,9 @@ export const createTransaction = async (req: Request, res: Response): Promise<vo
 
   const transaction = await Transaction.create({
     sessionId,
+    // Copied from the session so revenue stays with the branch where the sale started.
+    branchId: session.branchId,
+    kioskId: session.kioskId,
     externalId,
     status: 'PENDING',
     qrUrl,
@@ -143,13 +153,18 @@ export const handleWebhook = async (req: Request, res: Response): Promise<void> 
   sendSuccess(res, null, 'Webhook processed');
 };
 
-export const getTransactions = async (req: Request, res: Response): Promise<void> => {
-  const page = parseInt(req.query.page as string) || 1;
-  const limit = parseInt(req.query.limit as string) || 20;
+export const getTransactions = async (req: AuthRequest, res: Response): Promise<void> => {
+  const scope = branchFilter(req);
+  if (!scope) {
+    sendError(res, 'Invalid branchId', 400);
+    return;
+  }
+  const page = Math.max(1, parseInt(req.query.page as string) || 1);
+  const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 20));
   const skip = (page - 1) * limit;
   const status = req.query.status as string;
 
-  const query: any = {};
+  const query: any = { ...scope };
   if (status) {
     query.status = status;
   }
@@ -209,6 +224,8 @@ export const getTransactions = async (req: Request, res: Response): Promise<void
         createdAt: sessionObj.createdAt
       } : null,
       externalId: tx.externalId,
+      branchId: tx.branchId,
+      kioskId: tx.kioskId,
       status: tx.status,
       amount: tx.amount,
       paidAt: tx.paidAt,

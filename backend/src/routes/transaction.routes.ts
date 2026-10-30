@@ -6,16 +6,16 @@ import {
   getTransactions,
 } from '../controllers/transaction.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
+import { kioskAuth } from '../middlewares/kiosk.middleware';
 
 const router = Router();
 
 // Protected admin routes
 router.get('/', authMiddleware, getTransactions);
 
-// Public routes (called from photobooth app or Midtrans)
-router.post('/', createTransaction);
-router.get('/:sessionId', getTransactionStatus);
+// Kiosk and Midtrans routes
+router.post('/', kioskAuth, createTransaction);
 router.post('/webhook', handleWebhook);
+router.get('/:sessionId', getTransactionStatus);
 
 export default router;
-

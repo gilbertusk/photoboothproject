@@ -14,7 +14,7 @@ function response() {
   return { statusCode: 200, body: null, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
 }
 function chain(result) {
-  const c = { populate() { return c; }, sort() { return c; }, skip() { return c; }, limit: async () => result, select() { return c; }, lean: async () => result, then: (r, j) => Promise.resolve(result).then(r, j) };
+  const c = { populate() { return c; }, sort() { return c; }, skip() { return c; }, limit() { return c; }, select() { return c; }, lean: async () => result, then: (r, j) => Promise.resolve(result).then(r, j) };
   return c;
 }
 
@@ -87,15 +87,17 @@ test('kiosk token authenticates by hash and rejects missing, unknown and disable
     await kioskAuth(req, response(), () => { called = true; });
     assert.equal(called, true);
     assert.equal(String(req.kiosk.branchId), branchA);
-    for (const [headers, code] of [[{}, 401], [{ 'x-kiosk-token': 'bpk_wrong' }, 401]]) {
+    for (const [headers, code, errorCode] of [[{}, 401, 'KIOSK_UNREGISTERED'], [{ 'x-kiosk-token': 'bpk_wrong' }, 401, 'KIOSK_TOKEN_INVALID']]) {
       const res = response();
       await kioskAuth({ headers }, res, () => assert.fail('must not pass'));
       assert.equal(res.statusCode, code);
+      assert.equal(res.body.code, errorCode, 'kiosk app relies on the code to redirect to /setup');
     }
     active = false;
     const res = response();
     await kioskAuth({ headers: { 'x-kiosk-token': token } }, res, () => assert.fail('disabled kiosk must not pass'));
     assert.equal(res.statusCode, 403);
+    assert.equal(res.body.code, 'KIOSK_DISABLED');
   } finally { [Kiosk.findOne, Kiosk.updateOne] = originals; }
 });
 

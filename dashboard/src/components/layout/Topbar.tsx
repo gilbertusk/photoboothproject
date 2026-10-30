@@ -36,6 +36,14 @@ export function Topbar() {
         return 'TRANSAKSI'
       case '/settings':
         return 'PENGATURAN'
+      case '/branches':
+        return 'CABANG & KIOSK'
+      case '/admins':
+        return 'ADMIN & AKSES'
+      case '/customers':
+        return 'PELANGGAN'
+      case '/notifications':
+        return 'NOTIFIKASI'
       default:
         return 'ADMIN'
     }

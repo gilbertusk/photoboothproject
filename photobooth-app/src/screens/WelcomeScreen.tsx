@@ -2,10 +2,21 @@ import { useNavigate } from 'react-router-dom'
 import { useSettings } from '@/hooks/useSettings'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { Button } from '@/components/shared/Button'
+import { useQuery } from '@tanstack/react-query'
+import { api } from '@/lib/api'
+import { KioskInfo, getKioskToken, kioskBranchName } from '@/lib/kiosk'
 
 export function WelcomeScreen() {
   const navigate = useNavigate()
   const { isLoaded } = useSettings()
+  const hasToken = Boolean(getKioskToken())
+  // Invalid or disabled tokens are redirected to /setup by the API interceptor.
+  const { data: kiosk } = useQuery({
+    queryKey: ['kiosk-me'],
+    enabled: hasToken,
+    staleTime: 5 * 60_000,
+    queryFn: async () => (await api.get('/api/kiosks/me')).data.data as KioskInfo,
+  })
 
   if (!isLoaded) {
     return (
@@ -80,6 +91,10 @@ export function WelcomeScreen() {
         >
           MULAI SESI
         </Button>
+
+        <p className="absolute bottom-4 right-6 font-grotesk text-[10px] uppercase tracking-wider text-sway-ghost">
+          {kiosk ? `${kiosk.name} · ${kioskBranchName(kiosk) ?? ''}` : hasToken ? '' : 'Kiosk belum terhubung'}
+        </p>
       </div>
     </div>
   )

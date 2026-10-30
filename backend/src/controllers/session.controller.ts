@@ -4,6 +4,8 @@ import { Session } from '../models/session.model';
 import { PricingPackage } from '../models/pricing.model';
 import { Voucher } from '../models/voucher.model';
 import { sendSuccess, sendError, formatZodError } from '../utils/response';
+import { AuthRequest, KioskRequest } from '../types';
+import { branchFilter, kioskOwns } from '../utils/branch-scope';
 
 const createSessionSchema = z.object({
   packageId: z.string().min(1, 'Package ID is required'),
@@ -11,7 +13,7 @@ const createSessionSchema = z.object({
   voucherCode: z.string().optional(),
 });
 
-export const createSession = async (req: Request, res: Response): Promise<void> => {
+export const createSession = async (req: KioskRequest, res: Response): Promise<void> => {
   const parsed = createSessionSchema.safeParse(req.body);
   if (!parsed.success) {
     sendError(res, formatZodError(parsed.error), 400);
@@ -69,6 +71,8 @@ export const createSession = async (req: Request, res: Response): Promise<void> 
     packageId,
     templateId: templateId || undefined,
     voucherId: voucherId || undefined,
+    branchId: req.kiosk?.branchId,
+    kioskId: req.kiosk?._id,
     status: 'PENDING',
     totalPrice,
     finalPrice,
@@ -81,20 +85,25 @@ export const createSession = async (req: Request, res: Response): Promise<void> 
   sendSuccess(res, populatedSession, 'Session created', 201);
 };
 
-export const getSessions = async (req: Request, res: Response): Promise<void> => {
-  const page = parseInt(req.query.page as string) || 1;
-  const limit = parseInt(req.query.limit as string) || 20;
+export const getSessions = async (req: AuthRequest, res: Response): Promise<void> => {
+  const scope = branchFilter(req);
+  if (!scope) {
+    sendError(res, 'Invalid branchId', 400);
+    return;
+  }
+  const page = Math.max(1, parseInt(req.query.page as string) || 1);
+  const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 20));
   const skip = (page - 1) * limit;
 
   const [sessions, total] = await Promise.all([
-    Session.find()
+    Session.find(scope)
       .populate('packageId')
       .populate('templateId')
       .populate('voucherId')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit),
-    Session.countDocuments(),
+    Session.countDocuments(scope),
   ]);
 
   sendSuccess(res, {
@@ -122,11 +131,16 @@ export const getSessionById = async (req: Request, res: Response): Promise<void>
   sendSuccess(res, session, 'Session retrieved');
 };
 
-export const startSession = async (req: Request, res: Response): Promise<void> => {
+export const startSession = async (req: KioskRequest, res: Response): Promise<void> => {
   const session = await Session.findById(req.params.id);
 
   if (!session) {
     sendError(res, 'Session not found', 404);
+    return;
+  }
+
+  if (!kioskOwns(session, req)) {
+    sendError(res, 'Sesi ini milik kiosk lain', 403);
     return;
   }
 
@@ -147,11 +161,16 @@ export const startSession = async (req: Request, res: Response): Promise<void> =
   sendSuccess(res, session, 'Session started');
 };
 
-export const completeSession = async (req: Request, res: Response): Promise<void> => {
+export const completeSession = async (req: KioskRequest, res: Response): Promise<void> => {
   const session = await Session.findById(req.params.id);
 
   if (!session) {
     sendError(res, 'Session not found', 404);
+    return;
+  }
+
+  if (!kioskOwns(session, req)) {
+    sendError(res, 'Sesi ini milik kiosk lain', 403);
     return;
   }
 

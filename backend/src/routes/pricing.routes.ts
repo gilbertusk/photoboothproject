@@ -6,11 +6,11 @@ import {
   deletePricingPackage,
   togglePricingPackage,
 } from '../controllers/pricing.controller';
-import { authMiddleware } from '../middlewares/auth.middleware';
+import { authMiddleware, requireOwner } from '../middlewares/auth.middleware';
 
 const router = Router();
 
-router.use(authMiddleware);
+router.use(authMiddleware, requireOwner);
 
 router.get('/', getPricingPackages);
 router.post('/', createPricingPackage);

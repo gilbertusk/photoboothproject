@@ -4,6 +4,9 @@ export interface ISession extends Document {
   packageId: Types.ObjectId;
   templateId?: Types.ObjectId;
   voucherId?: Types.ObjectId;
+  // Snapshot of where the session happened; kiosks may later move branches.
+  branchId?: Types.ObjectId;
+  kioskId?: Types.ObjectId;
   status: 'PENDING' | 'PAID' | 'IN_PROGRESS' | 'COMPLETED' | 'EXPIRED';
   totalPrice: number;
   finalPrice: number;
@@ -28,6 +31,8 @@ const sessionSchema = new Schema<ISession>(
       type: Schema.Types.ObjectId,
       ref: 'Voucher',
     },
+    branchId: { type: Schema.Types.ObjectId, ref: 'Branch', index: true },
+    kioskId: { type: Schema.Types.ObjectId, ref: 'Kiosk', index: true },
     status: {
       type: String,
       required: true,

@@ -3,6 +3,8 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 export interface ITransaction extends Document {
   sessionId: Types.ObjectId;
   externalId: string;
+  branchId?: Types.ObjectId;
+  kioskId?: Types.ObjectId;
   status: 'PENDING' | 'PAID' | 'FAILED' | 'EXPIRED';
   qrUrl: string;
   amount: number;
@@ -22,6 +24,8 @@ const transactionSchema = new Schema<ITransaction>(
       type: String,
       required: true,
     },
+    branchId: { type: Schema.Types.ObjectId, ref: 'Branch', index: true },
+    kioskId: { type: Schema.Types.ObjectId, ref: 'Kiosk', index: true },
     status: {
       type: String,
       required: true,

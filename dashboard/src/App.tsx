@@ -12,6 +12,8 @@ import { TransactionsPage } from '@/pages/TransactionsPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { CustomersPage } from '@/pages/CustomersPage'
 import { NotificationsPage } from '@/pages/NotificationsPage'
+import { BranchesPage } from '@/pages/BranchesPage'
+import { AdminsPage } from '@/pages/AdminsPage'
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -24,6 +26,13 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
     return <Navigate to="/login" replace />
   }
 
+  return <>{children}</>
+}
+
+// UX guard only; the API enforces owner-only access.
+function OwnerRoute({ children }: ProtectedRouteProps) {
+  const role = useAuthStore((state) => state.admin?.role ?? 'OWNER')
+  if (role !== 'OWNER') return <Navigate to="/" replace />
   return <>{children}</>
 }
 
@@ -44,13 +53,15 @@ export function App() {
           }
         >
           <Route index element={<DashboardPage />} />
-          <Route path="templates" element={<TemplatesPage />} />
-          <Route path="pricing" element={<PricingPage />} />
-          <Route path="vouchers" element={<VouchersPage />} />
+          <Route path="templates" element={<OwnerRoute><TemplatesPage /></OwnerRoute>} />
+          <Route path="pricing" element={<OwnerRoute><PricingPage /></OwnerRoute>} />
+          <Route path="vouchers" element={<OwnerRoute><VouchersPage /></OwnerRoute>} />
           <Route path="transactions" element={<TransactionsPage />} />
-          <Route path="customers" element={<CustomersPage />} />
-          <Route path="notifications" element={<NotificationsPage />} />
-          <Route path="settings" element={<SettingsPage />} />
+          <Route path="branches" element={<BranchesPage />} />
+          <Route path="customers" element={<OwnerRoute><CustomersPage /></OwnerRoute>} />
+          <Route path="notifications" element={<OwnerRoute><NotificationsPage /></OwnerRoute>} />
+          <Route path="admins" element={<OwnerRoute><AdminsPage /></OwnerRoute>} />
+          <Route path="settings" element={<OwnerRoute><SettingsPage /></OwnerRoute>} />
         </Route>
 
         {/* Fallback Catch All */}

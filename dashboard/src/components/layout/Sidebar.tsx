@@ -8,25 +8,30 @@ import {
   Settings,
   HelpCircle,
   LogOut,
-  User
+  User,
+  Store,
+  Users
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/useAuth'
 
 export function Sidebar() {
   const location = useLocation()
-  const { logout } = useAuth()
+  const { admin, logout } = useAuth()
+  const isOwner = (admin?.role ?? 'OWNER') === 'OWNER'
 
   const menuItems = [
     { name: 'DASHBOARD', path: '/', icon: LayoutDashboard },
-    { name: 'TEMPLATES', path: '/templates', icon: Layers },
-    { name: 'PAKET HARGA', path: '/pricing', icon: Banknote },
-    { name: 'VOUCHER', path: '/vouchers', icon: Ticket },
-    { name: 'PELANGGAN', path: '/customers', icon: User },
-    { name: 'NOTIFIKASI', path: '/notifications', icon: Receipt },
+    { name: 'TEMPLATES', path: '/templates', icon: Layers, ownerOnly: true },
+    { name: 'PAKET HARGA', path: '/pricing', icon: Banknote, ownerOnly: true },
+    { name: 'VOUCHER', path: '/vouchers', icon: Ticket, ownerOnly: true },
+    { name: 'PELANGGAN', path: '/customers', icon: User, ownerOnly: true },
+    { name: 'NOTIFIKASI', path: '/notifications', icon: Receipt, ownerOnly: true },
     { name: 'TRANSAKSI', path: '/transactions', icon: Receipt },
-    { name: 'PENGATURAN', path: '/settings', icon: Settings },
-  ]
+    { name: 'CABANG & KIOSK', path: '/branches', icon: Store },
+    { name: 'ADMIN', path: '/admins', icon: Users, ownerOnly: true },
+    { name: 'PENGATURAN', path: '/settings', icon: Settings, ownerOnly: true },
+  ].filter((item) => isOwner || !item.ownerOnly)
 
   return (
     <aside className="fixed top-0 bottom-0 left-0 z-50 flex w-[220px] flex-col border-r border-sway-border bg-sway-card text-sway-text h-screen select-none">

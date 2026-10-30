@@ -14,6 +14,8 @@ import { api } from '@/lib/api'
 import { useToast } from '@/hooks/useToast'
 import { cn, formatRupiah } from '@/lib/utils'
 import { Transaction } from '@/types'
+import { useBranchStore } from '@/stores/branchStore'
+import { BranchSelect } from '@/components/shared/BranchSelect'
 
 // Reusable Stats Card Component
 interface TransactionStatsCardProps {
@@ -80,10 +82,12 @@ export function TransactionsPage() {
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null)
 
   // Fetch transactions with pagination & status filters
+  const branchId = useBranchStore((s) => s.branchId)
   const { data, isLoading, isError: transactionsError, refetch } = useQuery({
-    queryKey: ['transactions', page, limit, statusFilter],
+    queryKey: ['transactions', page, limit, statusFilter, branchId],
     queryFn: async () => {
       const params: Record<string, any> = { page, limit }
+      if (branchId) params.branchId = branchId
       if (statusFilter !== 'ALL') {
         params.status = statusFilter
       }
@@ -257,6 +261,7 @@ export function TransactionsPage() {
 
   return (
     <div className="space-y-6 select-none animate-in fade-in-50 duration-300">
+      <BranchSelect />
       {/* ROW 1: 3 Premium Financial Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <TransactionStatsCard

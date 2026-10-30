@@ -7,7 +7,7 @@ import {
   deleteTestimonial,
   toggleTestimonial,
 } from '../controllers/testimonial.controller';
-import { authMiddleware } from '../middlewares/auth.middleware';
+import { authMiddleware, requireOwner } from '../middlewares/auth.middleware';
 
 const router = Router();
 
@@ -16,9 +16,9 @@ router.get('/', getTestimonials);
 router.get('/:id', getTestimonialById);
 
 // Admin routes
-router.post('/', authMiddleware, createTestimonial);
-router.put('/:id', authMiddleware, updateTestimonial);
-router.delete('/:id', authMiddleware, deleteTestimonial);
-router.patch('/:id/toggle', authMiddleware, toggleTestimonial);
+router.post('/', authMiddleware, requireOwner, createTestimonial);
+router.put('/:id', authMiddleware, requireOwner, updateTestimonial);
+router.delete('/:id', authMiddleware, requireOwner, deleteTestimonial);
+router.patch('/:id/toggle', authMiddleware, requireOwner, toggleTestimonial);
 
 export default router;

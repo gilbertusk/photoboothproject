@@ -23,6 +23,8 @@ const envSchema = z.object({
   EMAIL_FROM: z.string().default('bertpixx <onboarding@resend.dev>'),
   NOTIFICATIONS_ENABLED: z.enum(['true', 'false']).default('false').transform(value => value === 'true'),
   FRONTEND_URL: z.string().default('http://localhost:5173'),
+  // Unset means: required in production, optional elsewhere so unregistered dev kiosks keep working.
+  KIOSK_AUTH_REQUIRED: z.enum(['true', 'false']).optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -32,4 +34,9 @@ if (!parsed.success) {
   process.exit(1);
 }
 
-export const env = parsed.data;
+export const env = {
+  ...parsed.data,
+  KIOSK_AUTH_REQUIRED: parsed.data.KIOSK_AUTH_REQUIRED
+    ? parsed.data.KIOSK_AUTH_REQUIRED === 'true'
+    : parsed.data.NODE_ENV === 'production',
+};

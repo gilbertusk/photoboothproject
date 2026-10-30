@@ -3,7 +3,7 @@ import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import { uploadFile } from '../services/storage.service';
-import { authMiddleware } from '../middlewares/auth.middleware';
+import { authMiddleware, requireOwner } from '../middlewares/auth.middleware';
 import { sendSuccess, sendError } from '../utils/response';
 import { getLocalIp } from '../utils/ip';
 import { env } from '../config/env';
@@ -26,7 +26,7 @@ const upload = multer({
   },
 });
 
-router.post('/image', authMiddleware, upload.single('image'), async (req: Request, res: Response): Promise<void> => {
+router.post('/image', authMiddleware, requireOwner, upload.single('image'), async (req: Request, res: Response): Promise<void> => {
   if (!req.file) {
     sendError(res, 'No image file provided', 400);
     return;

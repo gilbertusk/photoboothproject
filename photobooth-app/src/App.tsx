@@ -16,6 +16,7 @@ import { PricingPage } from '@/screens/PricingPage'
 import { BookingPage } from '@/screens/BookingPage'
 import { TestimonialPage } from '@/screens/TestimonialPage'
 import { GuestBookScreen } from '@/screens/GuestBookScreen'
+import { KioskSetupScreen } from '@/screens/KioskSetupScreen'
 
 function App() {
   useEffect(() => {
@@ -58,6 +59,8 @@ function App() {
         <Route path="/testimonial" element={<TestimonialPage />} />
         <Route path="/guestbook" element={<GuestBookScreen />} />
       </Route>
+
+      <Route path="/setup" element={<KioskSetupScreen />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

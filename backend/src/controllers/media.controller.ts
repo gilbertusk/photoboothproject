@@ -33,6 +33,8 @@ export const createMedia = async (req: Request, res: Response): Promise<void> =>
 
   const media = await Media.create({
     sessionId,
+    branchId: session.branchId,
+    kioskId: session.kioskId,
     type,
     url,
     shareToken,

@@ -2,6 +2,8 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 
 export interface IMedia extends Document {
   sessionId: Types.ObjectId;
+  branchId?: Types.ObjectId;
+  kioskId?: Types.ObjectId;
   type: 'PHOTO' | 'STRIP' | 'GIF';
   url: string;
   shareToken: string;
@@ -16,6 +18,8 @@ const mediaSchema = new Schema<IMedia>(
       ref: 'Session',
       required: true,
     },
+    branchId: { type: Schema.Types.ObjectId, ref: 'Branch', index: true },
+    kioskId: { type: Schema.Types.ObjectId, ref: 'Kiosk' },
     type: {
       type: String,
       required: true,

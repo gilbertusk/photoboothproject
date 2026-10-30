@@ -1,7 +1,28 @@
+export type AdminRole = 'OWNER' | 'BRANCH_ADMIN'
+
 export interface Admin {
   id: string
   email: string
   name: string
+  role?: AdminRole
+  branchId?: string
+}
+
+export interface Branch {
+  id: string
+  name: string
+  code: string
+  address?: string
+  isActive: boolean
+}
+
+export interface Kiosk {
+  id: string
+  name: string
+  branchId: Pick<Branch, 'name' | 'code'> & { _id: string } | string
+  isActive: boolean
+  lastSeenAt?: string
+  assignments: { branchId: string; assignedAt: string }[]
 }
 
 export interface Template {

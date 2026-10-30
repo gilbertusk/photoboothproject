@@ -15,16 +15,20 @@ import {
 import { format, parseISO } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { Session, DashboardStats } from '@/types'
+import { useBranchStore } from '@/stores/branchStore'
+import { BranchSelect } from '@/components/shared/BranchSelect'
 
 export function DashboardPage() {
   const navigate = useNavigate()
 
+  const branchId = useBranchStore((s) => s.branchId)
+
   // Totals are computed over the complete dataset on the server.
   const { data, isLoading, error } = useQuery({
-    queryKey: ['dashboard-analytics'],
+    queryKey: ['dashboard-analytics', branchId],
     refetchInterval: 60000,
     queryFn: async () => {
-      const response = await api.get('/api/analytics')
+      const response = await api.get('/api/analytics', { params: branchId ? { branchId } : {} })
       return response.data.data as DashboardStats & { recentSessions: Session[]; undatedPayments: number }
     },
   })
@@ -87,6 +91,7 @@ export function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      <BranchSelect />
       <p className="text-xs text-sway-dim">Pendapatan kiosk berdasarkan transaksi lunas; tanggal pembayaran dalam WIB. Booking acara dicatat terpisah.</p>
       {!!data?.undatedPayments && <p className="text-xs text-sway-dim">{data.undatedPayments} pembayaran tanpa tanggal masuk total pendapatan, tetapi tidak masuk grafik harian.</p>}
       {/* ROW 1: Stat Cards */}

@@ -35,6 +35,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
   const token = jwt.sign(
     { id: admin._id.toString(), email: admin.email },
+    // Role/branch are re-read from the database on each request; they are not trusted from the token.
     env.JWT_SECRET,
     { expiresIn: env.JWT_EXPIRES_IN } as jwt.SignOptions
   );
@@ -45,6 +46,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       id: admin._id,
       email: admin.email,
       name: admin.name,
+      role: admin.role ?? 'OWNER',
+      branchId: admin.branchId ? String(admin.branchId) : undefined,
     },
   }, 'Login successful');
 };

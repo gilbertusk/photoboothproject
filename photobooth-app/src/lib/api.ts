@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getKioskToken, KIOSK_IDENTITY_ERRORS } from './kiosk'
 
 const baseURL = import.meta.env.VITE_API_URL
 
@@ -23,6 +24,11 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`
     }
 
+    const kioskToken = getKioskToken()
+    if (kioskToken && !config.headers['x-kiosk-token']) {
+      config.headers['x-kiosk-token'] = kioskToken
+    }
+
     return config
   },
   (error) => {
@@ -40,6 +46,12 @@ api.interceptors.response.use(
       url: error.config?.url,
       baseURL: error.config?.baseURL,
     })
+
+    // Unregistered, revoked or disabled kiosk: send staff to setup instead of failing mid-session.
+    const code = error.response?.data?.code
+    if (KIOSK_IDENTITY_ERRORS.includes(code) && window.location.pathname !== '/setup') {
+      window.location.assign(`/setup?reason=${encodeURIComponent(code)}`)
+    }
 
     return Promise.reject(error)
   }

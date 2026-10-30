@@ -1,6 +1,7 @@
 import { Transaction } from '../models/transaction.model';
 import { Session } from '../models/session.model';
 import { PricingPackage } from '../models/pricing.model';
+import { BranchFilter } from '../utils/branch-scope';
 
 const timezone = 'Asia/Jakarta';
 const dayKey = (date: Date) => new Intl.DateTimeFormat('en-CA', { timeZone: timezone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
@@ -14,14 +15,14 @@ export function fillRevenueDays(rows: { _id: string; revenue: number }[], now = 
   });
 }
 
-export async function getDashboardAnalytics(now = new Date()) {
+export async function getDashboardAnalytics(now = new Date(), scope: BranchFilter = {}) {
   const today = new Date(`${dayKey(now)}T00:00:00+07:00`);
   const tomorrow = new Date(today.getTime() + 86400000);
   const weekStart = new Date(today.getTime() - 6 * 86400000);
   const monthStart = new Date(`${dayKey(now).slice(0, 7)}-01T00:00:00+07:00`);
   const [payments, sessions, recentSessions] = await Promise.all([
     Transaction.aggregate([
-      { $match: { status: 'PAID' } },
+      { $match: { ...scope, status: 'PAID' } },
       { $facet: {
         total: [{ $group: { _id: null, revenue: { $sum: '$amount' } } }],
         today: [{ $match: { paidAt: { $gte: today, $lt: tomorrow } } }, { $group: { _id: null, revenue: { $sum: '$amount' } } }],
@@ -38,12 +39,12 @@ export async function getDashboardAnalytics(now = new Date()) {
         ],
       } },
     ]),
-    Session.aggregate([{ $group: {
+    Session.aggregate([{ $match: scope }, { $group: {
       _id: null, totalSessions: { $sum: 1 },
       totalCompletedSessions: { $sum: { $cond: [{ $eq: ['$status', 'COMPLETED'] }, 1, 0] } },
       sessionsToday: { $sum: { $cond: [{ $and: [{ $gte: ['$createdAt', today] }, { $lt: ['$createdAt', tomorrow] }] }, 1, 0] } },
     } }]),
-    Session.find().sort({ createdAt: -1, _id: -1 }).limit(5).populate('packageId'),
+    Session.find(scope).sort({ createdAt: -1, _id: -1 }).limit(5).populate('packageId'),
   ]);
   const paid = payments[0];
   return {

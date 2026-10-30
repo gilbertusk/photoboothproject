@@ -7,16 +7,16 @@ import {
   getCustomerHistory,
   syncCustomersFromBookings,
 } from '../controllers/customer.controller';
-import { authMiddleware } from '../middlewares/auth.middleware';
+import { authMiddleware, requireOwner } from '../middlewares/auth.middleware';
 
 const router = Router();
 
 // Admin routes (all require auth)
-router.get('/', authMiddleware, getCustomers);
-router.get('/:id', authMiddleware, getCustomerById);
-router.put('/:id', authMiddleware, updateCustomer);
-router.delete('/:id', authMiddleware, deleteCustomer);
-router.get('/:id/history', authMiddleware, getCustomerHistory);
-router.post('/sync', authMiddleware, syncCustomersFromBookings);
+router.get('/', authMiddleware, requireOwner, getCustomers);
+router.get('/:id', authMiddleware, requireOwner, getCustomerById);
+router.put('/:id', authMiddleware, requireOwner, updateCustomer);
+router.delete('/:id', authMiddleware, requireOwner, deleteCustomer);
+router.get('/:id/history', authMiddleware, requireOwner, getCustomerHistory);
+router.post('/sync', authMiddleware, requireOwner, syncCustomersFromBookings);
 
 export default router;

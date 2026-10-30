@@ -19,7 +19,9 @@ test('backend exposes public gallery routes', () => {
 
   assert.match(source, /gallery\/:shareToken/)
   assert.match(source, /sessions\/:sessionId\/media/)
-  assert.match(source, /router\.post\(['"]\/['"], createMedia\)/)
+  // Kiosk identity is allowed, admin auth is not: the kiosk has no admin login.
+  assert.match(source, /router\.post\(['"]\/['"], (kioskAuth, )?createMedia\)/)
+  assert.doesNotMatch(source, /authMiddleware/)
 })
 
 test('kiosk PreviewScreen creates media records and stores share token', () => {

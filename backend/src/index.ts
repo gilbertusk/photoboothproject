@@ -19,6 +19,10 @@ import guestbookRoutes from './routes/guestbook.routes';
 import customerRoutes from './routes/customer.routes';
 import analyticsRoutes from './routes/analytics.routes';
 import notificationRoutes from './routes/notification.routes';
+import branchRoutes from './routes/branch.routes';
+import kioskRoutes from './routes/kiosk.routes';
+import adminRoutes from './routes/admin.routes';
+import { kioskAuth } from './middlewares/kiosk.middleware';
 import { startNotificationWorker } from './services/notification.service';
 import settingRoutes from './routes/setting.routes';
 import uploadRoutes from './routes/upload.routes';
@@ -134,6 +138,9 @@ app.use('/api/guestbook', guestbookRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/branches', branchRoutes);
+app.use('/api/kiosks', kioskRoutes);
+app.use('/api/admins', adminRoutes);
 
 // Public routes (no auth required, for photobooth app)
 app.get('/api/public/packages', async (_req, res) => {
@@ -150,7 +157,7 @@ app.post('/api/public/vouchers/validate', validateVoucher);
 
 app.get('/api/public/settings', getSettings);
 
-app.post('/api/public/upload', publicUpload.single('image'), async (req, res): Promise<void> => {
+app.post('/api/public/upload', kioskAuth, publicUpload.single('image'), async (req, res): Promise<void> => {
   if (!req.file) {
     sendError(res, 'No image file provided', 400);
     return;
@@ -166,7 +173,7 @@ app.post('/api/public/upload', publicUpload.single('image'), async (req, res): P
   sendSuccess(res, { url, key, localUrl }, 'Image uploaded successfully', 201);
 });
 
-app.post('/api/public/send-email', async (req, res): Promise<void> => {
+app.post('/api/public/send-email', kioskAuth, async (req, res): Promise<void> => {
   const { sessionId, email, shareUrl } = req.body;
   if (!sessionId || !email) {
     sendError(res, 'sessionId and email are required', 400);

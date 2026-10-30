@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import mongoose from 'mongoose';
-import { authMiddleware } from '../middlewares/auth.middleware';
+import { authMiddleware, requireOwner } from '../middlewares/auth.middleware';
 import { Notification } from '../models/notification.model';
 import { sendSuccess, sendError } from '../utils/response';
 import { env } from '../config/env';
 
 const router = Router();
-router.use(authMiddleware);
+router.use(authMiddleware, requireOwner);
 router.get('/', async (req, res) => {
   const page = Number(req.query.page ?? 1);
   if (!Number.isSafeInteger(page) || page < 1) { sendError(res, 'Invalid page', 400); return; }

@@ -9,7 +9,7 @@ import {
   updateBookingPayment,
   getAvailableSlots,
 } from '../controllers/booking.controller';
-import { authMiddleware } from '../middlewares/auth.middleware';
+import { authMiddleware, requireOwner } from '../middlewares/auth.middleware';
 
 const router = Router();
 
@@ -19,10 +19,10 @@ router.get('/available-slots', getAvailableSlots);
 router.get('/:id', getBookingById);
 
 // Admin routes
-router.get('/', authMiddleware, getBookings);
-router.put('/:id', authMiddleware, updateBooking);
-router.delete('/:id', authMiddleware, deleteBooking);
-router.patch('/:id/status', authMiddleware, toggleBookingStatus);
-router.patch('/:id/payment', authMiddleware, updateBookingPayment);
+router.get('/', authMiddleware, requireOwner, getBookings);
+router.put('/:id', authMiddleware, requireOwner, updateBooking);
+router.delete('/:id', authMiddleware, requireOwner, deleteBooking);
+router.patch('/:id/status', authMiddleware, requireOwner, toggleBookingStatus);
+router.patch('/:id/payment', authMiddleware, requireOwner, updateBookingPayment);
 
 export default router;
