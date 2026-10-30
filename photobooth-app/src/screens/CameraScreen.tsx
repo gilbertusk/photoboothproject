@@ -24,6 +24,8 @@ export function CameraScreen() {
     isMirror, toggleMirror,
     selectedFilter, setFilter,
     resetSession,
+    retakeIndex: storeRetakeIndex,
+    setStoreRetakeIndex,
   } = useSessionStore()
 
   const { webcamRef, captureWithFilter } = useCamera()
@@ -36,6 +38,15 @@ export function CameraScreen() {
   useEffect(() => {
     if (!sessionId || !selectedPackage) navigate('/')
   }, [sessionId, selectedPackage, navigate])
+
+  // Initialize local retakeIndex from store (set by PreviewScreen when replacing individual photo)
+  useEffect(() => {
+    if (storeRetakeIndex !== null) {
+      setRetakeIndex(storeRetakeIndex)
+      // Clear the store value so it doesn't persist across navigations
+      setStoreRetakeIndex(null)
+    }
+  }, [storeRetakeIndex, setStoreRetakeIndex])
 
   // Auto-advance to next shot during sequence
   useEffect(() => {

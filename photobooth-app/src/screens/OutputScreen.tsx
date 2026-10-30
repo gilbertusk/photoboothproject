@@ -6,7 +6,7 @@ import { api } from '@/lib/api'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import { BottomBar } from '@/components/shared/BottomBar'
 import { Button } from '@/components/shared/Button'
-import { Printer, ArrowRight, Check, AlertTriangle, Copy, Smartphone, Camera } from 'lucide-react'
+import { Printer, ArrowRight, Check, AlertTriangle, Copy, Smartphone, Camera, RefreshCw } from 'lucide-react'
 
 export function OutputScreen() {
   const navigate = useNavigate()
@@ -147,15 +147,26 @@ export function OutputScreen() {
           </div>
           
           <div className="w-full max-w-[200px] flex flex-col gap-2 mt-1">
-            <Button
-              onClick={handlePrint}
-              disabled={isPrinting}
-              variant="accent"
-              className="w-full h-11 font-bebas text-sm tracking-widest cursor-pointer flex items-center justify-center gap-2 font-bold"
-            >
-              <Printer className="w-4 h-4" />
-              <span>CETAK SEKARANG</span>
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button
+                onClick={handlePrint}
+                disabled={isPrinting}
+                variant="accent"
+                className="w-full h-11 font-bebas text-sm tracking-widest cursor-pointer flex items-center justify-center gap-2 font-bold"
+              >
+                <Printer className="w-4 h-4" />
+                <span>CETAK SEKARANG</span>
+              </Button>
+              <Button
+                onClick={handlePrint}
+                disabled={isPrinting}
+                variant="ghost"
+                className="w-full h-10 font-bebas text-[11px] tracking-widest cursor-pointer flex items-center justify-center gap-2 font-bold opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>CETAK ULANG</span>
+              </Button>
+            </div>
             <span className="text-[10px] text-sway-dim uppercase tracking-wider text-center font-grotesk block font-bold">
               KOMPOSISI CETAK FISIK & DIGITAL
             </span>

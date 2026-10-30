@@ -15,6 +15,7 @@ import { PublicLayout } from '@/components/layout/PublicLayout'
 import { PricingPage } from '@/screens/PricingPage'
 import { BookingPage } from '@/screens/BookingPage'
 import { TestimonialPage } from '@/screens/TestimonialPage'
+import { GuestBookScreen } from '@/screens/GuestBookScreen'
 
 function App() {
   useEffect(() => {
@@ -55,6 +56,7 @@ function App() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/booking" element={<BookingPage />} />
         <Route path="/testimonial" element={<TestimonialPage />} />
+        <Route path="/guestbook" element={<GuestBookScreen />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -24,6 +24,9 @@ interface SessionStore {
   galleryUrl: string | null
   mediaUrls: string[]
 
+  // Individual photo retake
+  retakeIndex: number | null
+
   // Camera settings
   isMirror: boolean
   selectedFilter: FilterType
@@ -66,6 +69,7 @@ const initialState = {
   shareToken: null,
   galleryUrl: null,
   mediaUrls: [],
+  retakeIndex: null,
   isMirror: true,
   selectedFilter: 'normal' as FilterType,
 }
@@ -102,6 +106,7 @@ export const useSessionStore = create<SessionStore>((set) => ({
   setShareToken: (token: string | null) => set({ shareToken: token }),
   setGalleryUrl: (url: string | null) => set({ galleryUrl: url }),
   setMediaUrls: (urls: string[]) => set({ mediaUrls: urls }),
+  setRetakeIndex: (index: number | null) => set({ retakeIndex: index }),
   toggleMirror: () => set((state) => ({ isMirror: !state.isMirror })),
   setFilter: (filter) => set({ selectedFilter: filter }),
   resetSession: () => set({ ...initialState }),

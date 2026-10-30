@@ -8,7 +8,7 @@ import { ProgressBar } from '@/components/shared/ProgressBar'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { BottomBar } from '@/components/shared/BottomBar'
 import { Button } from '@/components/shared/Button'
-import { Sparkles, ArrowRight, RefreshCw } from 'lucide-react'
+import { Sparkles, ArrowRight, RefreshCw, RotateCcw, Camera as CameraIcon } from 'lucide-react'
 
 // Helper to convert base64 data URL to a Blob
 function dataURLtoBlob(dataurl: string): Blob {
@@ -258,6 +258,38 @@ export function PreviewScreen() {
             <span className="text-[10px] text-sway-dim uppercase tracking-wider font-grotesk block mt-0.5 font-bold">
               LAYOUT: {selectedTemplate.name}
             </span>
+          </div>
+
+          {/* Individual photo thumbnails with replace buttons */}
+          <div className="mt-4 w-full">
+            <span className="font-grotesk text-[10px] text-sway-accent font-extrabold tracking-widest block uppercase mb-2">
+              GANTI FOTO INDIVIDUAL
+            </span>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {capturedPhotos.map((photo, idx) => (
+                <div key={idx} className="relative group">
+                  <img
+                    src={photo}
+                    alt={`Foto ${idx + 1}`}
+                    className="w-20 h-20 rounded object-cover border-2 border-sway-border-dim hover:border-sway-accent transition-colors"
+                  />
+                  <Button
+                    onClick={() => {
+                      useSessionStore.setState({ retakeIndex: idx })
+                      navigate('/camera')
+                    }}
+                    variant="ghost"
+                    size="sm"
+                    className="absolute bottom-1 right-1 h-7 text-[10px] font-bold font-grotesk uppercase tracking-wider bg-sway-accent text-white"
+                  >
+                    <RotateCcw className="w-3 h-3" /> GANTI
+                  </Button>
+                  <span className="absolute top-1 left-1 w-4 h-4 rounded-full flex items-center justify-center bg-black/60 text-white">
+                    <span className="font-grotesk text-[8px] font-bold">{idx + 1}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

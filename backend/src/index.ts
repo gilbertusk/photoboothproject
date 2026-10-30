@@ -15,6 +15,7 @@ import voucherRoutes from './routes/voucher.routes';
 import sessionRoutes from './routes/session.routes';
 import bookingRoutes from './routes/booking.routes';
 import testimonialRoutes from './routes/testimonial.routes';
+import guestbookRoutes from './routes/guestbook.routes';
 import settingRoutes from './routes/setting.routes';
 import uploadRoutes from './routes/upload.routes';
 import transactionRoutes from './routes/transaction.routes';
@@ -125,6 +126,7 @@ app.use('/api/settings', settingRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/media', mediaRoutes);
+app.use('/api/guestbook', guestbookRoutes);
 
 // Public routes (no auth required, for photobooth app)
 app.get('/api/public/packages', async (_req, res) => {
