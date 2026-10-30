@@ -17,6 +17,9 @@ import bookingRoutes from './routes/booking.routes';
 import testimonialRoutes from './routes/testimonial.routes';
 import guestbookRoutes from './routes/guestbook.routes';
 import customerRoutes from './routes/customer.routes';
+import analyticsRoutes from './routes/analytics.routes';
+import notificationRoutes from './routes/notification.routes';
+import { startNotificationWorker } from './services/notification.service';
 import settingRoutes from './routes/setting.routes';
 import uploadRoutes from './routes/upload.routes';
 import transactionRoutes from './routes/transaction.routes';
@@ -129,6 +132,8 @@ app.use('/api/transactions', transactionRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/guestbook', guestbookRoutes);
 app.use('/api/customers', customerRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Public routes (no auth required, for photobooth app)
 app.get('/api/public/packages', async (_req, res) => {
@@ -191,6 +196,7 @@ app.use(errorMiddleware);
 // Start server
 const startServer = async () => {
   await connectDB();
+  if (env.NOTIFICATIONS_ENABLED) startNotificationWorker();
 
   app.listen(env.PORT, () => {
     console.log(`🚀 Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);

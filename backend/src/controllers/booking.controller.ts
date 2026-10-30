@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Booking } from '../models/booking.model';
 import { PricingPackage } from '../models/pricing.model';
 import { refreshCustomerAfterBooking } from '../services/customer.service';
+import { queueBookingNotificationSafely } from '../services/notification.service';
 import { sendSuccess, sendError, formatZodError } from '../utils/response';
 
 const createBookingSchema = z.object({
@@ -47,6 +48,7 @@ export const createBooking = async (req: Request, res: Response): Promise<void> 
   const populatedBooking = await Booking.findById(booking._id).populate('packageId');
   await refreshCustomerAfterBooking(booking.customerEmail);
 
+  await queueBookingNotificationSafely(booking, 'RECEIVED');
   sendSuccess(res, populatedBooking, 'Pesanan berhasil dibuat', 201);
 };
 
@@ -89,6 +91,7 @@ export const updateBooking = async (req: Request, res: Response): Promise<void> 
     await refreshCustomerAfterBooking(previous.customerEmail);
   }
   await refreshCustomerAfterBooking(booking.customerEmail);
+  if (booking.status === 'CONFIRMED') await queueBookingNotificationSafely(booking, 'CONFIRMED');
   sendSuccess(res, booking, 'Pesanan berhasil diperbarui');
 };
 
@@ -118,6 +121,7 @@ export const toggleBookingStatus = async (req: Request, res: Response): Promise<
 
   booking.status = statusMap[booking.status] as any;
   await booking.save();
+  if (booking.status === 'CONFIRMED') await queueBookingNotificationSafely(booking, 'CONFIRMED');
 
   sendSuccess(res, booking, `Status pesanan diubah menjadi ${booking.status}`);
 };
@@ -147,6 +151,7 @@ export const updateBookingPayment = async (req: Request, res: Response): Promise
   await booking.save();
 
   await refreshCustomerAfterBooking(booking.customerEmail);
+  if (paymentStatus === 'PAID') await queueBookingNotificationSafely(booking, 'CONFIRMED');
   sendSuccess(res, booking, 'Status pembayaran diperbarui');
 };
 

@@ -20,8 +20,8 @@ export const sendPhotoEmail = async (
     throw new Error('RESEND_API_KEY is required to send photo emails');
   }
 
-  await resend!.emails.send({
-    from: 'bertpixx <onboarding@resend.dev>',
+  const result = await resend!.emails.send({
+    from: env.EMAIL_FROM,
     to,
     subject: 'Your bertpixx Photos Are Ready! 📸',
     html: `
@@ -58,4 +58,14 @@ export const sendPhotoEmail = async (
       </html>
     `,
   });
+  if (result.error) throw new Error(result.error.message);
+  if (!result.data?.id) throw new Error('Email provider returned no message ID');
 };
+
+export async function sendBookingEmail(to: string, subject: string, text: string, idempotencyKey: string): Promise<string> {
+  if (!resend) throw new Error('RESEND_API_KEY is required to send booking emails');
+  const result = await resend.emails.send({ from: env.EMAIL_FROM, to, subject, text }, { idempotencyKey });
+  if (result.error) throw new Error(result.error.message);
+  if (!result.data?.id) throw new Error('Email provider returned no message ID');
+  return result.data.id;
+}

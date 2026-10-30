@@ -12,98 +12,24 @@ import {
   Tooltip,
   CartesianGrid,
 } from 'recharts'
-import { subDays, format, isToday, parseISO } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { id } from 'date-fns/locale'
-import { Session } from '@/types'
+import { Session, DashboardStats } from '@/types'
 
 export function DashboardPage() {
   const navigate = useNavigate()
 
-  // Fetch sessions to aggregate statistics
+  // Totals are computed over the complete dataset on the server.
   const { data, isLoading, error } = useQuery({
-    queryKey: ['sessions-stats'],
+    queryKey: ['dashboard-analytics'],
+    refetchInterval: 60000,
     queryFn: async () => {
-      const response = await api.get('/api/sessions?limit=1000')
-      return response.data?.data?.sessions as Session[]
+      const response = await api.get('/api/analytics')
+      return response.data.data as DashboardStats & { recentSessions: Session[]; undatedPayments: number }
     },
   })
 
-  // Aggregation logic
-  const aggregateStats = () => {
-    if (!data || data.length === 0) return null
-
-    const sessions = data
-    const totalSessions = sessions.length
-    const totalCompletedSessions = sessions.filter(s => s.status === 'COMPLETED' || s.status === 'PAID').length
-
-    let totalRevenue = 0
-    let revenueToday = 0
-    let sessionsToday = 0
-
-    // Package popularity tracker
-    const packageCounts: Record<string, number> = {}
-
-    // Revenue tracking by date (last 7 days)
-    const dailyRevenue: Record<string, number> = {}
-    for (let i = 6; i >= 0; i--) {
-      const dateStr = format(subDays(new Date(), i), 'yyyy-MM-dd')
-      dailyRevenue[dateStr] = 0
-    }
-
-    sessions.forEach(session => {
-      const isPaidOrCompleted = session.status === 'PAID' || session.status === 'COMPLETED'
-      const sessionDate = session.createdAt ? parseISO(session.createdAt) : null
-
-      // Track today's metrics
-      if (sessionDate && isToday(sessionDate)) {
-        sessionsToday++
-        if (isPaidOrCompleted) {
-          revenueToday += session.finalPrice || 0
-        }
-      }
-
-      // Total revenue
-      if (isPaidOrCompleted) {
-        totalRevenue += session.finalPrice || 0
-      }
-
-      // Track package counts
-      const pkgName = session.package?.name
-      if (pkgName) packageCounts[pkgName] = (packageCounts[pkgName] || 0) + 1
-
-      // Track daily revenue (last 7 days)
-      const dayKey = sessionDate ? format(sessionDate, 'yyyy-MM-dd') : null
-      if (dayKey && dayKey in dailyRevenue && isPaidOrCompleted) {
-        dailyRevenue[dayKey] += session.finalPrice || 0
-      }
-    })
-
-    // Format revenue chart data
-    const revenueByDay = Object.entries(dailyRevenue).map(([date, value]) => {
-      const parsedDate = parseISO(date)
-      return {
-        date: format(parsedDate, 'dd MMM', { locale: id }).toUpperCase(),
-        value
-      }
-    })
-
-    // Format popular packages data
-    const popularPackages = Object.entries(packageCounts)
-      .map(([name, count]) => ({ name: name.toUpperCase(), count }))
-      .sort((a, b) => b.count - a.count)
-
-    return {
-      totalRevenue,
-      totalSessions,
-      totalCompletedSessions,
-      revenueToday,
-      sessionsToday,
-      revenueByDay,
-      popularPackages
-    }
-  }
-
-  const stats = aggregateStats()
+  const stats = data
 
   if (isLoading) {
     return (
@@ -128,12 +54,12 @@ export function DashboardPage() {
   }
 
   const displayTotalRevenue = formatRupiah(stats?.totalRevenue ?? 0)
-  const displayTotalCompleted = `${stats?.totalCompletedSessions ?? 0} TRANSAKSI SELESAI`
+  const displayTotalCompleted = `${stats?.totalCompletedSessions ?? 0} SESI SELESAI`
   const displaySessionsToday = String(stats?.sessionsToday ?? 0)
   const displayTotalSessions = String(stats?.totalSessions ?? 0)
   const displayRevenueToday = formatRupiah(stats?.revenueToday ?? 0)
   const displayRevenueTodaySessions = `DARI ${stats?.sessionsToday ?? 0} SESI`
-  const chartData = stats?.revenueByDay ?? []
+  const chartData = (stats?.revenueByDay ?? []).map(day => ({ date: format(parseISO(day.date), 'dd MMM', { locale: id }), value: day.revenue }))
 
   const colors = ['bg-sway-accent', 'bg-sway-gold', 'bg-[#3b82f6]', 'bg-sway-dim']
   const totalPicks = stats?.popularPackages.reduce((sum, pkg) => sum + pkg.count, 0) ?? 0
@@ -144,10 +70,10 @@ export function DashboardPage() {
         color: colors[idx % colors.length],
       }))
     : []
-  const displayTotalPicksThisMonth = `${stats?.totalSessions ?? 0} PAKET`
+  const displayTotalPicksThisMonth = `${totalPicks} PAKET`
 
-  const transactionsToDisplay = (data ?? []).slice(0, 5).map((session: any) => {
-      const timeFormatted = session.createdAt ? format(parseISO(session.createdAt), 'HH:mm') : '—'
+  const transactionsToDisplay = (data?.recentSessions ?? []).map((session) => {
+      const timeFormatted = session.createdAt ? new Date(session.createdAt).toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' }) : '—'
       let statusLabel = session.status || 'UNKNOWN'
       if (statusLabel === 'COMPLETED') statusLabel = 'PAID' // normalized completion
       return {
@@ -161,6 +87,8 @@ export function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      <p className="text-xs text-sway-dim">Pendapatan kiosk berdasarkan transaksi lunas; tanggal pembayaran dalam WIB. Booking acara dicatat terpisah.</p>
+      {!!data?.undatedPayments && <p className="text-xs text-sway-dim">{data.undatedPayments} pembayaran tanpa tanggal masuk total pendapatan, tetapi tidak masuk grafik harian.</p>}
       {/* ROW 1: Stat Cards */}
       <div className="grid grid-cols-4 gap-4">
         {/* Card 1: TOTAL REVENUE */}
@@ -185,7 +113,7 @@ export function DashboardPage() {
             {displaySessionsToday}
           </span>
           <span className="text-[11px] text-sway-gold mt-2 flex items-center gap-1 font-grotesk font-bold">
-            ◇ SESI BERJALAN
+            ◇ DIBUAT HARI INI (WIB)
           </span>
         </div>
 
@@ -227,7 +155,7 @@ export function DashboardPage() {
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-sway-accent animate-pulse" />
               <span className="text-[10px] text-sway-dim uppercase tracking-widest font-grotesk font-bold mt-0.5">
-                LIVE DATA FEED
+                DIPERBARUI TIAP MENIT
               </span>
             </div>
           </div>
@@ -398,7 +326,7 @@ export function DashboardPage() {
                     </span>
                   ) : (
                     <span className="bg-sway-card-hi text-sway-dim border border-sway-ghost px-2.5 py-0.5 rounded-[2px] text-[10px] uppercase tracking-wider font-bold inline-block">
-                      EXPIRED
+                      {tx.status}
                     </span>
                   )}
                 </div>

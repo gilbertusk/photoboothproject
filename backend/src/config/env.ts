@@ -20,6 +20,8 @@ const envSchema = z.object({
   MIDTRANS_CLIENT_KEY: z.string().default(''),
   MIDTRANS_IS_PRODUCTION: z.string().default('false').transform((val) => val === 'true'),
   RESEND_API_KEY: z.string().default(''),
+  EMAIL_FROM: z.string().default('bertpixx <onboarding@resend.dev>'),
+  NOTIFICATIONS_ENABLED: z.enum(['true', 'false']).default('false').transform(value => value === 'true'),
   FRONTEND_URL: z.string().default('http://localhost:5173'),
 });
 

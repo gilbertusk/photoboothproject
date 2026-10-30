@@ -23,6 +23,7 @@ export function Sidebar() {
     { name: 'PAKET HARGA', path: '/pricing', icon: Banknote },
     { name: 'VOUCHER', path: '/vouchers', icon: Ticket },
     { name: 'PELANGGAN', path: '/customers', icon: User },
+    { name: 'NOTIFIKASI', path: '/notifications', icon: Receipt },
     { name: 'TRANSAKSI', path: '/transactions', icon: Receipt },
     { name: 'PENGATURAN', path: '/settings', icon: Settings },
   ]
@@ -104,4 +105,3 @@ export function Sidebar() {
 }
 
 export default Sidebar
-
