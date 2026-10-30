@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '@/lib/api'
 import { Button } from '@/components/shared/Button'
-import { Image as ImageIcon, User, Clock, Heart } from 'lucide-react'
+import { User, Heart } from 'lucide-react'
 
 interface GuestbookMedia {
   id: string
@@ -101,13 +101,7 @@ export function GuestBookScreen() {
           <p className="font-grotesk text-[14px] text-sway-dim mb-8">
             Belum ada foto yang ditambahkan ke buku tamu. Foto akan muncul di sini setelah sesi photobooth selesai.
           </p>
-          <Button
-            asChild
-            variant="accent"
-            className="h-11 font-bold font-grotesk tracking-widest uppercase"
-          >
-            <Link to="/booking">PESAN PAKET ANDA</Link>
-          </Button>
+          <Link to="/booking" className="inline-flex items-center h-11 px-6 rounded bg-sway-accent text-white font-bold font-grotesk tracking-widest uppercase">PESAN PAKET ANDA</Link>
         </div>
       </div>
     )

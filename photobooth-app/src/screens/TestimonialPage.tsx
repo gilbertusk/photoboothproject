@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { api } from '@/lib/api'
 import { Button } from '@/components/shared/Button'
 import { Testimonial } from '@/types'
-import { Star, Quote, User, Image as ImageIcon } from 'lucide-react'
+import { Star, Quote, User } from 'lucide-react'
 
 export function TestimonialPage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
@@ -67,13 +67,7 @@ export function TestimonialPage() {
           <p className="font-grotesk text-[14px] text-sway-dim mb-8">
             Belum ada pelanggan yang memberikan testimoni. Jadilah yang pertama!
           </p>
-          <Button
-            asChild
-            variant="accent"
-            className="h-11 font-bold font-grotesk tracking-widest uppercase"
-          >
-            <Link to="/booking">PESAN PAKET ANDA</Link>
-          </Button>
+          <Link to="/booking" className="inline-flex items-center h-11 px-6 rounded bg-sway-accent text-white font-bold font-grotesk tracking-widest uppercase">PESAN PAKET ANDA</Link>
         </div>
       </div>
     )

@@ -25,7 +25,7 @@ export function CameraScreen() {
     selectedFilter, setFilter,
     resetSession,
     retakeIndex: storeRetakeIndex,
-    setStoreRetakeIndex,
+    setRetakeIndex: setStoreRetakeIndex,
   } = useSessionStore()
 
   const { webcamRef, captureWithFilter } = useCamera()

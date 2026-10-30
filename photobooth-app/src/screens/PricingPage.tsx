@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { api } from '@/lib/api'
 import { Button } from '@/components/shared/Button'
 import { PricingPackage } from '@/types'
-import { Clock, Camera, Image, Gift, Sparkles } from 'lucide-react'
+import { Clock, Camera, Image, Gift } from 'lucide-react'
 
 export function PricingPage() {
   const navigate = useNavigate()
@@ -63,12 +63,6 @@ export function PricingPage() {
         </Button>
       </div>
     )
-  }
-
-  const featureIcons: Record<string, any> = {
-    photoCount: Camera,
-    includeGif: Image,
-    includeEmail: Gift,
   }
 
   return (
@@ -164,7 +158,7 @@ export function PricingPage() {
                   <div className="flex items-start gap-2">
                     <Clock className="w-4 h-4 text-sway-accent shrink-0 mt-0.5" />
                     <span className="font-grotesk text-[12px] text-sway-text">
-                      {pkg.duration} Menit Layanan
+                      {Math.round(pkg.duration / 60)} Menit Layanan
                     </span>
                   </div>
                   <div className="flex items-start gap-2">

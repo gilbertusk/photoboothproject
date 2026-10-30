@@ -10,6 +10,7 @@ import { PricingPage } from '@/pages/PricingPage'
 import { VouchersPage } from '@/pages/VouchersPage'
 import { TransactionsPage } from '@/pages/TransactionsPage'
 import { SettingsPage } from '@/pages/SettingsPage'
+import { CustomersPage } from '@/pages/CustomersPage'
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -46,6 +47,7 @@ export function App() {
           <Route path="pricing" element={<PricingPage />} />
           <Route path="vouchers" element={<VouchersPage />} />
           <Route path="transactions" element={<TransactionsPage />} />
+          <Route path="customers" element={<CustomersPage />} />
           <Route path="settings" element={<SettingsPage />} />
         </Route>
 

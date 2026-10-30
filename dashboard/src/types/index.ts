@@ -77,6 +77,18 @@ export interface ApiResponse<T> {
   data?: T
 }
 
+export interface Customer {
+  id: string
+  email: string
+  name: string
+  phone?: string
+  totalBookings: number
+  totalSpent: number
+  lastBookingAt?: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface DashboardStats {
   totalRevenue: number
   totalSessions: number

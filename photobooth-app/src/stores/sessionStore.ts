@@ -47,6 +47,10 @@ interface SessionStore {
   setLocalStripUrl: (url: string) => void
   setLocalGifUrl: (url: string) => void
   setStripDataUrl: (url: string) => void
+  setShareToken: (token: string | null) => void
+  setGalleryUrl: (url: string | null) => void
+  setMediaUrls: (urls: string[]) => void
+  setRetakeIndex: (index: number | null) => void
   toggleMirror: () => void
   setFilter: (filter: FilterType) => void
   resetSession: () => void

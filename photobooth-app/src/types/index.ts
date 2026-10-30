@@ -5,6 +5,7 @@ export interface PricingPackage {
   name: string
   price: number
   photoCount: number
+  printCount: number
   duration: number
   includeGif: boolean
   includeEmail: boolean

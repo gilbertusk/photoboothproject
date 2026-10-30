@@ -30,6 +30,7 @@ const bookingSchema = new Schema<IBooking>(
       type: String,
       required: true,
       trim: true,
+      lowercase: true,
     },
     customerPhone: {
       type: String,
@@ -71,6 +72,10 @@ const bookingSchema = new Schema<IBooking>(
       type: String,
       enum: ['PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED'],
       default: 'PENDING',
+    },
+    totalAmount: {
+      type: Number,
+      min: 0,
     },
     paymentStatus: {
       type: String,

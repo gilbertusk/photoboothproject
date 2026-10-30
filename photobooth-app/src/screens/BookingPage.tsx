@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { api } from '@/lib/api'
 import { Button } from '@/components/shared/Button'
 import { PricingPackage, Booking } from '@/types'
-import { Calendar, Clock, MapPin, User, Mail, Phone, ChevronRight, AlertCircle, Check } from 'lucide-react'
+import { Clock, Mail, Phone, AlertCircle, Check } from 'lucide-react'
 
 export function BookingPage() {
   const [searchParams] = useSearchParams()
@@ -116,14 +116,14 @@ export function BookingPage() {
     setErrorMessage(null)
 
     try {
-      const res = await api.post<{ success: boolean; message: string; data: Booking }>(
+      await api.post<{ success: boolean; message: string; data: Booking }>(
         '/api/bookings',
         {
           customerName: form.customerName,
           customerEmail: form.customerEmail,
           customerPhone: form.customerPhone,
           packageId: selectedPackage._id,
-          eventDate: selectedDate,
+          eventDate: `${selectedDate}T00:00:00.000Z`,
           eventTime: selectedTime,
           eventLocation: form.eventLocation,
           eventType: form.eventType || undefined,
@@ -278,7 +278,7 @@ export function BookingPage() {
                             {formatRupiah(pkg.price)}
                           </div>
                           <div className="font-grotesk text-[10px] text-sway-dim mt-1 uppercase tracking-wider">
-                            {pkg.photoCount} Foto • {pkg.duration} Menit
+                            {pkg.photoCount} Foto • {Math.round(pkg.duration / 60)} Menit
                           </div>
                         </button>
                       )
@@ -424,7 +424,7 @@ export function BookingPage() {
 
                 <Button
                   type="submit"
-                  disabled={isSubmitting || !selectedPackage || !selectedDate || !selectedTime || !isFormValid}
+                  disabled={isLoadingPackages || isSubmitting || !selectedPackage || !selectedDate || !selectedTime || !isFormValid}
                   variant="accent"
                   className="w-full h-12 font-bold font-grotesk tracking-widest uppercase"
                 >

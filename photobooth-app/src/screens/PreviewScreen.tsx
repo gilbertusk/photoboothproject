@@ -8,7 +8,7 @@ import { ProgressBar } from '@/components/shared/ProgressBar'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { BottomBar } from '@/components/shared/BottomBar'
 import { Button } from '@/components/shared/Button'
-import { Sparkles, ArrowRight, RefreshCw, RotateCcw, Camera as CameraIcon } from 'lucide-react'
+import { Sparkles, ArrowRight, RefreshCw, RotateCcw } from 'lucide-react'
 
 // Helper to convert base64 data URL to a Blob
 function dataURLtoBlob(dataurl: string): Blob {

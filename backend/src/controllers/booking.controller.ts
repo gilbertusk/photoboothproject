@@ -2,11 +2,12 @@ import { Request, Response } from 'express';
 import { z } from 'zod';
 import { Booking } from '../models/booking.model';
 import { PricingPackage } from '../models/pricing.model';
+import { refreshCustomerAfterBooking } from '../services/customer.service';
 import { sendSuccess, sendError, formatZodError } from '../utils/response';
 
 const createBookingSchema = z.object({
   customerName: z.string().min(1, 'Nama lengkap wajib diisi'),
-  customerEmail: z.string().email('Email tidak valid'),
+  customerEmail: z.string().trim().email('Email tidak valid').toLowerCase(),
   customerPhone: z.string().min(1, 'Nomor telepon wajib diisi'),
   packageId: z.string().min(1, 'Paket wajib dipilih'),
   eventDate: z.string().datetime('Tanggal acara tidak valid'),
@@ -44,6 +45,7 @@ export const createBooking = async (req: Request, res: Response): Promise<void> 
   });
 
   const populatedBooking = await Booking.findById(booking._id).populate('packageId');
+  await refreshCustomerAfterBooking(booking.customerEmail);
 
   sendSuccess(res, populatedBooking, 'Pesanan berhasil dibuat', 201);
 };
@@ -71,6 +73,7 @@ export const updateBooking = async (req: Request, res: Response): Promise<void> 
     return;
   }
 
+  const previous = await Booking.findById(req.params.id);
   const booking = await Booking.findByIdAndUpdate(
     req.params.id,
     parsed.data,
@@ -82,6 +85,10 @@ export const updateBooking = async (req: Request, res: Response): Promise<void> 
     return;
   }
 
+  if (previous && previous.customerEmail !== booking.customerEmail) {
+    await refreshCustomerAfterBooking(previous.customerEmail);
+  }
+  await refreshCustomerAfterBooking(booking.customerEmail);
   sendSuccess(res, booking, 'Pesanan berhasil diperbarui');
 };
 
@@ -91,6 +98,7 @@ export const deleteBooking = async (req: Request, res: Response): Promise<void> 
     sendError(res, 'Pesanan tidak ditemukan', 404);
     return;
   }
+  await refreshCustomerAfterBooking(booking.customerEmail);
   sendSuccess(res, null, 'Pesanan berhasil dihapus');
 };
 
@@ -138,6 +146,7 @@ export const updateBookingPayment = async (req: Request, res: Response): Promise
 
   await booking.save();
 
+  await refreshCustomerAfterBooking(booking.customerEmail);
   sendSuccess(res, booking, 'Status pembayaran diperbarui');
 };
 

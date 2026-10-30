@@ -7,7 +7,8 @@ import {
   Receipt,
   Settings,
   HelpCircle,
-  LogOut
+  LogOut,
+  User
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/useAuth'
@@ -21,6 +22,7 @@ export function Sidebar() {
     { name: 'TEMPLATES', path: '/templates', icon: Layers },
     { name: 'PAKET HARGA', path: '/pricing', icon: Banknote },
     { name: 'VOUCHER', path: '/vouchers', icon: Ticket },
+    { name: 'PELANGGAN', path: '/customers', icon: User },
     { name: 'TRANSAKSI', path: '/transactions', icon: Receipt },
     { name: 'PENGATURAN', path: '/settings', icon: Settings },
   ]
