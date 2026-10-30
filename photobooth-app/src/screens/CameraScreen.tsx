@@ -198,7 +198,7 @@ export function CameraScreen() {
           {/* Retake mode vignette */}
           {inRetakeMode && !isCountdownActive && (
             <div className="absolute inset-0 z-20 pointer-events-none"
-              style={{ boxShadow: 'inset 0 0 60px rgba(255,86,56,0.3)' }}
+              style={{ boxShadow: 'inset 0 0 60px rgba(255,107,90,0.35)' }}
             />
           )}
 
@@ -224,7 +224,7 @@ export function CameraScreen() {
         </div>
 
         {/* THUMBNAILS STRIP */}
-        <div className="h-[88px] bg-black/90 border-t border-sway-border-dim flex items-center justify-center gap-2.5 px-4 shrink-0">
+        <div className="h-[88px] bg-sway-surface border-t border-sway-border flex items-center justify-center gap-2.5 px-4 shrink-0">
           {Array.from({ length: requiredPhotos }).map((_, idx) => {
             const photo     = capturedPhotos[idx]
             const isFilled  = !!photo
@@ -241,7 +241,7 @@ export function CameraScreen() {
                   relative w-[70px] h-[62px] rounded overflow-hidden shrink-0
                   border-2 transition-all duration-200 group
                   ${isRetaking
-                    ? 'border-sway-accent scale-105 shadow-[0_0_16px_rgba(255,86,56,0.5)]'
+                    ? 'border-sway-accent scale-105 shadow-[0_0_16px_rgba(255,107,90,0.5)]'
                     : isFilled
                     ? 'border-sway-accent/60 hover:border-sway-accent hover:scale-105 cursor-pointer'
                     : isCurrent

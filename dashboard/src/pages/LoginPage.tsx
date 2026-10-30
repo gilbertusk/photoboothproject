@@ -63,22 +63,22 @@ export function LoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-zinc-950 overflow-hidden px-4">
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-background overflow-hidden px-4">
       {/* Decorative Gradients */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 h-[350px] w-[350px] rounded-full bg-primary/20 blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 h-[350px] w-[350px] rounded-full bg-purple-500/20 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 h-[350px] w-[350px] rounded-full bg-sway-gold/20 blur-[100px] pointer-events-none" />
 
       {/* Login Card */}
       <Card className="w-full max-w-[440px] border-border bg-card/65 backdrop-blur-md rounded-2xl shadow-2xl relative z-10 overflow-hidden">
         {/* Brand Banner Accent */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-primary via-purple-500 to-indigo-500" />
+        <div className="h-1.5 w-full bg-gradient-to-r from-primary via-sway-accent-dim to-sway-gold" />
         
         <CardHeader className="space-y-2 text-center pt-8 pb-4">
-          <div className="mx-auto h-12 w-12 rounded-2xl bg-gradient-to-tr from-primary to-purple-400 flex items-center justify-center shadow-lg shadow-primary/20">
+          <div className="mx-auto h-12 w-12 rounded-2xl bg-gradient-to-tr from-primary to-sway-gold flex items-center justify-center shadow-lg shadow-primary/20">
             <span className="font-bold text-white text-xl">📸</span>
           </div>
           <CardTitle className="text-2xl font-bold tracking-tight text-foreground pt-2">
-            Admin Photobooth
+            bertpixx Admin
           </CardTitle>
           <CardDescription className="text-sm text-muted-foreground">
             Masuk untuk mengakses Dashboard Admin
@@ -100,14 +100,14 @@ export function LoginPage() {
                   placeholder="admin@photobooth.app"
                   {...register('email')}
                   className={cn(
-                    "pl-10.5 pr-4 py-5 bg-zinc-900/40 border-border text-foreground rounded-xl placeholder:text-muted-foreground/60 transition-all duration-200 focus-visible:ring-primary focus-visible:border-primary/50",
+                    "pl-10.5 pr-4 py-5 bg-white border-border text-foreground rounded-xl placeholder:text-muted-foreground/60 transition-all duration-200 focus-visible:ring-primary focus-visible:border-primary/50",
                     errors.email && "border-rose-500 focus-visible:ring-rose-500 focus-visible:border-rose-500/50"
                   )}
                   disabled={isLoading}
                 />
               </div>
               {errors.email && (
-                <p className="text-xs text-rose-400 font-semibold">{errors.email.message}</p>
+                <p className="text-xs text-rose-600 font-semibold">{errors.email.message}</p>
               )}
             </div>
 
@@ -126,7 +126,7 @@ export function LoginPage() {
                   placeholder="••••••••"
                   {...register('password')}
                   className={cn(
-                    "pl-10.5 pr-11 py-5 bg-zinc-900/40 border-border text-foreground rounded-xl placeholder:text-muted-foreground/60 transition-all duration-200 focus-visible:ring-primary focus-visible:border-primary/50",
+                    "pl-10.5 pr-11 py-5 bg-white border-border text-foreground rounded-xl placeholder:text-muted-foreground/60 transition-all duration-200 focus-visible:ring-primary focus-visible:border-primary/50",
                     errors.password && "border-rose-500 focus-visible:ring-rose-500 focus-visible:border-rose-500/50"
                   )}
                   disabled={isLoading}
@@ -141,7 +141,7 @@ export function LoginPage() {
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-rose-400 font-semibold">{errors.password.message}</p>
+                <p className="text-xs text-rose-600 font-semibold">{errors.password.message}</p>
               )}
             </div>
 

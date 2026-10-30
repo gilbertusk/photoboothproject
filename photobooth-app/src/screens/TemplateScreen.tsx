@@ -170,7 +170,7 @@ export function TemplateScreen() {
                 ) : (
                   <FramePreview
                     key={selectedTpl._id}
-                    layout={{ width: 0, height: 0, slots: [] }}
+                    layout={selectedTpl.layout}
                     slots={selectedTpl.slots}
                     name={selectedTpl.name}
                     previewWidth={140}
@@ -223,7 +223,7 @@ export function TemplateScreen() {
                     onClick={() => setSelectedTpl(tpl)}
                     className={`relative flex flex-col bg-sway-card border rounded-xl overflow-hidden transition-all duration-200 active:scale-[0.97] cursor-pointer select-none text-left w-full group ${
                       isSelected
-                        ? 'border-sway-accent shadow-[0_0_24px_rgba(255,86,56,0.22)] bg-sway-surface'
+                        ? 'border-sway-accent shadow-[0_0_24px_rgba(255,107,90,0.25)] bg-sway-surface'
                         : 'border-sway-border-dim hover:border-sway-border hover:bg-sway-surface/40'
                     }`}
                   >
@@ -240,7 +240,7 @@ export function TemplateScreen() {
                     {/* Frame visual preview area */}
                     <div
                       className={`w-full flex items-center justify-center transition-colors duration-200 ${
-                        isSelected ? 'bg-[#1a0d0b]' : 'bg-sway-bg/80 group-hover:bg-[#1a0d0b]/60'
+                        isSelected ? 'bg-sway-card-top' : 'bg-sway-bg/80 group-hover:bg-sway-card-top/60'
                       }`}
                       style={{ padding: '12px 10px', minHeight: 130 }}
                     >
@@ -253,7 +253,7 @@ export function TemplateScreen() {
                         />
                       ) : (
                         <FramePreview
-                          layout={{ width: 0, height: 0, slots: [] }}
+                          layout={tpl.layout}
                           slots={tpl.slots}
                           name={tpl.name}
                           previewWidth={78}

@@ -1,4 +1,4 @@
-# Tobooth — Web-based Interactive Photobooth PWA & Admin Dashboard
+# bertpixx — Web-based Interactive Photobooth PWA & Admin Dashboard
 
 An interactive, high-performance offline-first photobooth ecosystem designed for modern event experiences.
 
@@ -6,15 +6,15 @@ An interactive, high-performance offline-first photobooth ecosystem designed for
 
 ## 📸 Application Preview
 
-![Tobooth Photobooth UI Mockup](./tobooth_ui_mockup.jpg)
+![bertpixx UI Mockup](./tobooth_ui_mockup.jpg)
 
 ---
 
 ## 🚀 Project Overview
-**Tobooth** is a full-stack, enterprise-grade software ecosystem built to power digital photobooth kiosks. The project consists of three main components:
-1. **Tobooth App (Client PWA):** An interactive, touch-screen Progressive Web App optimized for iPad/tablet installations at events, enabling guests to purchase sessions, apply filters, pose for photo bursts, generate GIFs, and download/print results.
-2. **Tobooth Dashboard (Admin Panel):** A secure, data-rich management console for kiosk operators to track sales metrics, configure price list packages, manage promotional vouchers, and upload custom photo strip templates.
-3. **Tobooth Backend (API Server):** A robust Node.js REST API coordinating payments, cloud storage uploads, transactional emails, database operations, and background jobs.
+**bertpixx** is a full-stack, enterprise-grade software ecosystem built to power digital photobooth kiosks. The project consists of three main components:
+1. **bertpixx App (Client PWA):** An interactive, touch-screen Progressive Web App optimized for iPad/tablet installations at events, enabling guests to purchase sessions, apply filters, pose for photo bursts, generate GIFs, and download/print results.
+2. **bertpixx Dashboard (Admin Panel):** A secure, data-rich management console for kiosk operators to track sales metrics, configure price list packages, manage promotional vouchers, and upload custom photo strip templates.
+3. **bertpixx Backend (API Server):** A robust Node.js REST API coordinating payments, cloud storage uploads, transactional emails, database operations, and background jobs.
 
 ---
 

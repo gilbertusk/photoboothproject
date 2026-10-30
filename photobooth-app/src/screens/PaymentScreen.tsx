@@ -56,7 +56,7 @@ export function PaymentScreen() {
           </div>
 
           {/* Thick Red Accented Visual Border Frame around QR */}
-          <div className="relative p-2.5 bg-white border-[4px] border-sway-accent rounded overflow-hidden w-[180px] h-[180px] lg:w-[200px] lg:h-[200px] flex items-center justify-center shadow-[0_0_30px_rgba(255,86,56,0.15)] animate-scaleIn shrink-0">
+          <div className="relative p-2.5 bg-white border-[4px] border-sway-accent rounded overflow-hidden w-[180px] h-[180px] lg:w-[200px] lg:h-[200px] flex items-center justify-center shadow-[0_0_30px_rgba(255,107,90,0.2)] animate-scaleIn shrink-0">
             {qrUrl ? (
               <img
                 src={qrUrl}
@@ -108,7 +108,7 @@ export function PaymentScreen() {
               <div className="flex-1 flex flex-col">
                 <span className="font-grotesk text-sway-text text-[11px] font-bold uppercase tracking-wider">Pindai QR Code</span>
                 <span className="text-[11px] text-sway-muted mt-0.5 leading-normal">
-                  Arahkan pemindai kamera Anda ke QR Code merah di sebelah kiri.
+                  Arahkan pemindai kamera Anda ke QR Code di sebelah kiri.
                 </span>
               </div>
             </div>
@@ -132,7 +132,7 @@ export function PaymentScreen() {
               <span>TRANSAKSI AMAN & TERVERIFIKASI</span>
             </div>
             <p className="text-[10px] text-sway-dim leading-relaxed">
-              Kiosk ini terhubung langsung dengan sistem pembayaran resmi Tobooth.
+              Kiosk ini terhubung langsung dengan sistem pembayaran resmi bertpixx.
             </p>
           </div>
         </div>

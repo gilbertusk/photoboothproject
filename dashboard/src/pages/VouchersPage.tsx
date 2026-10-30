@@ -112,105 +112,6 @@ const voucherSchema = z.object({
 
 type VoucherFormValues = z.infer<typeof voucherSchema>
 
-const DUMMY_VOUCHERS: Voucher[] = [
-  {
-    id: 'v1',
-    code: 'DISC20',
-    type: 'PERCENTAGE',
-    value: 20,
-    used: 15,
-    quota: 100,
-    expiredAt: '2026-12-31T00:00:00.000Z',
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'v2',
-    code: 'HEMAT10K',
-    type: 'FIXED',
-    value: 10000,
-    used: 8,
-    quota: 50,
-    expiredAt: undefined,
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'v3',
-    code: 'SWAY50',
-    type: 'PERCENTAGE',
-    value: 50,
-    used: 30,
-    quota: 30,
-    expiredAt: '2026-05-31T00:00:00.000Z',
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'v4',
-    code: 'PROMO15',
-    type: 'PERCENTAGE',
-    value: 15,
-    used: 5,
-    quota: 20,
-    expiredAt: '2026-06-15T00:00:00.000Z',
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'v5',
-    code: 'VIP25K',
-    type: 'FIXED',
-    value: 25000,
-    used: 2,
-    quota: 10,
-    expiredAt: undefined,
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'v6',
-    code: 'NEWUSER',
-    type: 'PERCENTAGE',
-    value: 30,
-    used: 0,
-    quota: 50,
-    expiredAt: undefined,
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'v7',
-    code: 'EXPIRED01',
-    type: 'FIXED',
-    value: 5000,
-    used: 12,
-    quota: 100,
-    expiredAt: '2026-01-01T00:00:00.000Z',
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'v8',
-    code: 'NONAKTIF',
-    type: 'PERCENTAGE',
-    value: 10,
-    used: 3,
-    quota: 20,
-    expiredAt: undefined,
-    isActive: false,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  }
-]
-
 export function VouchersPage() {
   const queryClient = useQueryClient()
   const { success, error } = useToast()
@@ -250,7 +151,7 @@ export function VouchersPage() {
   }, [])
 
   // Fetch vouchers
-  const { data: serverVouchers = [], isLoading, refetch } = useQuery({
+  const { data: serverVouchers = [], isLoading, isError: vouchersError, refetch } = useQuery({
     queryKey: ['vouchers'],
     queryFn: async () => {
       const response = await api.get('/api/vouchers')
@@ -258,10 +159,7 @@ export function VouchersPage() {
     },
   })
 
-  // If server database is empty, fall back to our beautiful specs-defined 8 mockup rows
-  const vouchers = useMemo(() => {
-    return serverVouchers && serverVouchers.length > 0 ? serverVouchers : DUMMY_VOUCHERS;
-  }, [serverVouchers])
+  const vouchers = serverVouchers
 
   // React Hook Form Configuration
   const {
@@ -377,13 +275,6 @@ export function VouchersPage() {
     }
 
     if (editingVoucher) {
-      // If we are modifying a dummy voucher which isn't on the database, simulate success in frontend
-      if (editingVoucher.id.startsWith('v')) {
-        success('Voucher Diperbarui', 'Perubahan kupon voucher mock berhasil disimpan (Simulasi)!')
-        // Update mock list local state (if we want, but since it's just dummy, toaster notification is perfect!)
-        closeForm()
-        return
-      }
       updateMutation.mutate({ id: editingVoucher.id, payload })
     } else {
       createMutation.mutate(payload)
@@ -392,11 +283,6 @@ export function VouchersPage() {
 
   const handleDeleteConfirm = () => {
     if (!deletingVoucher) return
-    if (deletingVoucher.id.startsWith('v')) {
-      success('Voucher Dihapus', 'Kupon voucher mock telah berhasil dihapus (Simulasi)!')
-      setDeletingVoucher(null)
-      return
-    }
     deleteMutation.mutate(deletingVoucher.id)
   }
 
@@ -437,9 +323,6 @@ export function VouchersPage() {
     const total = vouchers.length
     const nonActive = vouchers.filter(v => getVoucherStatus(v) === 'nonaktif').length
     
-    // Pemakaian Hari Ini (simulated standard of 8 or dynamic sum based on mock values)
-    const todayUsage = 8
-    
     // Stock kritis (quota - used < 10 && status !== habis && status !== expired && status !== nonaktif)
     const kritis = vouchers.filter(v => {
       const s = getVoucherStatus(v)
@@ -449,7 +332,6 @@ export function VouchersPage() {
     return {
       total,
       nonActive,
-      todayUsage,
       kritis
     }
   }, [vouchers])
@@ -492,6 +374,15 @@ export function VouchersPage() {
 
   const isMutating = createMutation.isPending || updateMutation.isPending
 
+  if (vouchersError) {
+    return (
+      <div className="rounded border border-sway-error/30 bg-sway-card p-6 text-center">
+        <p className="font-bebas text-2xl text-sway-error">DATA TIDAK DAPAT DIMUAT</p>
+        <p className="mt-2 text-sm text-sway-dim">Gagal mengambil data voucher dari server.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6 select-none">
       {/* ROW 1: Stats Cards */}
@@ -508,9 +399,8 @@ export function VouchersPage() {
         {/* Card 2: PEMAKAIAN HARI INI */}
         <VoucherStatsCard
           label="PEMAKAIAN HARI INI"
-          value={metrics.todayUsage.toString()}
-          suffix="KALI"
-          subtitle="dari berbagai voucher aktif"
+          value="—"
+          subtitle="data harian belum tersedia"
         />
 
         {/* Card 3: VOUCHER HAMPIR HABIS */}
@@ -649,8 +539,8 @@ export function VouchersPage() {
                     <div className="w-[12%] flex items-center">
                       <span className={cn(
                         "px-2.5 py-1 rounded-[2px] text-[10px] uppercase tracking-wider font-bold select-none leading-none",
-                        status === 'aktif' && "bg-sway-success text-sway-bg",
-                        status === 'habis' && "bg-sway-gold text-sway-bg",
+                        status === 'aktif' && "bg-sway-success text-white",
+                        status === 'habis' && "bg-sway-gold text-white",
                         status === 'expired' && "bg-sway-error text-sway-text",
                         status === 'nonaktif' && "bg-sway-card-hi text-sway-ghost"
                       )}>
@@ -712,7 +602,7 @@ export function VouchersPage() {
                   className={cn(
                     "w-8 h-8 rounded text-[13px] font-grotesk font-bold transition-all duration-150 flex items-center justify-center border select-none",
                     isActive 
-                      ? "bg-sway-accent text-sway-bg border-sway-accent" 
+                      ? "bg-sway-accent text-white border-sway-accent"
                       : "bg-transparent text-sway-dim border-sway-border-dim hover:text-sway-text hover:border-sway-border"
                   )}
                 >
@@ -734,7 +624,7 @@ export function VouchersPage() {
 
       {/* Add / Edit Voucher Modal */}
       {isFormOpen && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 transition-all duration-300 backdrop-blur-sm">
+        <div className="fixed inset-0 bg-sway-text/40 flex items-center justify-center z-50 p-4 transition-all duration-300 backdrop-blur-sm">
           <div className="w-[460px] bg-sway-card border border-sway-border rounded-[6px] p-7 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
             {/* Header */}
             <div className="flex justify-between items-center select-none">
@@ -935,7 +825,7 @@ export function VouchersPage() {
                 <button
                   type="submit"
                   disabled={isMutating}
-                  className="h-10 px-5 rounded font-grotesk text-[11px] uppercase tracking-widest font-bold bg-sway-accent text-sway-bg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-sway-accent/20 cursor-pointer"
+                  className="h-10 px-5 rounded font-grotesk text-[11px] uppercase tracking-widest font-bold bg-sway-accent text-white hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-sway-accent/20 cursor-pointer"
                 >
                   {isMutating ? (
                     <>
@@ -954,7 +844,7 @@ export function VouchersPage() {
 
       {/* Delete Confirmation Modal (Bespoke Sway Style) */}
       {deletingVoucher && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 transition-all duration-300 backdrop-blur-sm">
+        <div className="fixed inset-0 bg-sway-text/40 flex items-center justify-center z-50 p-4 transition-all duration-300 backdrop-blur-sm">
           <div className="w-[420px] bg-sway-card border border-sway-border rounded-[6px] p-7 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 font-grotesk">
             <h3 className="font-bebas text-[28px] text-sway-text tracking-wide leading-none mt-1">
               HAPUS VOUCHER

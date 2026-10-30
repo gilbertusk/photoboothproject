@@ -62,13 +62,13 @@ export function PackageCard({
         'border transition-all duration-200 cursor-pointer',
         'relative overflow-hidden select-none',
         isSelected
-          ? 'bg-sway-surface border-sway-accent shadow-[0_0_20px_rgba(255,86,56,0.18)]'
+          ? 'bg-sway-surface border-sway-accent shadow-[0_0_20px_rgba(255,107,90,0.22)]'
           : 'bg-sway-card border-sway-border-dim hover:border-sway-border'
       )}
     >
       {/* HOT badge */}
       {isFeatured && (
-        <span className="absolute top-2 right-2 z-10 bg-sway-accent text-sway-bg font-grotesk text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm">
+        <span className="absolute top-2 right-2 z-10 bg-sway-accent text-white font-grotesk text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm">
           HOT
         </span>
       )}
@@ -79,7 +79,7 @@ export function PackageCard({
           className={cn(
             'flex items-center justify-center shrink-0 transition-colors duration-200',
             'rounded-l-xl',
-            isSelected ? 'bg-[#1a0d0b]' : 'bg-sway-bg/60'
+            isSelected ? 'bg-sway-card-top' : 'bg-sway-bg/60'
           )}
           style={{ width: 72, padding: '12px 8px' }}
         >
@@ -106,7 +106,7 @@ export function PackageCard({
             {isSelected && (
               <div className="w-[16px] h-[16px] rounded-full bg-sway-accent flex items-center justify-center shrink-0">
                 <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-                  <path d="M2 5l2 2 4-4" stroke="#200f0c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 5l2 2 4-4" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
             )}

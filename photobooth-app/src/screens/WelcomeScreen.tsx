@@ -20,7 +20,7 @@ export function WelcomeScreen() {
       {/* LEFT SIDE: Branding + Pills (40% on large, full width on mobile) */}
       <div className="w-full lg:w-[40%] flex flex-col justify-center px-6 lg:px-12 py-12 lg:py-8 bg-sway-bg animate-fadeIn text-left z-10 border-b lg:border-b-0 lg:border-r border-sway-border-dim">
         <span className="font-grotesk text-[12px] uppercase text-sway-accent tracking-[0.2em] mb-4 block font-extrabold">
-          PHOTOBOOTH
+          BERTPIXX
         </span>
 
         <h1 className="font-bebas text-[48px] lg:text-[72px] text-sway-text leading-none select-none text-left mb-6 font-bold tracking-tight">

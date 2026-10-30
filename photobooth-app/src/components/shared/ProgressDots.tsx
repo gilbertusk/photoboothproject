@@ -19,14 +19,14 @@ export function ProgressDots({ steps, currentStep, className }: ProgressDotsProp
             {/* Dot */}
             <div className="relative">
               {isActive && (
-                <div className="absolute inset-0 rounded-full bg-pb-primary/40 animate-pulse-ring" />
+                <div className="absolute inset-0 rounded-full bg-sway-accent/40 animate-pulse-ring" />
               )}
               <div
                 className={cn(
                   'h-3.5 w-3.5 rounded-full transition-all duration-300',
-                  isActive && 'bg-pb-primary scale-125 shadow-lg shadow-pb-primary/40',
-                  isPast && 'bg-pb-primary/70',
-                  isFuture && 'bg-pb-surface-2 border border-pb-border'
+                  isActive && 'bg-sway-accent scale-125 shadow-lg shadow-sway-accent/40',
+                  isPast && 'bg-sway-accent/70',
+                  isFuture && 'bg-sway-card-hi border border-sway-border'
                 )}
               />
             </div>
@@ -34,9 +34,9 @@ export function ProgressDots({ steps, currentStep, className }: ProgressDotsProp
             <span
               className={cn(
                 'text-[11px] font-medium transition-colors duration-300 whitespace-nowrap',
-                isActive && 'text-pb-primary-light',
-                isPast && 'text-pb-text-muted',
-                isFuture && 'text-pb-text-muted/50'
+                isActive && 'text-sway-accent',
+                isPast && 'text-sway-dim',
+                isFuture && 'text-sway-dim/50'
               )}
             >
               {label}

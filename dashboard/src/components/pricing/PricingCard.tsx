@@ -43,7 +43,7 @@ export function PricingCard({
       <div className="flex justify-between items-start select-none">
         {/* Status Badge */}
         {isActive ? (
-          <span className="bg-sway-success text-sway-bg px-2.5 py-0.5 rounded-[2px] font-grotesk text-[10px] uppercase tracking-[0.1em] font-bold">
+          <span className="bg-sway-success text-white px-2.5 py-0.5 rounded-[2px] font-grotesk text-[10px] uppercase tracking-[0.1em] font-bold">
             AKTIF
           </span>
         ) : (

@@ -16,29 +16,29 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       case 'COMPLETED':
       case 'ACTIVE':
       case 'TRUE':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
+        return 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20 hover:bg-emerald-500/20'
       
       // Warning / Pending states
       case 'PENDING':
       case 'IN_PROGRESS':
-        return 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20'
+        return 'bg-amber-500/10 text-amber-700 border-amber-500/20 hover:bg-amber-500/20'
       
       // Failed / Alert states
       case 'FAILED':
       case 'DESTRUCTIVE':
-        return 'bg-rose-500/10 text-rose-400 border-rose-500/20 hover:bg-rose-500/20'
+        return 'bg-rose-500/10 text-rose-700 border-rose-500/20 hover:bg-rose-500/20'
       
       // Expired / Quota Full states
       case 'EXPIRED':
       case 'HABIS':
-        return 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
+        return 'bg-red-500/10 text-red-700 border-red-500/20 hover:bg-red-500/20'
 
       // Inactive / Disabled states
       case 'INACTIVE':
       case 'FALSE':
       case 'NONAKTIF':
       default:
-        return 'bg-zinc-800 text-zinc-400 border-zinc-700 hover:bg-zinc-800/80'
+        return 'bg-sway-surface text-sway-dim border-sway-border hover:bg-sway-surface/80'
     }
   }
 

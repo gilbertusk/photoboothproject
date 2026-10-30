@@ -24,74 +24,6 @@ const pricingSchema = z.object({
 
 type PricingFormValues = z.infer<typeof pricingSchema>
 
-const DUMMY_PACKAGES: PricingPackage[] = [
-  {
-    id: 'p1',
-    name: 'REGULAR',
-    price: 35000,
-    photoCount: 3,
-    duration: 300, // 5 minutes in seconds
-    printCount: 1,
-    includeGif: false,
-    includeEmail: false,
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'p2',
-    name: 'PREMIUM',
-    price: 45000,
-    photoCount: 4,
-    duration: 420, // 7 minutes in seconds
-    printCount: 1,
-    includeGif: true,
-    includeEmail: true,
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'p3',
-    name: 'ULTIMATE',
-    price: 60000,
-    photoCount: 6,
-    duration: 600, // 10 minutes in seconds
-    printCount: 2,
-    includeGif: true,
-    includeEmail: false,
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'p4',
-    name: 'COUPLE',
-    price: 55000,
-    photoCount: 4,
-    duration: 480, // 8 minutes in seconds
-    printCount: 2,
-    includeGif: true,
-    includeEmail: false,
-    isActive: true,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  },
-  {
-    id: 'p5',
-    name: 'MINI',
-    price: 25000,
-    photoCount: 2,
-    duration: 180, // 3 minutes in seconds
-    printCount: 1,
-    includeGif: false,
-    includeEmail: false,
-    isActive: false,
-    createdAt: '2026-05-22T00:00:00.000Z',
-    updatedAt: '2026-05-22T00:00:00.000Z'
-  }
-]
-
 export function PricingPage() {
   const queryClient = useQueryClient()
   const { success, error } = useToast()
@@ -121,7 +53,7 @@ export function PricingPage() {
   const [deletingPackage, setDeletingPackage] = useState<PricingPackage | null>(null)
 
   // Fetch packages from backend
-  const { data: packages = [] } = useQuery({
+  const { data: packages = [], isError: packagesError } = useQuery({
     queryKey: ['pricing'],
     queryFn: async () => {
       const response = await api.get('/api/pricing')
@@ -236,7 +168,7 @@ export function PricingPage() {
       price: pkg.price,
       photoCount: pkg.photoCount,
       duration: Math.round(pkg.duration / 60) || 5, // Convert seconds to minutes for form
-      printCount: pkg.printCount || (pkg.price >= 50000 ? 2 : 1), // Derivation fallback for print count if not in database
+      printCount: pkg.printCount,
       includeGif: pkg.includeGif,
       includeEmail: pkg.includeEmail,
       isActive: pkg.isActive,
@@ -262,25 +194,35 @@ export function PricingPage() {
     }
   }
 
-  // Fallback to seeded mock packages if empty
-  const displayData = packages && packages.length > 0 ? packages : DUMMY_PACKAGES
-
   // Apply search query filter
-  const filteredPackages = displayData.filter((pkg) =>
+  const filteredPackages = packages.filter((pkg) =>
     pkg.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   const isMutating = createMutation.isPending || updateMutation.isPending
 
+  if (packagesError) {
+    return (
+      <div className="rounded border border-sway-error/30 bg-sway-card p-6 text-center">
+        <p className="font-bebas text-2xl text-sway-error">DATA TIDAK DAPAT DIMUAT</p>
+        <p className="mt-2 text-sm text-sway-dim">Gagal mengambil data paket dari server.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       {/* 3-COLUMN CARDS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {filteredPackages.length === 0 && (
+          <div className="col-span-full rounded border border-sway-border bg-sway-card p-10 text-center text-sm text-sway-dim">
+            Belum ada paket harga yang tersimpan.
+          </div>
+        )}
         {filteredPackages.map((pkg) => {
-          // Fallback calculation for printCount if not found in db object
-          const printCount = pkg.printCount || (pkg.price >= 50000 ? 2 : 1)
+          const printCount = pkg.printCount
           // Display duration in minutes on cards
-          const durationInMinutes = Math.round(pkg.duration / 60) || 5
+          const durationInMinutes = Math.round(pkg.duration / 60)
 
           return (
             <PricingCard
@@ -320,7 +262,7 @@ export function PricingPage() {
       {/* FORM DIALOG MODAL (ADD / EDIT) */}
       {isFormOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-sway-text/40 backdrop-blur-xs px-4"
           onClick={(e) => e.target === e.currentTarget && closeForm()}
         >
           <div className="w-[480px] bg-sway-card border border-sway-border rounded p-7 flex flex-col justify-between scrollbar-none shadow-2xl">
@@ -552,11 +494,11 @@ export function PricingPage() {
                 <button
                   type="submit"
                   disabled={isMutating}
-                  className="bg-sway-accent text-sway-bg h-11 px-5 rounded font-grotesk text-[12px] uppercase tracking-widest font-bold cursor-pointer hover:bg-sway-accent/90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 select-none border-none font-black"
+                  className="bg-sway-accent text-white h-11 px-5 rounded font-grotesk text-[12px] uppercase tracking-widest font-bold cursor-pointer hover:bg-sway-accent/90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 select-none border-none font-black"
                 >
                   {isMutating ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin text-sway-bg" />
+                      <Loader2 className="h-4 w-4 animate-spin text-white" />
                       MENYIMPAN...
                     </>
                   ) : (
@@ -572,7 +514,7 @@ export function PricingPage() {
       {/* CONFIRM DELETE DIALOG */}
       {deletingPackage !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-sway-text/40 backdrop-blur-xs px-4"
           onClick={(e) => e.target === e.currentTarget && setDeletingPackage(null)}
         >
           <div className="w-[400px] bg-sway-card border border-sway-border rounded p-6 shadow-2xl">

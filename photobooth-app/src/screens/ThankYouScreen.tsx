@@ -41,10 +41,10 @@ export function ThankYouScreen() {
   return (
     <div className="h-screen w-full flex flex-col lg:flex-row bg-sway-bg text-sway-text select-none relative overflow-hidden justify-center items-center">
       
-      {/* Huge ultra-transparent "TOBOOTH" background word */}
+      {/* Huge ultra-transparent "BERTPIXX" background word */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
-        <span className="text-[120px] sm:text-[180px] lg:text-[240px] font-bebas text-sway-ghost opacity-[0.05] tracking-widest leading-none font-bold uppercase select-none">
-          TOBOOTH
+        <span className="text-[120px] sm:text-[180px] lg:text-[240px] font-bebas text-sway-accent opacity-[0.07] tracking-widest leading-none font-bold uppercase select-none">
+          BERTPIXX
         </span>
       </div>
 
@@ -55,7 +55,7 @@ export function ThankYouScreen() {
       {/* LEFT SIDE - Message and Tick Box */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center gap-4 px-6 lg:px-12 py-8 z-10 lg:border-r lg:border-sway-border-dim/20">
         {/* Glowing Tick Box Indicator */}
-        <div className="w-16 h-16 border-2 border-sway-accent rounded flex items-center justify-center text-sway-accent shadow-[0_0_30px_rgba(255,86,56,0.15)] animate-scaleIn shrink-0">
+        <div className="w-16 h-16 border-2 border-sway-accent rounded flex items-center justify-center text-sway-accent shadow-[0_0_30px_rgba(255,107,90,0.2)] animate-scaleIn shrink-0">
           <Check className="w-8 h-8 stroke-[3]" />
         </div>
 
@@ -97,9 +97,9 @@ export function ThankYouScreen() {
         {/* Start Again CTA Button */}
         <Button
           onClick={handleStartAgain}
-          variant="primary"
+          variant="accent"
           size="lg"
-          className="w-full max-w-xs h-14 bg-white hover:bg-white/95 text-black font-bold uppercase tracking-widest font-grotesk"
+          className="w-full max-w-xs h-14 font-bold uppercase tracking-widest font-grotesk"
         >
           MULAI SESI BARU →
         </Button>

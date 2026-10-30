@@ -30,12 +30,12 @@ export function Countdown({ from = 3, onComplete }: CountdownProps) {
 
   const getCountStyles = () => {
     if (count === 'GO!') {
-      return 'text-sway-accent drop-shadow-[0_0_80px_rgba(255,86,56,0.6)] animate-pulse'
+      return 'text-sway-accent drop-shadow-[0_0_80px_rgba(255,107,90,0.6)] animate-pulse'
     }
     if (count === 1) {
-      return 'text-sway-gold drop-shadow-[0_0_80px_rgba(254,183,0,0.6)]'
+      return 'text-sway-gold drop-shadow-[0_0_80px_rgba(232,161,58,0.6)]'
     }
-    return 'text-sway-text drop-shadow-[0_0_60px_rgba(253,219,212,0.35)]'
+    return 'text-sway-text drop-shadow-[0_0_60px_rgba(255,107,90,0.35)]'
   }
 
   return (

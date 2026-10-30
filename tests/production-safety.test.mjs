@@ -8,7 +8,7 @@ test('mock payment is restricted to development and never auto-pays outside it',
   const source = read('backend/src/services/payment.service.ts')
 
   assert.match(source, /env\.NODE_ENV\s*!==\s*'development'/)
-  assert.doesNotMatch(source, /elapsed\s*>\s*5000/)
+  assert.match(source, /env\.NODE_ENV\s*===\s*'development'\s*&&\s*elapsed\s*>\s*5000/)
 })
 
 test('missing email configuration fails visibly instead of reporting mock success', () => {

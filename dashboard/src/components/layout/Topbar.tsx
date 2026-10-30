@@ -83,7 +83,7 @@ export function Topbar() {
             {/* Add Template Button */}
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('open-add-template-modal'))}
-              className="bg-sway-accent text-sway-bg font-bebas text-[16px] tracking-wide h-11 px-5 rounded flex items-center gap-2 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all font-medium border-none shadow-sm shadow-sway-accent/20 select-none ml-2"
+              className="bg-sway-accent text-white font-bebas text-[16px] tracking-wide h-11 px-5 rounded flex items-center gap-2 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all font-medium border-none shadow-sm shadow-sway-accent/20 select-none ml-2"
             >
               <Plus size={16} />
               TAMBAH TEMPLATE
@@ -105,7 +105,7 @@ export function Topbar() {
             {/* Add Pricing Button */}
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('open-add-pricing-modal'))}
-              className="bg-sway-accent text-sway-bg font-grotesk text-[12px] uppercase tracking-widest font-bold h-10 px-4.5 rounded flex items-center gap-1.5 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all border-none select-none ml-1"
+              className="bg-sway-accent text-white font-grotesk text-[12px] uppercase tracking-widest font-bold h-10 px-4.5 rounded flex items-center gap-1.5 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all border-none select-none ml-1"
             >
               <Plus size={14} className="mr-0.5" />
               TAMBAH PAKET
@@ -154,7 +154,7 @@ export function Topbar() {
             {/* Add Voucher Button */}
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('open-add-voucher-modal'))}
-              className="bg-sway-accent text-sway-bg font-grotesk text-[12px] uppercase tracking-widest font-bold h-10 px-4.5 rounded flex items-center gap-1.5 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all border-none select-none ml-1"
+              className="bg-sway-accent text-white font-grotesk text-[12px] uppercase tracking-widest font-bold h-10 px-4.5 rounded flex items-center gap-1.5 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all border-none select-none ml-1"
             >
               <Plus size={14} className="mr-0.5" />
               BUAT VOUCHER
@@ -203,7 +203,7 @@ export function Topbar() {
             {/* Refresh Button */}
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('transactions-refresh'))}
-              className="bg-sway-accent text-sway-bg font-grotesk text-[12px] uppercase tracking-widest font-bold h-10 px-4.5 rounded flex items-center gap-1.5 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all border-none select-none ml-1"
+              className="bg-sway-accent text-white font-grotesk text-[12px] uppercase tracking-widest font-bold h-10 px-4.5 rounded flex items-center gap-1.5 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all border-none select-none ml-1"
             >
               <RefreshCw size={14} className="mr-0.5" />
               SEGARKAN
@@ -240,7 +240,7 @@ export function Topbar() {
           <div className="flex items-center gap-3">
             {/* Bell Icon */}
             <button
-              className="w-9 h-9 flex items-center justify-center text-[#e7bdb4] hover:text-sway-text transition-colors cursor-pointer rounded hover:bg-sway-card-hi/30"
+              className="w-9 h-9 flex items-center justify-center text-sway-muted hover:text-sway-text transition-colors cursor-pointer rounded hover:bg-sway-card-hi/30"
               aria-label="Notifications"
             >
               <Bell size={20} />
@@ -249,7 +249,7 @@ export function Topbar() {
             {/* Screen Icon */}
             <button
               onClick={toggleFullscreen}
-              className="w-9 h-9 flex items-center justify-center text-[#e7bdb4] hover:text-sway-text transition-colors cursor-pointer rounded hover:bg-sway-card-hi/30"
+              className="w-9 h-9 flex items-center justify-center text-sway-muted hover:text-sway-text transition-colors cursor-pointer rounded hover:bg-sway-card-hi/30"
               aria-label="Toggle Fullscreen"
             >
               <Maximize size={20} />
@@ -257,7 +257,7 @@ export function Topbar() {
 
             {/* User Icon */}
             <button
-              className="w-9 h-9 flex items-center justify-center text-[#e7bdb4] hover:text-sway-text transition-colors cursor-pointer rounded hover:bg-sway-card-hi/30"
+              className="w-9 h-9 flex items-center justify-center text-sway-muted hover:text-sway-text transition-colors cursor-pointer rounded hover:bg-sway-card-hi/30"
               aria-label="Profile"
             >
               <User size={20} />
@@ -266,7 +266,7 @@ export function Topbar() {
             {/* Save All Changes Button */}
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('trigger-save-settings'))}
-              className="bg-[#a9321c] hover:bg-[#c8452b] active:scale-[0.98] text-[#fddbd4] font-grotesk text-[12px] uppercase tracking-widest font-bold h-10 px-6 rounded flex items-center justify-center cursor-pointer transition-all border-none select-none ml-2"
+              className="bg-sway-accent hover:brightness-110 active:scale-[0.98] text-white font-grotesk text-[12px] uppercase tracking-widest font-bold h-10 px-6 rounded flex items-center justify-center cursor-pointer transition-all border-none select-none ml-2"
             >
               SIMPAN SEMUA PERUBAHAN
             </button>

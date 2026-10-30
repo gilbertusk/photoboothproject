@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSessionStore } from '@/stores/sessionStore'
 import { generateQRDataURL } from '@/lib/qrcode'
@@ -14,8 +14,14 @@ export function OutputScreen() {
     sessionId,
     stripUrl,
     localStripUrl,
+    stripDataUrl,
     selectedPackage,
   } = useSessionStore()
+
+  // Prefer the in-memory composed strip: no network, no mixed-content (https page -> http LAN url)
+  const displayStripSrc = stripDataUrl || stripUrl || localStripUrl || ''
+  const printImgRef = useRef<HTMLImageElement>(null)
+  const [isPrinting, setIsPrinting] = useState(false)
 
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null)
   const [email, setEmail] = useState('')
@@ -47,8 +53,25 @@ export function OutputScreen() {
     return null
   }
 
-  const handlePrint = () => {
-    window.print()
+  const handlePrint = async () => {
+    const img = printImgRef.current
+    if (!img || isPrinting) return
+    setIsPrinting(true)
+    try {
+      if (!img.complete || img.naturalWidth === 0) {
+        await new Promise<void>((resolve, reject) => {
+          img.onload = () => resolve()
+          img.onerror = () => reject(new Error('Gagal memuat gambar cetak'))
+        })
+      }
+      await img.decode().catch(() => undefined)
+      window.print()
+    } catch (err) {
+      console.error(err)
+      alert('Gambar strip belum siap untuk dicetak. Silakan coba lagi.')
+    } finally {
+      setIsPrinting(false)
+    }
   }
 
   const handleSendEmail = async (e: React.FormEvent) => {
@@ -98,7 +121,8 @@ export function OutputScreen() {
       {/* Hidden Print Container for Kiosk CSS Printer */}
       <div id="print-area" className="hidden print:block print:w-full print:h-full">
         <img
-          src={localStripUrl || stripUrl}
+          ref={printImgRef}
+          src={displayStripSrc}
           alt="Printed Photobooth Strip"
           className="w-full h-auto object-contain max-h-screen mx-auto"
         />
@@ -114,7 +138,7 @@ export function OutputScreen() {
         <div className="w-full lg:w-[35%] flex flex-col justify-center items-center gap-3 lg:border-r lg:border-sway-border-dim lg:pr-6">
           <div className="p-2.5 bg-sway-card border border-sway-border-dim rounded shadow-lg flex items-center justify-center shrink-0">
             <img
-              src={localStripUrl || stripUrl}
+              src={displayStripSrc}
               alt="Final Photobooth Strip"
               className="w-[140px] h-auto rounded"
             />
@@ -123,8 +147,9 @@ export function OutputScreen() {
           <div className="w-full max-w-[200px] flex flex-col gap-2 mt-1">
             <Button
               onClick={handlePrint}
-              variant="primary"
-              className="w-full h-11 bg-white hover:bg-white/90 text-black font-bebas text-sm tracking-widest cursor-pointer flex items-center justify-center gap-2 font-bold"
+              disabled={isPrinting}
+              variant="accent"
+              className="w-full h-11 font-bebas text-sm tracking-widest cursor-pointer flex items-center justify-center gap-2 font-bold"
             >
               <Printer className="w-4 h-4" />
               <span>CETAK SEKARANG</span>

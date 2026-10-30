@@ -19,20 +19,20 @@ export function LoadingSpinner({ size = 'md', className, label }: LoadingSpinner
         {/* Glow ring */}
         <div
           className={cn(
-            'absolute inset-0 rounded-full bg-pb-primary/20 blur-xl animate-pulse-ring',
+            'absolute inset-0 rounded-full bg-sway-accent/20 blur-xl animate-pulse-ring',
             size === 'lg' && 'blur-2xl'
           )}
         />
         {/* Spinner */}
         <div
           className={cn(
-            'rounded-full border-pb-primary/30 border-t-pb-primary animate-spin',
+            'rounded-full border-sway-accent/30 border-t-sway-accent animate-spin',
             sizeMap[size]
           )}
         />
       </div>
       {label && (
-        <p className="text-pb-text-muted text-sm font-medium animate-pulse">{label}</p>
+        <p className="text-sway-dim text-sm font-medium animate-pulse">{label}</p>
       )}
     </div>
   )

@@ -10,9 +10,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants = {
   primary: 'bg-sway-text text-sway-bg hover:bg-sway-muted active:bg-sway-dim',
-  accent:  'bg-sway-accent text-sway-bg hover:brightness-110 active:brightness-90',
+  accent:  'bg-sway-accent text-white hover:brightness-110 active:brightness-90',
   ghost:   'bg-transparent border border-sway-border text-sway-muted hover:border-sway-dim hover:text-sway-text',
-  danger:  'bg-red-900 text-sway-text hover:bg-red-800',
+  danger:  'bg-red-600 text-white hover:bg-red-700',
 }
 
 const sizes = {

@@ -230,7 +230,7 @@ export function PackageScreen() {
               )}
 
               {appliedVoucherData && (
-                <div className="flex items-center justify-between bg-[#152e1b] border border-sway-success/30 rounded p-3 px-4 mt-3 animate-scaleIn">
+                <div className="flex items-center justify-between bg-sway-success/10 border border-sway-success/30 rounded p-3 px-4 mt-3 animate-scaleIn">
                   <span className="font-grotesk text-sway-success font-extrabold text-[12px] uppercase tracking-wider flex items-center gap-1.5">
                     ✓ {appliedVoucherData.code} — HEMAT Rp {discountAmount.toLocaleString('id-ID')}
                   </span>

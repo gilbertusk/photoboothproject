@@ -18,7 +18,7 @@ export function PaymentSuccessOverlay({ onComplete }: PaymentSuccessOverlayProps
     <div className="fixed inset-0 bg-sway-bg/98 z-50 flex flex-col items-center justify-center select-none animate-fadeIn">
       <div className="flex flex-col items-center gap-4 text-center max-w-sm px-6">
         {/* Square Check Icon */}
-        <div className="w-20 h-20 border-2 border-sway-accent-dim rounded-xl flex items-center justify-center text-sway-accent-dim shadow-[0_0_30px_rgba(255,180,165,0.15)] animate-scaleIn">
+        <div className="w-20 h-20 border-2 border-sway-accent-dim rounded-xl flex items-center justify-center text-sway-accent-dim shadow-[0_0_30px_rgba(255,107,90,0.18)] animate-scaleIn">
           <Check className="w-10 h-10 stroke-[3]" />
         </div>
 

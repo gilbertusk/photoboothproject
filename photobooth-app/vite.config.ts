@@ -14,13 +14,13 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Tobooth Photobooth',
-        short_name: 'Tobooth',
+        name: 'bertpixx',
+        short_name: 'bertpixx',
         description: 'Web-based Photobooth PWA for iPad',
         display: 'standalone',
         orientation: 'any',
-        background_color: '#200f0c',
-        theme_color: '#200f0c',
+        background_color: '#fff7f2',
+        theme_color: '#fff7f2',
         icons: [
           {
             src: '/pwa-192x192.png',

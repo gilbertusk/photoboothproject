@@ -43,29 +43,6 @@ const templateSchema = z.object({
 
 type TemplateFormValues = z.infer<typeof templateSchema>
 
-const DUMMY_TEMPLATES: Template[] = [
-  { id:'d1',  name:'CLASSIC STRIP',           description:'Strip putih bersih klasik dengan aksen merah.',        slots:3, isActive:true,  createdAt:'2026-05-22T00:00:00.000Z', updatedAt:'2026-05-22T00:00:00.000Z', layout:{} },
-  { id:'d2',  name:'VINTAGE STRIP',           description:'Strip bergaya sepia hangat ala foto jadul.',           slots:3, isActive:true,  createdAt:'2026-05-21T00:00:00.000Z', updatedAt:'2026-05-21T00:00:00.000Z', layout:{} },
-  { id:'d3',  name:'FILM NOIR STRIP',         description:'Strip hitam bergaya negatif film sinema.',             slots:3, isActive:true,  createdAt:'2026-05-20T00:00:00.000Z', updatedAt:'2026-05-20T00:00:00.000Z', layout:{} },
-  { id:'d4',  name:'PASTEL STRIP',            description:'Strip lembut warna pastel pink manis.',                slots:3, isActive:true,  createdAt:'2026-05-19T00:00:00.000Z', updatedAt:'2026-05-19T00:00:00.000Z', layout:{} },
-  { id:'d5',  name:'GOLD STRIP',              description:'Strip mewah hitam dengan aksen emas.',                 slots:3, isActive:true,  createdAt:'2026-05-18T00:00:00.000Z', updatedAt:'2026-05-18T00:00:00.000Z', layout:{} },
-  { id:'d6',  name:'MONO STRIP',              description:'Strip hitam-putih kontras tinggi minimalis.',          slots:3, isActive:true,  createdAt:'2026-05-17T00:00:00.000Z', updatedAt:'2026-05-17T00:00:00.000Z', layout:{} },
-  { id:'d7',  name:'OCEAN STRIP',             description:'Strip biru laut dalam yang tenang.',                   slots:3, isActive:true,  createdAt:'2026-05-16T00:00:00.000Z', updatedAt:'2026-05-16T00:00:00.000Z', layout:{} },
-  { id:'d8',  name:'MINT COMPACT STRIP',      description:'Strip hijau segar dengan susunan rapat.',              slots:3, isActive:true,  createdAt:'2026-05-15T00:00:00.000Z', updatedAt:'2026-05-15T00:00:00.000Z', layout:{} },
-  { id:'d9',  name:'NEON GLOW STRIP',         description:'Strip gelap dengan aksen neon ungu menyala.',          slots:3, isActive:true,  createdAt:'2026-05-14T00:00:00.000Z', updatedAt:'2026-05-14T00:00:00.000Z', layout:{} },
-  { id:'d10', name:'LAVENDER STRIP',          description:'Strip ungu mimpi lembut dan romantis.',                slots:3, isActive:false, createdAt:'2026-05-13T00:00:00.000Z', updatedAt:'2026-05-13T00:00:00.000Z', layout:{} },
-  { id:'d11', name:'CLASSIC STRIP 4',         description:'Strip putih bersih 4 foto gaya klasik.',              slots:4, isActive:true,  createdAt:'2026-05-12T00:00:00.000Z', updatedAt:'2026-05-12T00:00:00.000Z', layout:{} },
-  { id:'d12', name:'GOLD LOOSE STRIP 4',      description:'Strip emas mewah 4 foto dengan margin lapang.',       slots:4, isActive:true,  createdAt:'2026-05-11T00:00:00.000Z', updatedAt:'2026-05-11T00:00:00.000Z', layout:{} },
-  { id:'d13', name:'CHERRY STRIP 4',          description:'Strip deep crimson 4 foto dramatis.',                 slots:4, isActive:true,  createdAt:'2026-05-10T00:00:00.000Z', updatedAt:'2026-05-10T00:00:00.000Z', layout:{} },
-  { id:'d14', name:'CYBER FILM STRIP 4',      description:'Strip cyberpunk 4 foto dengan efek film.',            slots:4, isActive:true,  createdAt:'2026-05-09T00:00:00.000Z', updatedAt:'2026-05-09T00:00:00.000Z', layout:{} },
-  { id:'d15', name:'SUNSET STRIP 4',          description:'Strip amber hangat 4 foto saat senja.',               slots:4, isActive:true,  createdAt:'2026-05-08T00:00:00.000Z', updatedAt:'2026-05-08T00:00:00.000Z', layout:{} },
-  { id:'d16', name:'ROSE GOLD STRIP 4',       description:'Strip rose gold elegan 4 foto.',                      slots:4, isActive:false, createdAt:'2026-05-07T00:00:00.000Z', updatedAt:'2026-05-07T00:00:00.000Z', layout:{} },
-  { id:'d17', name:'CLASSIC STRIP 6',         description:'Strip putih klasik 6 foto lengkap.',                  slots:6, isActive:true,  createdAt:'2026-05-06T00:00:00.000Z', updatedAt:'2026-05-06T00:00:00.000Z', layout:{} },
-  { id:'d18', name:'GOLD STRIP 6',            description:'Strip emas premium 6 foto mewah.',                    slots:6, isActive:true,  createdAt:'2026-05-05T00:00:00.000Z', updatedAt:'2026-05-05T00:00:00.000Z', layout:{} },
-  { id:'d19', name:'MINT COMPACT STRIP 6',    description:'Strip mint segar 6 foto susunan rapat.',              slots:6, isActive:true,  createdAt:'2026-05-04T00:00:00.000Z', updatedAt:'2026-05-04T00:00:00.000Z', layout:{} },
-  { id:'d20', name:'LAVENDER LOOSE STRIP 6',  description:'Strip lavender 6 foto margin lapang.',                slots:6, isActive:true,  createdAt:'2026-05-03T00:00:00.000Z', updatedAt:'2026-05-03T00:00:00.000Z', layout:{} },
-]
-
 export function TemplatesPage() {
   const queryClient = useQueryClient()
   const { success, error } = useToast()
@@ -92,7 +69,7 @@ export function TemplatesPage() {
   }, [])
 
   // Fetch templates via react-query
-  const { data: templates = [] } = useQuery({
+  const { data: templates = [], isError: templatesError } = useQuery({
     queryKey: ['templates'],
     queryFn: async () => {
       const response = await api.get('/api/templates')
@@ -244,10 +221,8 @@ export function TemplatesPage() {
       setValue('previewUrl', url)
       success('Sukses', 'Gambar pratinjau berhasil diunggah!')
     } catch (err) {
-      // Offline fallback / local link generation for seamless design testing
-      const localUrl = URL.createObjectURL(file)
-      setValue('previewUrl', localUrl)
-      success('Pratinjau Lokal', 'Menggunakan gambar pratinjau lokal untuk pengujian.')
+      console.error('Gagal mengunggah gambar template:', err)
+      error('Kesalahan', 'Gambar gagal diunggah. Periksa koneksi backend lalu coba lagi.')
     } finally {
       setFileUploading(false)
     }
@@ -255,18 +230,17 @@ export function TemplatesPage() {
 
   // Formatting date for display in Indonesian format
   const formatDateDisplay = (dateStr?: string) => {
-    if (!dateStr) return '22 Mei 2026'
+    if (!dateStr) return '—'
     try {
       const parsedDate = parseISO(dateStr)
       return format(parsedDate, 'dd MMMM yyyy', { locale: id })
     } catch (e) {
-      // Fallback parser if custom or already parsed
-      return '22 Mei 2026'
+      return '—'
     }
   }
 
   // Filter & Search Logic
-  const filteredTemplates = (templates && templates.length > 0 ? templates : DUMMY_TEMPLATES)
+  const filteredTemplates = templates
     .filter(template => {
       const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (template.description || '').toLowerCase().includes(searchQuery.toLowerCase())
@@ -297,6 +271,10 @@ export function TemplatesPage() {
   }, [searchQuery, statusFilter])
 
   const isMutating = createMutation.isPending || updateMutation.isPending || fileUploading
+
+  if (templatesError) {
+    return <DataLoadError label="template" />
+  }
 
   return (
     <div className="space-y-5">
@@ -479,7 +457,7 @@ export function TemplatesPage() {
                 className={cn(
                   "w-8 h-8 rounded flex items-center justify-center font-grotesk text-[13px] border-none select-none cursor-pointer transition-colors",
                   page === currentPage
-                    ? "bg-sway-accent text-sway-bg font-bold"
+                    ? "bg-sway-accent text-white font-bold"
                     : "bg-transparent text-sway-dim hover:bg-sway-card-hi"
                 )}
               >
@@ -502,7 +480,7 @@ export function TemplatesPage() {
       {/* FORM DIALOG MODAL (ADD / EDIT) */}
       {isFormOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-sway-text/40 backdrop-blur-xs px-4"
           onClick={(e) => e.target === e.currentTarget && closeForm()}
         >
           <div className="w-[560px] max-h-[90vh] overflow-y-auto bg-sway-card border border-sway-border rounded p-7 flex flex-col justify-between scrollbar-thin shadow-2xl">
@@ -648,7 +626,7 @@ export function TemplatesPage() {
                   id="layout"
                   rows={5}
                   {...register('layout')}
-                  className="h-[120px] bg-[#1a0e0c] font-mono text-[12px] text-sway-text border border-sway-border-dim rounded p-3 focus:border-sway-accent focus:outline-none w-full resize-none transition-colors"
+                  className="h-[120px] bg-sway-bg font-mono text-[12px] text-sway-text border border-sway-border-dim rounded p-3 focus:border-sway-accent focus:outline-none w-full resize-none transition-colors"
                   disabled={isMutating}
                 />
                 <span className="text-[11px] text-sway-ghost font-grotesk mt-1 block">
@@ -672,11 +650,11 @@ export function TemplatesPage() {
                 <button
                   type="submit"
                   disabled={isMutating}
-                  className="bg-sway-accent text-sway-bg h-11 px-5 rounded font-grotesk text-[12px] uppercase tracking-widest font-bold cursor-pointer hover:bg-sway-accent/90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 select-none border-none font-black"
+                  className="bg-sway-accent text-white h-11 px-5 rounded font-grotesk text-[12px] uppercase tracking-widest font-bold cursor-pointer hover:bg-sway-accent/90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 select-none border-none font-black"
                 >
                   {isMutating ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin text-sway-bg" />
+                      <Loader2 className="h-4 w-4 animate-spin text-white" />
                       MENYIMPAN...
                     </>
                   ) : (
@@ -692,7 +670,7 @@ export function TemplatesPage() {
       {/* CONFIRM DELETE DIALOG */}
       {deletingTemplate !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-sway-text/40 backdrop-blur-xs px-4"
           onClick={(e) => e.target === e.currentTarget && setDeletingTemplate(null)}
         >
           <div className="w-[400px] bg-sway-card border border-sway-border rounded p-6 shadow-2xl">
@@ -732,6 +710,15 @@ export function TemplatesPage() {
           </div>
         </div>
       )}
+    </div>
+  )
+}
+
+function DataLoadError({ label }: { label: string }) {
+  return (
+    <div className="rounded border border-sway-error/30 bg-sway-card p-6 text-center">
+      <p className="font-bebas text-2xl text-sway-error">DATA TIDAK DAPAT DIMUAT</p>
+      <p className="mt-2 text-sm text-sway-dim">Gagal mengambil data {label} dari server.</p>
     </div>
   )
 }

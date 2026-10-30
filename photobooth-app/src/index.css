@@ -5,33 +5,33 @@
 
 @theme {
   /* Backgrounds */
-  --color-sway-bg:        #200f0c;
-  --color-sway-surface:   #291713;
-  --color-sway-card:      #2d1b17;
-  --color-sway-card-hi:   #392521;
-  --color-sway-card-top:  #45302b;
+  --color-sway-bg:        #fff7f2;
+  --color-sway-surface:   #ffeadf;
+  --color-sway-card:      #ffffff;
+  --color-sway-card-hi:   #fff2ea;
+  --color-sway-card-top:  #ffe4d6;
 
   /* Text */
-  --color-sway-text:      #fddbd4;
-  --color-sway-muted:     #e7bdb4;
-  --color-sway-dim:       #ae8880;
-  --color-sway-ghost:     #5d3f39;
+  --color-sway-text:      #3b1d12;
+  --color-sway-muted:     #6e4434;
+  --color-sway-dim:       #a57c6b;
+  --color-sway-ghost:     #c9a08f;
 
   /* Accent */
-  --color-sway-accent:    #ff5638;
-  --color-sway-accent-dim:#ffb4a5;
+  --color-sway-accent:    #ff6b5a;
+  --color-sway-accent-dim:#ffbdb3;
 
   /* Gold */
-  --color-sway-gold:      #feb700;
-  --color-sway-gold-dim:  #ffdb9d;
+  --color-sway-gold:      #e8a13a;
+  --color-sway-gold-dim:  #f8dcae;
 
   /* Semantic */
   --color-sway-success:   #22C55E;
   --color-sway-error:     #b91c1c;
 
   /* Borders */
-  --color-sway-border:    #5d3f39;
-  --color-sway-border-dim:#392521;
+  --color-sway-border:    #f6d3c3;
+  --color-sway-border-dim:#fbe3d8;
 
   /* Fonts */
   --font-bebas:   'Bebas Neue', sans-serif;
@@ -59,8 +59,8 @@ html, body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background-color: #200f0c;
-  color: #fddbd4;
+  background-color: #fff7f2;
+  color: #3b1d12;
   font-family: 'Space Grotesk', sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
@@ -190,17 +190,17 @@ input, textarea, select {
 /* ── GLASS ───────────────────────────────────────── */
 
 .glass {
-  background: rgba(45, 27, 23, 0.7);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(93, 63, 57, 0.5);
+  border: 1px solid rgba(246, 211, 195, 0.8);
 }
 
 .glass-light {
-  background: rgba(57, 37, 33, 0.5);
+  background: rgba(255, 242, 234, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(93, 63, 57, 0.3);
+  border: 1px solid rgba(246, 211, 195, 0.5);
 }
 
 /* ── PRINT ───────────────────────────────────────── */

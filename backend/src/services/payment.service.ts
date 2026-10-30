@@ -18,11 +18,15 @@ export const createQrisTransaction = async (
   amount: number
 ): Promise<{ qrUrl: string; externalId: string }> => {
   if (!env.MIDTRANS_SERVER_KEY) {
+    if (env.NODE_ENV !== 'development') {
+      throw new Error('MIDTRANS_SERVER_KEY is required outside development');
+    }
+
     // Return mock QRIS transaction for local development/demo
     console.log(`⚠️ MIDTRANS_SERVER_KEY is not configured. Using Mock QRIS payment for order: ${orderId}`);
     
-    // Generate a beautiful mock QR code utilizing the public QR Server API, customized with our brand's accent color (#ff5638)
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=ff5638&data=MOCK-PAYMENT-${orderId}`;
+    // Generate a beautiful mock QR code utilizing the public QR Server API, customized with our brand's accent color (#ff6b5a)
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=ff6b5a&data=MOCK-PAYMENT-${orderId}`;
     
     return {
       qrUrl,
@@ -55,13 +59,17 @@ export const checkTransactionStatus = async (
   externalId: string
 ): Promise<string> => {
   if (externalId.startsWith('MOCK-')) {
+    if (env.NODE_ENV !== 'development') {
+      throw new Error('Mock payment IDs are only valid in development');
+    }
+
     // Automatically transition to paid status after 5 seconds to simulate a real payment workflow
     const parts = externalId.split('-');
     const timestampStr = parts[parts.length - 1];
     const timestamp = parseInt(timestampStr, 10);
     if (!isNaN(timestamp)) {
       const elapsed = Date.now() - timestamp;
-      if (elapsed > 5000) {
+      if (env.NODE_ENV === 'development' && elapsed > 5000) {
         return 'paid';
       }
     }

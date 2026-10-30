@@ -26,7 +26,7 @@ export interface FrameTheme {
   numBadgeText: string
   footerBg: string       // footer section background
   footerLine: string     // divider line colour
-  brandColor: string     // TOBOOTH text colour
+  brandColor: string     // BERTPIXX text colour
   subColor: string       // subtitle text colour
   cornerDecor: boolean   // draw corner marks like a photo print
   filmHoles: boolean     // draw film-perforation holes on the sides
@@ -39,21 +39,21 @@ export const THEMES: Record<string, FrameTheme> = {
   classic: {
     canvasBg:     '#FDFCFA',
     canvasBorder: '#E0D8D0',
-    accentTop:    '#FF5638',
+    accentTop:    '#FF6B5A',
     accentTopH:   10,
     slotFill:     '#DEDAD5',
     slotBorder:   '#B8B0A8',
     slotX:        '#B0A8A0',
-    numBadgeBg:   '#FF5638',
+    numBadgeBg:   '#FF6B5A',
     numBadgeText: '#ffffff',
     footerBg:     '#FDFCFA',
     footerLine:   '#D0C8C0',
-    brandColor:   '#FF5638',
+    brandColor:   '#FF6B5A',
     subColor:     '#9E9089',
     cornerDecor:  true,
     filmHoles:    false,
     roundCorners: 4,
-    outerDarkBg:  '#1A0D0B',
+    outerDarkBg:  '#3B1D12',
   },
   // ── Dark film strip (cinema negative) ────────────────────
   film: {
@@ -64,11 +64,11 @@ export const THEMES: Record<string, FrameTheme> = {
     slotFill:     '#2C2C2C',
     slotBorder:   '#3D3D3D',
     slotX:        '#4A4A4A',
-    numBadgeBg:   '#FF5638',
+    numBadgeBg:   '#FF6B5A',
     numBadgeText: '#ffffff',
     footerBg:     '#111111',
     footerLine:   '#2A2A2A',
-    brandColor:   '#FF5638',
+    brandColor:   '#FF6B5A',
     subColor:     '#555555',
     cornerDecor:  false,
     filmHoles:    true,
@@ -98,17 +98,17 @@ export const THEMES: Record<string, FrameTheme> = {
   // ── Modern minimal / clean dark ──────────────────────────
   modern: {
     canvasBg:     '#181818',
-    canvasBorder: '#FF5638',
-    accentTop:    '#FF5638',
+    canvasBorder: '#FF6B5A',
+    accentTop:    '#FF6B5A',
     accentTopH:   5,
     slotFill:     '#242424',
-    slotBorder:   '#FF5638',
-    slotX:        '#FF563840',
-    numBadgeBg:   '#FF5638',
+    slotBorder:   '#FF6B5A',
+    slotX:        '#FF6B5A40',
+    numBadgeBg:   '#FF6B5A',
     numBadgeText: '#ffffff',
     footerBg:     '#181818',
-    footerLine:   '#FF563850',
-    brandColor:   '#FF5638',
+    footerLine:   '#FF6B5A50',
+    brandColor:   '#FF6B5A',
     subColor:     '#666666',
     cornerDecor:  false,
     filmHoles:    false,
@@ -380,7 +380,7 @@ export const THEMES: Record<string, FrameTheme> = {
 // ─────────────────────────────────────────────────────────────────────────────
 // SLOT GEOMETRY DEFINITIONS  (canvas units)
 // ─────────────────────────────────────────────────────────────────────────────
-interface GeomLayout {
+export interface GeomLayout {
   cW: number          // canvas width
   cH: number          // canvas height
   slots: TemplateSlot[]
@@ -608,12 +608,14 @@ export function resolveTheme(name: string, slots: number): { theme: FrameTheme; 
 // ─────────────────────────────────────────────────────────────────────────────
 // Also respect layout data from backend if it has real coordinates
 // ─────────────────────────────────────────────────────────────────────────────
-function resolveGeomFromLayout(layout: TemplateLayout, slots: number, name: string): GeomLayout {
+export function resolveGeometry(layout: TemplateLayout | undefined, slots: number, name: string): GeomLayout {
   if (
-    layout?.width > 0 &&
-    layout?.height > 0 &&
+    layout &&
+    layout.width > 0 &&
+    layout.height > 0 &&
     Array.isArray(layout.slots) &&
-    layout.slots.length > 0
+    layout.slots.length > 0 &&
+    layout.slots.length === slots
   ) {
     // Use backend layout but wrap it in GeomLayout
     const lastSlot = layout.slots[layout.slots.length - 1]
@@ -661,7 +663,7 @@ export function FramePreview({
   inactive = false,
 }: FramePreviewProps) {
   const { theme } = useMemo(() => resolveTheme(name, slots), [name, slots])
-  const geom = useMemo(() => resolveGeomFromLayout(layout, slots, name), [layout, slots, name])
+  const geom = useMemo(() => resolveGeometry(layout, slots, name), [layout, slots, name])
 
   const { cW, cH, slots: slotDefs, footerH } = geom
   const scale = previewWidth / cW
@@ -851,7 +853,7 @@ export function FramePreview({
             fill={theme.brandColor}
             letterSpacing={2.5}
           >
-            TOBOOTH
+            BERTPIXX
           </text>
           {footerH > 120 && (
             <text
@@ -890,7 +892,7 @@ export function FramePreview({
             letterSpacing={3}
             transform={`rotate(-90, 14, ${cH / 2})`}
           >
-            TOBOOTH ▪ PHOTOBOOTH
+            BERTPIXX ▪ PHOTOBOOTH
           </text>
           <text
             x={cW - 14} y={cH / 2}
@@ -902,7 +904,7 @@ export function FramePreview({
             letterSpacing={3}
             transform={`rotate(90, ${cW - 14}, ${cH / 2})`}
           >
-            TOBOOTH ▪ PHOTOBOOTH
+            BERTPIXX ▪ PHOTOBOOTH
           </text>
         </>
       )}

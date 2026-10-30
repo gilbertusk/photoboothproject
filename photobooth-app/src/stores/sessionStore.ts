@@ -17,6 +17,7 @@ interface SessionStore {
   gifUrl: string | null
   localStripUrl: string | null
   localGifUrl: string | null
+  stripDataUrl: string | null
 
   // Camera settings
   isMirror: boolean
@@ -37,6 +38,7 @@ interface SessionStore {
   setGifUrl: (url: string) => void
   setLocalStripUrl: (url: string) => void
   setLocalGifUrl: (url: string) => void
+  setStripDataUrl: (url: string) => void
   toggleMirror: () => void
   setFilter: (filter: FilterType) => void
   resetSession: () => void
@@ -55,6 +57,7 @@ const initialState = {
   gifUrl: null,
   localStripUrl: null,
   localGifUrl: null,
+  stripDataUrl: null,
   isMirror: true,
   selectedFilter: 'normal' as FilterType,
 }
@@ -87,6 +90,7 @@ export const useSessionStore = create<SessionStore>((set) => ({
   setGifUrl: (url) => set({ gifUrl: url }),
   setLocalStripUrl: (url) => set({ localStripUrl: url }),
   setLocalGifUrl: (url) => set({ localGifUrl: url }),
+  setStripDataUrl: (url) => set({ stripDataUrl: url }),
   toggleMirror: () => set((state) => ({ isMirror: !state.isMirror })),
   setFilter: (filter) => set({ selectedFilter: filter }),
   resetSession: () => set({ ...initialState }),

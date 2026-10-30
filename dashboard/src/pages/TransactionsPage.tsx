@@ -66,257 +66,6 @@ function TransactionStatsCard({
   )
 }
 
-// 6 Premium High-Fidelity Dummy Transactions for Offline/Data Failsafe Fallbacks
-const DUMMY_TRANSACTIONS: Transaction[] = [
-  {
-    id: "TX-SWY-88A9F1",
-    amount: 120000,
-    status: "PAID",
-    externalId: "MID-SWY-20260522-881",
-    createdAt: "2026-05-22T12:30:00Z",
-    paidAt: "2026-05-22T12:31:15Z",
-    session: {
-      id: "SES-01",
-      status: "COMPLETED",
-      totalPrice: 150000,
-      finalPrice: 120000,
-      createdAt: "2026-05-22T12:30:00Z",
-      package: {
-        id: "PKG-01",
-        name: "SWAY DELUXE",
-        photoCount: 4,
-        duration: 180,
-        printCount: 2,
-        includeGif: true,
-        includeEmail: true,
-        price: 150000,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      },
-      template: {
-        id: "TPL-01",
-        name: "Retro Vignette Noir",
-        previewUrl: "",
-        layout: {},
-        slots: 4,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      },
-      voucher: {
-        id: "VCH-01",
-        code: "WELCOME20",
-        type: "PERCENTAGE",
-        value: 20,
-        quota: 100,
-        used: 42,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      }
-    }
-  },
-  {
-    id: "TX-SWY-74B8C2",
-    amount: 80000,
-    status: "PAID",
-    externalId: "MID-SWY-20260522-742",
-    createdAt: "2026-05-22T11:15:00Z",
-    paidAt: "2026-05-22T11:16:45Z",
-    session: {
-      id: "SES-02",
-      status: "COMPLETED",
-      totalPrice: 100000,
-      finalPrice: 80000,
-      createdAt: "2026-05-22T11:15:00Z",
-      package: {
-        id: "PKG-02",
-        name: "SWAY STANDART",
-        photoCount: 2,
-        duration: 90,
-        printCount: 2,
-        includeGif: true,
-        includeEmail: true,
-        price: 100000,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      },
-      template: {
-        id: "TPL-02",
-        name: "Y2K Neon Glitch",
-        previewUrl: "",
-        layout: {},
-        slots: 2,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      },
-      voucher: {
-        id: "VCH-02",
-        code: "SWAY20K",
-        type: "FIXED",
-        value: 20000,
-        quota: 50,
-        used: 10,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      }
-    }
-  },
-  {
-    id: "TX-SWY-63C7D3",
-    amount: 150000,
-    status: "PENDING",
-    externalId: "MID-SWY-20260522-633",
-    createdAt: "2026-05-22T13:10:00Z",
-    session: {
-      id: "SES-03",
-      status: "PENDING",
-      totalPrice: 150000,
-      finalPrice: 150000,
-      createdAt: "2026-05-22T13:10:00Z",
-      package: {
-        id: "PKG-01",
-        name: "SWAY DELUXE",
-        photoCount: 4,
-        duration: 180,
-        printCount: 2,
-        includeGif: true,
-        includeEmail: true,
-        price: 150000,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      },
-      template: {
-        id: "TPL-03",
-        name: "Classy Sepia Portrait",
-        previewUrl: "",
-        layout: {},
-        slots: 4,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      }
-    }
-  },
-  {
-    id: "TX-SWY-52D6E4",
-    amount: 100000,
-    status: "EXPIRED",
-    externalId: "MID-SWY-20260522-524",
-    createdAt: "2026-05-22T09:45:00Z",
-    session: {
-      id: "SES-04",
-      status: "EXPIRED",
-      totalPrice: 100000,
-      finalPrice: 100000,
-      createdAt: "2026-05-22T09:45:00Z",
-      package: {
-        id: "PKG-02",
-        name: "SWAY STANDART",
-        photoCount: 2,
-        duration: 90,
-        printCount: 2,
-        includeGif: true,
-        includeEmail: true,
-        price: 100000,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      },
-      template: {
-        id: "TPL-01",
-        name: "Retro Vignette Noir",
-        previewUrl: "",
-        layout: {},
-        slots: 4,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      }
-    }
-  },
-  {
-    id: "TX-SWY-41E5F5",
-    amount: 250000,
-    status: "PAID",
-    externalId: "MID-SWY-20260522-415",
-    createdAt: "2026-05-21T21:30:00Z",
-    paidAt: "2026-05-21T21:32:10Z",
-    session: {
-      id: "SES-05",
-      status: "COMPLETED",
-      totalPrice: 250000,
-      finalPrice: 250000,
-      createdAt: "2026-05-21T21:30:00Z",
-      package: {
-        id: "PKG-03",
-        name: "SWAY VIP PARTY",
-        photoCount: 8,
-        duration: 360,
-        printCount: 4,
-        includeGif: true,
-        includeEmail: true,
-        price: 250000,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      },
-      template: {
-        id: "TPL-04",
-        name: "Cyberpunk Tokyo Night",
-        previewUrl: "",
-        layout: {},
-        slots: 8,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      }
-    }
-  },
-  {
-    id: "TX-SWY-30F4A6",
-    amount: 100000,
-    status: "FAILED",
-    externalId: "MID-SWY-20260521-306",
-    createdAt: "2026-05-21T18:20:00Z",
-    session: {
-      id: "SES-06",
-      status: "EXPIRED",
-      totalPrice: 100000,
-      finalPrice: 100000,
-      createdAt: "2026-05-21T18:20:00Z",
-      package: {
-        id: "PKG-02",
-        name: "SWAY STANDART",
-        photoCount: 2,
-        duration: 90,
-        printCount: 2,
-        includeGif: true,
-        includeEmail: true,
-        price: 100000,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      },
-      template: {
-        id: "TPL-02",
-        name: "Y2K Neon Glitch",
-        previewUrl: "",
-        layout: {},
-        slots: 2,
-        isActive: true,
-        createdAt: "",
-        updatedAt: ""
-      }
-    }
-  }
-]
-
 export function TransactionsPage() {
   const queryClient = useQueryClient()
   const { success, error } = useToast()
@@ -331,7 +80,7 @@ export function TransactionsPage() {
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null)
 
   // Fetch transactions with pagination & status filters
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, isError: transactionsError, refetch } = useQuery({
     queryKey: ['transactions', page, limit, statusFilter],
     queryFn: async () => {
       const params: Record<string, any> = { page, limit }
@@ -403,22 +152,10 @@ export function TransactionsPage() {
   }, [refetch, success])
 
   const serverTransactions = data?.transactions || []
-  const hasServerData = serverTransactions.length > 0
-
-  // Merge server and dummy dataset fallback
-  const activeTransactions = useMemo(() => {
-    if (hasServerData) return serverTransactions
-
-    // Fallback locally
-    return DUMMY_TRANSACTIONS.filter(tx => {
-      if (statusFilter !== 'ALL' && tx.status !== statusFilter) return false
-      return true
-    })
-  }, [serverTransactions, hasServerData, statusFilter])
 
   // Filter local array with topbar searches
   const filteredTransactions = useMemo(() => {
-    return activeTransactions.filter(tx => {
+    return serverTransactions.filter(tx => {
       const matchesSearch = !searchQuery ||
         tx.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (tx.externalId && tx.externalId.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -427,18 +164,14 @@ export function TransactionsPage() {
 
       return matchesSearch
     })
-  }, [activeTransactions, searchQuery])
+  }, [serverTransactions, searchQuery])
 
   // Dynamic Pagination items count
-  const totalPages = hasServerData
-    ? (data?.pagination?.totalPages || 1)
-    : Math.max(1, Math.ceil(filteredTransactions.length / limit))
+  const totalPages = data?.pagination?.totalPages || 1
 
   const paginatedTransactions = useMemo(() => {
-    if (hasServerData) return filteredTransactions
-    const start = (page - 1) * limit
-    return filteredTransactions.slice(start, start + limit)
-  }, [filteredTransactions, hasServerData, page, limit])
+    return filteredTransactions
+  }, [filteredTransactions])
 
   // Adjust page index if query bounds exceed
   useEffect(() => {
@@ -447,52 +180,50 @@ export function TransactionsPage() {
     }
   }, [filteredTransactions, page, totalPages])
 
-  // Compute Metrics Panel from either source
+  // Compute metrics from server data only
   const stats = useMemo(() => {
-    const activeList = hasServerData ? serverTransactions : DUMMY_TRANSACTIONS
-
-    const totalRevenue = activeList
+    const totalRevenue = serverTransactions
       .filter(tx => tx.status === 'PAID')
       .reduce((sum, tx) => sum + tx.amount, 0)
 
-    const paidCount = activeList.filter(tx => tx.status === 'PAID').length
-    const pendingCount = activeList.filter(tx => tx.status === 'PENDING').length
+    const paidCount = serverTransactions.filter(tx => tx.status === 'PAID').length
+    const pendingCount = serverTransactions.filter(tx => tx.status === 'PENDING').length
 
     return {
       totalRevenue,
       paidCount,
       pendingCount
     }
-  }, [serverTransactions, hasServerData])
+  }, [serverTransactions])
 
   // Render bespoke status badge capsule
   const getStatusBadge = (status: Transaction['status']) => {
     switch (status) {
       case 'PAID':
         return (
-          <span className="bg-[#1c3f2d] border border-[#2e6244] text-[#aef0c8] text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
+          <span className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-sway-success" />
             PAID
           </span>
         )
       case 'PENDING':
         return (
-          <span className="bg-[#3f341c] border border-[#62532e] text-[#f0e1ae] text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#feb700]" />
+          <span className="bg-amber-50 border border-amber-200 text-amber-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-sway-gold" />
             PENDING
           </span>
         )
       case 'FAILED':
         return (
-          <span className="bg-[#3f1c1c] border border-[#622e2e] text-[#f0aeae] text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#C81E1E]" />
+          <span className="bg-red-50 border border-red-200 text-red-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-sway-error" />
             FAILED
           </span>
         )
       case 'EXPIRED':
         return (
-          <span className="bg-[#30211e] border border-[#4d332e] text-[#e7bdb4] text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#ae8880]" />
+          <span className="bg-sway-surface border border-sway-border text-sway-muted text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-sway-dim" />
             EXPIRED
           </span>
         )
@@ -513,6 +244,15 @@ export function TransactionsPage() {
     if (isNaN(date.getTime())) return '—'
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()} | ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
+  }
+
+  if (transactionsError) {
+    return (
+      <div className="rounded border border-sway-error/30 bg-sway-card p-6 text-center">
+        <p className="font-bebas text-2xl text-sway-error">DATA TIDAK DAPAT DIMUAT</p>
+        <p className="mt-2 text-sm text-sway-dim">Gagal mengambil data transaksi dari server.</p>
+      </div>
+    )
   }
 
   return (
@@ -751,7 +491,7 @@ export function TransactionsPage() {
                   className={cn(
                     "w-8 h-8 rounded text-[13px] font-grotesk font-bold transition-all duration-150 flex items-center justify-center border select-none cursor-pointer",
                     isActive
-                      ? "bg-sway-accent text-sway-bg border-sway-accent"
+                      ? "bg-sway-accent text-white border-sway-accent"
                       : "bg-transparent text-sway-dim border-sway-border-dim hover:text-sway-text hover:border-sway-border"
                   )}
                 >
@@ -939,8 +679,8 @@ export function TransactionsPage() {
                     </span>
                     <div className={cn(
                       "font-grotesk text-[12px] font-bold leading-none",
-                      selectedTx.status === 'PAID' ? "text-[#aef0c8]" :
-                      (selectedTx.status === 'FAILED' || selectedTx.status === 'EXPIRED') ? "text-[#f0aeae]" : "text-sway-ghost"
+                      selectedTx.status === 'PAID' ? "text-emerald-600" :
+                      (selectedTx.status === 'FAILED' || selectedTx.status === 'EXPIRED') ? "text-red-600" : "text-sway-ghost"
                     )}>
                       {selectedTx.status === 'PAID' ? "Pembayaran Diterima (Lunas)" :
                        (selectedTx.status === 'FAILED' || selectedTx.status === 'EXPIRED') ? `Transaksi Gagal (${selectedTx.status})` :
@@ -970,7 +710,7 @@ export function TransactionsPage() {
               )}
               <button
                 onClick={() => setSelectedTx(null)}
-                className="bg-sway-accent text-sway-bg font-grotesk text-[11px] uppercase tracking-wider font-bold h-9 px-4.5 rounded cursor-pointer transition-all hover:brightness-110 ml-auto"
+                className="bg-sway-accent text-white font-grotesk text-[11px] uppercase tracking-wider font-bold h-9 px-4.5 rounded cursor-pointer transition-all hover:brightness-110 ml-auto"
               >
                 TUTUP INVOICE
               </button>

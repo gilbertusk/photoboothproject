@@ -31,10 +31,10 @@ interface SlotDef { x: number; y: number; width: number; height: number }
 interface GeomLayout { cW: number; cH: number; slots: SlotDef[]; footerH: number }
 
 const THEMES: Record<string, FrameTheme> = {
-  classic:  { canvasBg:'#FDFCFA', canvasBorder:'#E0D8D0', accentTop:'#FF5638', accentTopH:10, slotFill:'#DEDAD5', slotBorder:'#B8B0A8', slotX:'#B0A8A0', numBadgeBg:'#FF5638', numBadgeText:'#fff', footerBg:'#FDFCFA', footerLine:'#D0C8C0', brandColor:'#FF5638', subColor:'#9E9089', cornerDecor:true,  filmHoles:false, roundCorners:4,  outerDarkBg:'#1A0D0B' },
-  film:     { canvasBg:'#111111', canvasBorder:'#2A2A2A', accentTop:'none',    accentTopH:0,  slotFill:'#2C2C2C', slotBorder:'#3D3D3D', slotX:'#4A4A4A', numBadgeBg:'#FF5638', numBadgeText:'#fff', footerBg:'#111111', footerLine:'#2A2A2A', brandColor:'#FF5638', subColor:'#555555', cornerDecor:false, filmHoles:true,  roundCorners:0,  outerDarkBg:'#0A0A0A' },
+  classic:  { canvasBg:'#FDFCFA', canvasBorder:'#E0D8D0', accentTop:'#FF6B5A', accentTopH:10, slotFill:'#DEDAD5', slotBorder:'#B8B0A8', slotX:'#B0A8A0', numBadgeBg:'#FF6B5A', numBadgeText:'#fff', footerBg:'#FDFCFA', footerLine:'#D0C8C0', brandColor:'#FF6B5A', subColor:'#9E9089', cornerDecor:true,  filmHoles:false, roundCorners:4,  outerDarkBg:'#1A0D0B' },
+  film:     { canvasBg:'#111111', canvasBorder:'#2A2A2A', accentTop:'none',    accentTopH:0,  slotFill:'#2C2C2C', slotBorder:'#3D3D3D', slotX:'#4A4A4A', numBadgeBg:'#FF6B5A', numBadgeText:'#fff', footerBg:'#111111', footerLine:'#2A2A2A', brandColor:'#FF6B5A', subColor:'#555555', cornerDecor:false, filmHoles:true,  roundCorners:0,  outerDarkBg:'#0A0A0A' },
   vintage:  { canvasBg:'#F5ECD8', canvasBorder:'#C8A97A', accentTop:'#8B6343', accentTopH:8,  slotFill:'#DDD0B8', slotBorder:'#B8A080', slotX:'#C0A870', numBadgeBg:'#8B6343', numBadgeText:'#F5ECD8', footerBg:'#F5ECD8', footerLine:'#C8A97A', brandColor:'#8B6343', subColor:'#A0835A', cornerDecor:true,  filmHoles:false, roundCorners:2,  outerDarkBg:'#2A1A0A' },
-  modern:   { canvasBg:'#181818', canvasBorder:'#FF5638', accentTop:'#FF5638', accentTopH:5,  slotFill:'#242424', slotBorder:'#FF5638', slotX:'#FF563840', numBadgeBg:'#FF5638', numBadgeText:'#fff', footerBg:'#181818', footerLine:'#FF563850', brandColor:'#FF5638', subColor:'#666', cornerDecor:false, filmHoles:false, roundCorners:6,  outerDarkBg:'#0D0D0D' },
+  modern:   { canvasBg:'#181818', canvasBorder:'#FF6B5A', accentTop:'#FF6B5A', accentTopH:5,  slotFill:'#242424', slotBorder:'#FF6B5A', slotX:'#FF6B5A40', numBadgeBg:'#FF6B5A', numBadgeText:'#fff', footerBg:'#181818', footerLine:'#FF6B5A50', brandColor:'#FF6B5A', subColor:'#666', cornerDecor:false, filmHoles:false, roundCorners:6,  outerDarkBg:'#0D0D0D' },
   neon:     { canvasBg:'#0D0D1A', canvasBorder:'#9B59B6', accentTop:'#9B59B6', accentTopH:6,  slotFill:'#12122A', slotBorder:'#9B59B6', slotX:'#9B59B650', numBadgeBg:'#9B59B6', numBadgeText:'#fff', footerBg:'#0D0D1A', footerLine:'#9B59B650', brandColor:'#9B59B6', subColor:'#5555AA', cornerDecor:false, filmHoles:false, roundCorners:8,  outerDarkBg:'#07070F' },
   polaroid: { canvasBg:'#FFFEF8', canvasBorder:'#E8E4DC', accentTop:'none',    accentTopH:0,  slotFill:'#E0DCD4', slotBorder:'#C8C4BC', slotX:'#C0BCA8', numBadgeBg:'#333',    numBadgeText:'#fff', footerBg:'#FFFEF8', footerLine:'#E8E4DC', brandColor:'#333333', subColor:'#888880', cornerDecor:false, filmHoles:false, roundCorners:3,  outerDarkBg:'#1A1A18' },
   pastel:   { canvasBg:'#FFF5F8', canvasBorder:'#F4C2D0', accentTop:'#F48FB1', accentTopH:10, slotFill:'#FADADF', slotBorder:'#F4A7B9', slotX:'#F4A7B980', numBadgeBg:'#EC407A', numBadgeText:'#fff', footerBg:'#FFF5F8', footerLine:'#F4C2D0', brandColor:'#EC407A', subColor:'#CE93A8', cornerDecor:true,  filmHoles:false, roundCorners:8,  outerDarkBg:'#2A0A14' },
@@ -217,7 +217,7 @@ export function FramePreview({ name, slots, previewWidth = 64, inactive = false 
         <>
           <rect x={outerPad} y={footerBaseY} width={cW-outerPad*2} height={footerH-outerPad} fill={theme.footerBg} />
           <rect x={outerPad+24} y={footerBaseY+12} width={cW-(outerPad+24)*2} height={1.5} fill={theme.footerLine} />
-          <text x={cW/2} y={footerBaseY+(footerH>150?55:38)} textAnchor="middle" fontSize={footerH>150?18:14} fontFamily="Arial, sans-serif" fontWeight="900" fill={theme.brandColor} letterSpacing={2.5}>TOBOOTH</text>
+          <text x={cW/2} y={footerBaseY+(footerH>150?55:38)} textAnchor="middle" fontSize={footerH>150?18:14} fontFamily="Arial, sans-serif" fontWeight="900" fill={theme.brandColor} letterSpacing={2.5}>BERTPIXX</text>
           {footerH > 120 && <text x={cW/2} y={footerBaseY+88} textAnchor="middle" fontSize={10} fontFamily="Arial, sans-serif" fill={theme.subColor} letterSpacing={2}>MEMORIES CAPTURED</text>}
         </>
       )}
@@ -225,8 +225,8 @@ export function FramePreview({ name, slots, previewWidth = 64, inactive = false 
       {/* Film side text */}
       {theme.filmHoles && (
         <>
-          <text x={14} y={cH/2} textAnchor="middle" fontSize={9} fontFamily="monospace" fontWeight="700" fill="#444" letterSpacing={3} transform={`rotate(-90,14,${cH/2})`}>TOBOOTH ▪ PHOTOBOOTH</text>
-          <text x={cW-14} y={cH/2} textAnchor="middle" fontSize={9} fontFamily="monospace" fontWeight="700" fill="#444" letterSpacing={3} transform={`rotate(90,${cW-14},${cH/2})`}>TOBOOTH ▪ PHOTOBOOTH</text>
+          <text x={14} y={cH/2} textAnchor="middle" fontSize={9} fontFamily="monospace" fontWeight="700" fill="#444" letterSpacing={3} transform={`rotate(-90,14,${cH/2})`}>BERTPIXX ▪ PHOTOBOOTH</text>
+          <text x={cW-14} y={cH/2} textAnchor="middle" fontSize={9} fontFamily="monospace" fontWeight="700" fill="#444" letterSpacing={3} transform={`rotate(90,${cW-14},${cH/2})`}>BERTPIXX ▪ PHOTOBOOTH</text>
         </>
       )}
     </svg>

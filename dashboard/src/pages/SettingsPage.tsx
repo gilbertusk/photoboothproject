@@ -56,13 +56,13 @@ export function SettingsPage() {
   } = useForm<SettingsFormValues>({
     resolver: zodResolver(settingsSchema) as any,
     defaultValues: {
-      branding_name: 'Tobooth Photobooth',
+      branding_name: 'bertpixx',
       branding_logo: '',
       session_countdown: 3,
       session_interval: 2,
       inactive_timeout: 60,
       message_welcome: 'Abadikan Momen Bersama',
-      message_thankyou: 'Sampai jumpa di Tobooth berikutnya!',
+      message_thankyou: 'Sampai jumpa di bertpixx berikutnya!',
     },
   })
 
@@ -75,13 +75,13 @@ export function SettingsPage() {
   useEffect(() => {
     if (settingsData) {
       reset({
-        branding_name: settingsData.branding_name || 'Tobooth Photobooth',
+        branding_name: settingsData.branding_name || 'bertpixx',
         branding_logo: settingsData.branding_logo || '',
         session_countdown: settingsData.session_countdown ? parseInt(settingsData.session_countdown) : 3,
         session_interval: settingsData.session_interval ? parseInt(settingsData.session_interval) : 2,
         inactive_timeout: settingsData.inactive_timeout ? parseInt(settingsData.inactive_timeout) : 60,
         message_welcome: settingsData.message_welcome || 'Abadikan Momen Bersama',
-        message_thankyou: settingsData.message_thankyou || 'Sampai jumpa di Tobooth berikutnya!',
+        message_thankyou: settingsData.message_thankyou || 'Sampai jumpa di bertpixx berikutnya!',
       })
     }
   }, [settingsData, reset])
@@ -103,13 +103,13 @@ export function SettingsPage() {
       if (res.data?.data) {
         const data = res.data.data
         reset({
-          branding_name: data.branding_name || 'Tobooth Photobooth',
+          branding_name: data.branding_name || 'bertpixx',
           branding_logo: data.branding_logo || '',
           session_countdown: data.session_countdown ? parseInt(data.session_countdown) : 3,
           session_interval: data.session_interval ? parseInt(data.session_interval) : 2,
           inactive_timeout: data.inactive_timeout ? parseInt(data.inactive_timeout) : 60,
           message_welcome: data.message_welcome || 'Abadikan Momen Bersama',
-          message_thankyou: data.message_thankyou || 'Sampai jumpa di Tobooth berikutnya!',
+          message_thankyou: data.message_thankyou || 'Sampai jumpa di bertpixx berikutnya!',
         })
       }
       return () => clearTimeout(timer)
@@ -197,7 +197,7 @@ export function SettingsPage() {
   return (
     <div className="relative">
       {isLoading ? (
-        <div className="h-[400px] flex flex-col items-center justify-center gap-3 bg-[#291713] border border-[#5d3f39] rounded-[4px] select-none">
+        <div className="h-[400px] flex flex-col items-center justify-center gap-3 bg-sway-card border border-sway-border rounded-[4px] select-none">
           <Loader2 className="h-10 w-10 text-sway-accent animate-spin" />
           <p className="text-sm text-sway-dim font-bold font-grotesk tracking-wider">Memuat pengaturan sistem...</p>
         </div>
@@ -210,7 +210,7 @@ export function SettingsPage() {
           <div className="lg:col-span-2 space-y-6">
             
             {/* BRANDING CARD */}
-            <div className="bg-[#291713] border border-[#5d3f39] rounded-[4px] p-6 space-y-5">
+            <div className="bg-sway-card border border-sway-border rounded-[4px] p-6 space-y-5">
               <div className="flex items-center gap-3 text-sway-text border-b border-sway-border-dim/20 pb-3">
                 <ImageIcon size={20} className="text-sway-accent" />
                 <h3 className="font-bebas text-[20px] tracking-wider leading-none">BRANDING</h3>
@@ -226,8 +226,8 @@ export function SettingsPage() {
                     id="branding_name"
                     type="text"
                     {...register('branding_name')}
-                    placeholder="Tobooth Photobooth"
-                    className="bg-[#291713] border border-[#5d3f39] text-[#fddbd4] rounded-[4px] px-4 py-2 font-grotesk text-[14px] w-full focus:border-sway-accent focus:ring-0 outline-none transition-colors"
+                    placeholder="bertpixx"
+                    className="bg-sway-card border border-sway-border text-sway-text rounded-[4px] px-4 py-2 font-grotesk text-[14px] w-full focus:border-sway-accent focus:ring-0 outline-none transition-colors"
                     disabled={isSaving}
                   />
                   {errors.branding_name && (
@@ -240,9 +240,9 @@ export function SettingsPage() {
                   <span className="text-[10px] text-sway-dim tracking-wider font-bold uppercase block">
                     LOGO PERUSAHAAN
                   </span>
-                  <div className="border border-dashed border-[#5d3f39] rounded-[4px] bg-[#291713] p-4 flex items-center gap-4 transition-colors hover:border-[#ff5638]/40">
+                  <div className="border border-dashed border-sway-border rounded-[4px] bg-sway-card p-4 flex items-center gap-4 transition-colors hover:border-sway-accent/40">
                     {/* Thumbnail Box */}
-                    <div className="w-[72px] h-[48px] rounded-[4px] bg-[#392521] border border-[#5d3f39] flex items-center justify-center overflow-hidden shrink-0 select-none">
+                    <div className="w-[72px] h-[48px] rounded-[4px] bg-sway-card-hi border border-sway-border flex items-center justify-center overflow-hidden shrink-0 select-none">
                       {watchedLogo ? (
                         <img
                           src={watchedLogo}
@@ -289,7 +289,7 @@ export function SettingsPage() {
             </div>
 
             {/* SESI FOTO CARD */}
-            <div className="bg-[#291713] border border-[#5d3f39] rounded-[4px] p-6 space-y-5">
+            <div className="bg-sway-card border border-sway-border rounded-[4px] p-6 space-y-5">
               <div className="flex items-center gap-3 text-sway-text border-b border-sway-border-dim/20 pb-3">
                 <Camera size={20} className="text-sway-accent" />
                 <h3 className="font-bebas text-[20px] tracking-wider leading-none">SESI FOTO</h3>
@@ -307,7 +307,7 @@ export function SettingsPage() {
                         id="session_countdown"
                         type="number"
                         {...register('session_countdown')}
-                        className="bg-[#291713] border border-[#5d3f39] text-[#fddbd4] rounded-[4px] pl-4 pr-16 py-2.5 font-grotesk text-[14px] w-full focus:border-sway-accent focus:ring-0 outline-none transition-colors"
+                        className="bg-sway-card border border-sway-border text-sway-text rounded-[4px] pl-4 pr-16 py-2.5 font-grotesk text-[14px] w-full focus:border-sway-accent focus:ring-0 outline-none transition-colors"
                         disabled={isSaving}
                       />
                       <span className="absolute right-4 text-sway-dim font-grotesk text-[12px] font-bold pointer-events-none">
@@ -332,7 +332,7 @@ export function SettingsPage() {
                         id="session_interval"
                         type="number"
                         {...register('session_interval')}
-                        className="bg-[#291713] border border-[#5d3f39] text-[#fddbd4] rounded-[4px] pl-4 pr-16 py-2.5 font-grotesk text-[14px] w-full focus:border-sway-accent focus:ring-0 outline-none transition-colors"
+                        className="bg-sway-card border border-sway-border text-sway-text rounded-[4px] pl-4 pr-16 py-2.5 font-grotesk text-[14px] w-full focus:border-sway-accent focus:ring-0 outline-none transition-colors"
                         disabled={isSaving}
                       />
                       <span className="absolute right-4 text-sway-dim font-grotesk text-[12px] font-bold pointer-events-none">
@@ -358,7 +358,7 @@ export function SettingsPage() {
                       id="inactive_timeout"
                       type="number"
                       {...register('inactive_timeout')}
-                      className="bg-[#291713] border border-[#5d3f39] text-[#fddbd4] rounded-[4px] pl-4 pr-16 py-2.5 font-grotesk text-[14px] w-full focus:border-sway-accent focus:ring-0 outline-none transition-colors"
+                      className="bg-sway-card border border-sway-border text-sway-text rounded-[4px] pl-4 pr-16 py-2.5 font-grotesk text-[14px] w-full focus:border-sway-accent focus:ring-0 outline-none transition-colors"
                       disabled={isSaving}
                     />
                     <span className="absolute right-4 text-sway-dim font-grotesk text-[12px] font-bold pointer-events-none">
@@ -376,7 +376,7 @@ export function SettingsPage() {
             </div>
 
             {/* PESAN APLIKASI CARD */}
-            <div className="bg-[#291713] border border-[#5d3f39] rounded-[4px] p-6 space-y-5">
+            <div className="bg-sway-card border border-sway-border rounded-[4px] p-6 space-y-5">
               <div className="flex items-center gap-3 text-sway-text border-b border-sway-border-dim/20 pb-3">
                 <MessageSquare size={20} className="text-sway-accent" />
                 <h3 className="font-bebas text-[20px] tracking-wider leading-none">PESAN APLIKASI</h3>
@@ -397,7 +397,7 @@ export function SettingsPage() {
                     id="message_welcome"
                     rows={2}
                     {...register('message_welcome')}
-                    className="bg-[#291713] border border-[#5d3f39] text-[#fddbd4] rounded-[4px] px-4 py-2.5 font-grotesk text-[14px] w-full h-[64px] resize-none focus:border-sway-accent focus:ring-0 outline-none transition-colors"
+                    className="bg-sway-card border border-sway-border text-sway-text rounded-[4px] px-4 py-2.5 font-grotesk text-[14px] w-full h-[64px] resize-none focus:border-sway-accent focus:ring-0 outline-none transition-colors"
                     disabled={isSaving}
                   />
                   {errors.message_welcome && (
@@ -419,7 +419,7 @@ export function SettingsPage() {
                     id="message_thankyou"
                     rows={2}
                     {...register('message_thankyou')}
-                    className="bg-[#291713] border border-[#5d3f39] text-[#fddbd4] rounded-[4px] px-4 py-2.5 font-grotesk text-[14px] w-full h-[64px] resize-none focus:border-sway-accent focus:ring-0 outline-none transition-colors"
+                    className="bg-sway-card border border-sway-border text-sway-text rounded-[4px] px-4 py-2.5 font-grotesk text-[14px] w-full h-[64px] resize-none focus:border-sway-accent focus:ring-0 outline-none transition-colors"
                     disabled={isSaving}
                   />
                   {errors.message_thankyou && (
@@ -434,7 +434,7 @@ export function SettingsPage() {
           <div className="space-y-6">
             
             {/* STATUS SISTEM CARD */}
-            <div className="bg-[#291713] border border-[#5d3f39] rounded-[4px] p-6 space-y-5">
+            <div className="bg-sway-card border border-sway-border rounded-[4px] p-6 space-y-5">
               <div className="flex items-center gap-3 text-sway-text border-b border-sway-border-dim/20 pb-3">
                 <Cloud size={20} className="text-sway-accent" />
                 <h3 className="font-bebas text-[20px] tracking-wider leading-none">STATUS SISTEM</h3>
@@ -442,45 +442,45 @@ export function SettingsPage() {
 
               <div className="space-y-4 select-none">
                 <div className="flex items-center justify-between border-b border-sway-border-dim/20 pb-2.5">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">MongoDB Atlas</span>
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">MongoDB Atlas</span>
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]" />
-                    <span className="text-[11px] font-bold text-[#22C55E] font-grotesk">Terhubung</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-sway-success" />
+                    <span className="text-[11px] font-bold text-sway-success font-grotesk">Terhubung</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-b border-sway-border-dim/20 pb-2.5">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">Redis Queue</span>
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">Redis Queue</span>
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]" />
-                    <span className="text-[11px] font-bold text-[#22C55E] font-grotesk">Aktif</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-sway-success" />
+                    <span className="text-[11px] font-bold text-sway-success font-grotesk">Aktif</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-b border-sway-border-dim/20 pb-2.5">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">Cloudflare R2</span>
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">Cloudflare R2</span>
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]" />
-                    <span className="text-[11px] font-bold text-[#22C55E] font-grotesk">Terhubung</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-sway-success" />
+                    <span className="text-[11px] font-bold text-sway-success font-grotesk">Terhubung</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-b border-sway-border-dim/20 pb-2.5">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">Midtrans</span>
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">Midtrans</span>
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#feb700]" />
-                    <span className="text-[11px] font-bold text-[#feb700] font-grotesk">Mode Sandbox</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-sway-gold" />
+                    <span className="text-[11px] font-bold text-sway-gold font-grotesk">Mode Sandbox</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">Resend Email</span>
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">Resend Email</span>
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]" />
-                    <span className="text-[11px] font-bold text-[#22C55E] font-grotesk">Aktif</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-sway-success" />
+                    <span className="text-[11px] font-bold text-sway-success font-grotesk">Aktif</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* TENTANG APLIKASI CARD */}
-            <div className="bg-[#291713] border border-[#5d3f39] rounded-[4px] p-6 space-y-5">
+            <div className="bg-sway-card border border-sway-border rounded-[4px] p-6 space-y-5">
               <div className="flex items-center gap-3 text-sway-text border-b border-sway-border-dim/20 pb-3">
                 <Info size={20} className="text-sway-accent" />
                 <h3 className="font-bebas text-[20px] tracking-wider leading-none">TENTANG APLIKASI</h3>
@@ -488,28 +488,28 @@ export function SettingsPage() {
 
               <div className="space-y-4">
                 <div className="flex items-center justify-between border-b border-sway-border-dim/20 pb-2.5">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">VERSI</span>
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">VERSI</span>
                   <span className="text-[13px] font-bold text-sway-text font-mono">1.0.0</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-sway-border-dim/20 pb-2.5">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">ENVIRONMENT</span>
-                  <span className="text-[10px] font-black tracking-widest bg-sway-accent text-sway-bg px-2 py-0.5 rounded-[3px] font-grotesk uppercase">
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">ENVIRONMENT</span>
+                  <span className="text-[10px] font-black tracking-widest bg-sway-accent text-white px-2 py-0.5 rounded-[3px] font-grotesk uppercase">
                     DEVELOPMENT
                   </span>
                 </div>
                 <div className="flex items-center justify-between border-b border-sway-border-dim/20 pb-2.5">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">BACKEND URL</span>
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">BACKEND URL</span>
                   <span className="text-[13px] font-bold text-sway-text font-mono">localhost:3000</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[13px] font-bold text-[#e7bdb4] font-grotesk">LAST UPDATED</span>
+                  <span className="text-[13px] font-bold text-sway-muted font-grotesk">LAST UPDATED</span>
                   <span className="text-[13px] font-bold text-sway-text font-grotesk">22 Mei 2026</span>
                 </div>
               </div>
             </div>
 
             {/* DANGER ZONE CARD */}
-            <div className="bg-[#291713] border border-[#ff5638]/20 rounded-[4px] p-6 space-y-5">
+            <div className="bg-sway-card border border-sway-accent/20 rounded-[4px] p-6 space-y-5">
               <div className="flex items-center gap-3 text-sway-accent border-b border-sway-accent/10 pb-3">
                 <AlertTriangle size={20} className="text-sway-accent" />
                 <h3 className="font-bebas text-[20px] tracking-wider leading-none uppercase">DANGER ZONE</h3>
@@ -519,7 +519,7 @@ export function SettingsPage() {
                 <button
                   type="button"
                   onClick={handleResetSession}
-                  className="border border-[#c81e1e]/60 hover:border-[#c81e1e] hover:bg-[#c81e1e]/10 text-[#ff5638] hover:text-[#c81e1e] font-grotesk text-[12px] tracking-widest font-bold w-full py-2.5 rounded-[4px] uppercase select-none transition-all duration-200 cursor-pointer bg-transparent"
+                  className="border border-sway-error/60 hover:border-sway-error hover:bg-sway-error/10 text-sway-accent hover:text-sway-error font-grotesk text-[12px] tracking-widest font-bold w-full py-2.5 rounded-[4px] uppercase select-none transition-all duration-200 cursor-pointer bg-transparent"
                 >
                   RESET DATA SESI
                 </button>
@@ -527,7 +527,7 @@ export function SettingsPage() {
                 <button
                   type="button"
                   onClick={handleCreateAdmin}
-                  className="border border-[#5d3f39] hover:border-sway-dim hover:bg-sway-card/40 text-sway-text font-grotesk text-[12px] tracking-widest font-bold w-full py-2.5 rounded-[4px] uppercase select-none transition-all duration-200 cursor-pointer bg-transparent"
+                  className="border border-sway-border hover:border-sway-dim hover:bg-sway-card/40 text-sway-text font-grotesk text-[12px] tracking-widest font-bold w-full py-2.5 rounded-[4px] uppercase select-none transition-all duration-200 cursor-pointer bg-transparent"
                 >
                   BUAT ADMIN BARU
                 </button>
@@ -539,8 +539,8 @@ export function SettingsPage() {
 
       {/* FLOAT-RIGHT FLOATING SUCCESS TOAST NOTIFICATION MATCHING SCREENSHOT */}
       {showSuccessToast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-start gap-3.5 p-4 border border-[#22C55E] bg-[#200f0c] text-sway-text shadow-2xl rounded-[4px] w-[340px] animate-fade-in transition-all duration-300">
-          <div className="w-6 h-6 rounded-full bg-[#22C55E]/10 border border-[#22C55E]/30 flex items-center justify-center text-[#22C55E] shrink-0 mt-0.5">
+        <div className="fixed bottom-6 right-6 z-50 flex items-start gap-3.5 p-4 border border-sway-success bg-sway-card text-sway-text shadow-2xl rounded-[4px] w-[340px] animate-fade-in transition-all duration-300">
+          <div className="w-6 h-6 rounded-full bg-sway-success/10 border border-sway-success/30 flex items-center justify-center text-sway-success shrink-0 mt-0.5">
             <Check size={14} className="stroke-[3]" />
           </div>
           <div className="space-y-1">

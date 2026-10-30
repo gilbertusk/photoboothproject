@@ -34,6 +34,7 @@ export function PreviewScreen() {
     setGifUrl,
     setLocalStripUrl,
     setLocalGifUrl,
+    setStripDataUrl,
     resetSession,
   } = useSessionStore()
 
@@ -44,6 +45,7 @@ export function PreviewScreen() {
   const [gifUrlLocal, setGifUrlLocal] = useState<string | null>(null)
   const [gifGenerating, setGifGenerating] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const [isStripReady, setIsStripReady] = useState(false)
 
   // Redirect if session state is missing
   useEffect(() => {
@@ -73,7 +75,7 @@ export function PreviewScreen() {
   }
 
   const handleProcessPhotos = async () => {
-    if (!stripComposerRef.current) return
+    if (!stripComposerRef.current || !isStripReady) return
     setIsProcessing(true)
     setErrorMsg(null)
 
@@ -84,6 +86,8 @@ export function PreviewScreen() {
       if (!stripDataUrl) {
         throw new Error('Gagal merangkai strip foto')
       }
+
+      setStripDataUrl(stripDataUrl)
 
       // Convert to blob for upload
       const stripBlob = dataURLtoBlob(stripDataUrl)
@@ -163,8 +167,10 @@ export function PreviewScreen() {
               ref={stripComposerRef}
               layout={selectedTemplate.layout}
               photos={capturedPhotos}
+              slots={selectedTemplate.slots}
               width={140}
               templateName={selectedTemplate.name}
+              onReadyChange={setIsStripReady}
             />
           </div>
           <div className="text-center">
@@ -294,7 +300,7 @@ export function PreviewScreen() {
             right={
               <Button
                 onClick={handleProcessPhotos}
-                disabled={gifGenerating}
+                disabled={gifGenerating || !isStripReady}
                 variant="accent"
                 size="lg"
                 className="h-11 min-w-[160px] font-bold font-grotesk"

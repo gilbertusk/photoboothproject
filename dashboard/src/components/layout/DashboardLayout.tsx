@@ -25,7 +25,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Footer */}
         <footer className="px-8 py-4 flex justify-between text-[10px] uppercase tracking-[0.15em] text-sway-ghost font-grotesk font-semibold border-t border-sway-border-dim/20 bg-sway-bg shrink-0">
           <span>System status: optimal // uptime: 99.98%</span>
-          <span>© 2025 Tobooth — Nocturnal Production</span>
+          <span>© 2026 bertpixx</span>
         </footer>
       </div>
     </div>

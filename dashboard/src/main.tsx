@@ -20,7 +20,7 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <App />
       <Toaster
-        theme="dark"
+        theme="light"
         position="top-right"
         richColors
         closeButton
