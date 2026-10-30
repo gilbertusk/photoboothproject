@@ -23,6 +23,8 @@ const envSchema = z.object({
   EMAIL_FROM: z.string().default('bertpixx <onboarding@resend.dev>'),
   NOTIFICATIONS_ENABLED: z.enum(['true', 'false']).default('false').transform(value => value === 'true'),
   FRONTEND_URL: z.string().default('http://localhost:5173'),
+  // Comma-separated extra origins allowed by CORS (e.g. deployed dashboard and kiosk URLs).
+  CORS_ORIGINS: z.string().default(''),
   // Unset means: required in production, optional elsewhere so unregistered dev kiosks keep working.
   KIOSK_AUTH_REQUIRED: z.enum(['true', 'false']).optional(),
 });

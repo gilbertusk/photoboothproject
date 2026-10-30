@@ -22,6 +22,12 @@ export const uploadFile = async (
   key: string,
   mimeType: string
 ): Promise<string> => {
+  // Serverless filesystem is read-only, so Vercel uploads go straight to R2.
+  if (process.env.VERCEL) {
+    if (!hasR2) throw new Error('Cloudflare R2 must be configured when running on Vercel');
+    return putToR2(file, key, mimeType);
+  }
+
   // Always save file locally for local development, kiosk preview, and printing fallback
   const uploadDir = path.join(process.cwd(), 'public', 'uploads');
   
@@ -40,7 +46,10 @@ export const uploadFile = async (
     return `/public/uploads/${filename}`;
   }
 
-  // Real Cloudflare R2 upload
+  return putToR2(file, key, mimeType);
+};
+
+const putToR2 = async (file: Buffer, key: string, mimeType: string): Promise<string> => {
   const command = new PutObjectCommand({
     Bucket: env.R2_BUCKET_NAME,
     Key: key,

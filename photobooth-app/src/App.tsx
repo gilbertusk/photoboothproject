@@ -17,18 +17,13 @@ import { BookingPage } from '@/screens/BookingPage'
 import { TestimonialPage } from '@/screens/TestimonialPage'
 import { GuestBookScreen } from '@/screens/GuestBookScreen'
 import { KioskSetupScreen } from '@/screens/KioskSetupScreen'
+import { api } from '@/lib/api'
 
 function App() {
   useEffect(() => {
     const checkBackend = async () => {
       try {
-        const response = await fetch('/api/public/settings')
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const data = await response.json()
+        const { data } = await api.get('/api/public/settings')
         console.log('Backend berhasil terhubung:', data)
       } catch (error: any) {
         console.error('Backend gagal terhubung:', error)

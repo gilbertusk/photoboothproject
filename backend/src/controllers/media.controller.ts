@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { Media } from '../models/media.model';
 import { Session } from '../models/session.model';
 import { sendSuccess, sendError, formatZodError } from '../utils/response';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID as uuidv4 } from 'crypto';
 
 const createMediaSchema = z.object({
   sessionId: z.string().min(1, 'Session ID is required'),

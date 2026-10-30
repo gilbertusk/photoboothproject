@@ -1,12 +1,17 @@
 import mongoose from 'mongoose';
 import { env } from './env';
 
+let connecting: Promise<typeof mongoose> | null = null;
+
+// Cached so serverless invocations reuse one connection; throws instead of exiting the process.
 export const connectDB = async (): Promise<void> => {
-  try {
-    const conn = await mongoose.connect(env.MONGODB_URI);
-    console.log(`✅ MongoDB connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
-    process.exit(1);
+  if (mongoose.connection.readyState === 1) return;
+  if (!connecting) {
+    connecting = mongoose.connect(env.MONGODB_URI).catch((error) => {
+      connecting = null;
+      throw error;
+    });
   }
+  const conn = await connecting;
+  console.log(`✅ MongoDB connected: ${conn.connection.host}`);
 };

@@ -41,7 +41,7 @@ import { sendPhotoEmail } from './services/email.service';
 import { Session } from './models/session.model';
 import { uploadFile } from './services/storage.service';
 import multer from 'multer';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID as uuidv4 } from 'crypto';
 import path from 'path';
 
 // Multer for public file uploads
@@ -72,7 +72,8 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'http://127.0.0.1:5173',
-  'http://127.0.0.1:5174'
+  'http://127.0.0.1:5174',
+  ...env.CORS_ORIGINS.split(',').map((origin) => origin.trim().replace(/\/$/, '')).filter(Boolean),
 ];
 
 app.use(cors({
@@ -121,6 +122,12 @@ app.get('/health', (_req, res) => {
       environment: env.NODE_ENV,
     },
   });
+});
+
+// Ensure a DB connection before any API work (serverless instances start cold).
+app.use('/api', async (_req, _res, next) => {
+  await connectDB();
+  next();
 });
 
 // API Routes
@@ -212,9 +219,12 @@ const startServer = async () => {
   });
 };
 
-startServer().catch((error) => {
-  console.error('❌ Failed to start server:', error);
-  process.exit(1);
-});
+// On Vercel the exported app runs as a function; only listen when running as a normal server.
+if (!process.env.VERCEL) {
+  startServer().catch((error) => {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
+  });
+}
 
 export default app;
