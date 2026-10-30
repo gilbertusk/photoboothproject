@@ -38,6 +38,8 @@ export function Topbar() {
         return 'PENGATURAN'
       case '/branches':
         return 'CABANG & KIOSK'
+      case '/inventory':
+        return 'STOK KIOSK'
       case '/admins':
         return 'ADMIN & AKSES'
       case '/customers':

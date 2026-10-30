@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSessionStore } from '@/stores/sessionStore'
 import { generateQRDataURL } from '@/lib/qrcode'
 import { api } from '@/lib/api'
+import { reportPrint } from '@/lib/printReport'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import { BottomBar } from '@/components/shared/BottomBar'
 import { Button } from '@/components/shared/Button'
@@ -68,6 +69,8 @@ export function OutputScreen() {
       }
       await img.decode().catch(() => undefined)
       window.print()
+      // Browsers do not report whether the dialog was cancelled, so every attempt is counted.
+      void reportPrint(sessionId)
     } catch (err) {
       console.error(err)
       alert('Gambar strip belum siap untuk dicetak. Silakan coba lagi.')

@@ -14,6 +14,7 @@ import { CustomersPage } from '@/pages/CustomersPage'
 import { NotificationsPage } from '@/pages/NotificationsPage'
 import { BranchesPage } from '@/pages/BranchesPage'
 import { AdminsPage } from '@/pages/AdminsPage'
+import { InventoryPage } from '@/pages/InventoryPage'
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -58,6 +59,7 @@ export function App() {
           <Route path="vouchers" element={<OwnerRoute><VouchersPage /></OwnerRoute>} />
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="branches" element={<BranchesPage />} />
+          <Route path="inventory" element={<InventoryPage />} />
           <Route path="customers" element={<OwnerRoute><CustomersPage /></OwnerRoute>} />
           <Route path="notifications" element={<OwnerRoute><NotificationsPage /></OwnerRoute>} />
           <Route path="admins" element={<OwnerRoute><AdminsPage /></OwnerRoute>} />

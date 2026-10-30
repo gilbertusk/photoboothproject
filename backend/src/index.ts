@@ -22,6 +22,7 @@ import notificationRoutes from './routes/notification.routes';
 import branchRoutes from './routes/branch.routes';
 import kioskRoutes from './routes/kiosk.routes';
 import adminRoutes from './routes/admin.routes';
+import inventoryRoutes from './routes/inventory.routes';
 import { kioskAuth } from './middlewares/kiosk.middleware';
 import { startNotificationWorker } from './services/notification.service';
 import settingRoutes from './routes/setting.routes';
@@ -141,6 +142,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/branches', branchRoutes);
 app.use('/api/kiosks', kioskRoutes);
 app.use('/api/admins', adminRoutes);
+app.use('/api/inventory', inventoryRoutes);
 
 // Public routes (no auth required, for photobooth app)
 app.get('/api/public/packages', async (_req, res) => {

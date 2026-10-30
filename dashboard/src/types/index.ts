@@ -25,6 +25,34 @@ export interface Kiosk {
   assignments: { branchId: string; assignedAt: string }[]
 }
 
+export interface InventoryStockItem {
+  id: string
+  name: string
+  unit: string
+  perPrint: number
+  lowStockThreshold: number
+  isActive: boolean
+  quantity: number
+  lowStock: boolean
+}
+
+export interface InventoryKiosk {
+  id: string
+  name: string
+  isActive: boolean
+  branch?: Pick<Branch, 'name' | 'code'> & { _id: string } | string
+  items: InventoryStockItem[]
+}
+
+export interface InventoryMovementRow {
+  _id: string
+  kind: 'PRINT' | 'REPRINT' | 'RESTOCK' | 'ADJUST'
+  delta: number
+  note?: string
+  adminId?: { name: string } | null
+  createdAt: string
+}
+
 export interface Template {
   id: string
   name: string

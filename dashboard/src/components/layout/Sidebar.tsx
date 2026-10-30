@@ -10,7 +10,8 @@ import {
   LogOut,
   User,
   Store,
-  Users
+  Users,
+  Package
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/useAuth'
@@ -29,6 +30,7 @@ export function Sidebar() {
     { name: 'NOTIFIKASI', path: '/notifications', icon: Receipt, ownerOnly: true },
     { name: 'TRANSAKSI', path: '/transactions', icon: Receipt },
     { name: 'CABANG & KIOSK', path: '/branches', icon: Store },
+    { name: 'STOK', path: '/inventory', icon: Package },
     { name: 'ADMIN', path: '/admins', icon: Users, ownerOnly: true },
     { name: 'PENGATURAN', path: '/settings', icon: Settings, ownerOnly: true },
   ].filter((item) => isOwner || !item.ownerOnly)
