@@ -48,6 +48,7 @@ const THEMES: Record<string, FrameTheme> = {
   slate:    { canvasBg:'#F0F4F8', canvasBorder:'#607D8B', accentTop:'#546E7A', accentTopH:9,  slotFill:'#CFD8DC', slotBorder:'#90A4AE', slotX:'#90A4AE80', numBadgeBg:'#546E7A', numBadgeText:'#fff', footerBg:'#F0F4F8', footerLine:'#B0BEC5', brandColor:'#546E7A', subColor:'#90A4AE', cornerDecor:true,  filmHoles:false, roundCorners:4,  outerDarkBg:'#1C2A30' },
   cyber:    { canvasBg:'#0A0A00', canvasBorder:'#FFEA00', accentTop:'#FFEA00', accentTopH:6,  slotFill:'#141400', slotBorder:'#FFEA00', slotX:'#FFEA0040', numBadgeBg:'#FFEA00', numBadgeText:'#0A0A00', footerBg:'#0A0A00', footerLine:'#FFEA0050', brandColor:'#FFEA00', subColor:'#888800', cornerDecor:false, filmHoles:true,  roundCorners:0,  outerDarkBg:'#050500' },
   lavender: { canvasBg:'#F8F5FF', canvasBorder:'#B39DDB', accentTop:'#9C6FD6', accentTopH:9,  slotFill:'#EDE7FF', slotBorder:'#B39DDB', slotX:'#9C6FD670', numBadgeBg:'#7B1FA2', numBadgeText:'#fff', footerBg:'#F8F5FF', footerLine:'#B39DDB', brandColor:'#7B1FA2', subColor:'#9C6FD6', cornerDecor:true,  filmHoles:false, roundCorners:10, outerDarkBg:'#1A0A2A' },
+  editorial:{ canvasBg:'#FFF8F3', canvasBorder:'#F6D3C3', accentTop:'#FF6B5A', accentTopH:0,  slotFill:'#FFEADF', slotBorder:'#3B1D12', slotX:'#A57C6B80', numBadgeBg:'#FF6B5A', numBadgeText:'#fff', footerBg:'#FFF8F3', footerLine:'#3B1D12', brandColor:'#3B1D12', subColor:'#A57C6B', cornerDecor:false, filmHoles:false, roundCorners:0, outerDarkBg:'#FFE4D6' },
 }
 
 const GEOMETRIES: Record<string, GeomLayout> = {
@@ -58,13 +59,16 @@ const GEOMETRIES: Record<string, GeomLayout> = {
   strip_3_compact:  { cW:400, cH:1080, slots:[{x:20,y:40,width:360,height:270},{x:20,y:325,width:360,height:270},{x:20,y:610,width:360,height:270}], footerH:160 },
   strip_3_loose:    { cW:400, cH:1350, slots:[{x:40,y:70,width:320,height:250},{x:40,y:390,width:320,height:250},{x:40,y:710,width:320,height:250}], footerH:340 },
   strip_3_sq:       { cW:400, cH:1400, slots:[{x:30,y:50,width:340,height:340},{x:30,y:420,width:340,height:340},{x:30,y:790,width:340,height:340}], footerH:210 },
+  editorial_3:      { cW:500, cH:1200, slots:[{x:36,y:130,width:400,height:250},{x:64,y:420,width:400,height:250},{x:36,y:710,width:400,height:250}], footerH:240 },
   collage_4:        { cW:400, cH:1500, slots:[{x:30,y:50,width:340,height:255},{x:30,y:340,width:340,height:255},{x:30,y:630,width:340,height:255},{x:30,y:920,width:340,height:255}], footerH:200 },
   strip_4_compact:  { cW:400, cH:1320, slots:[{x:16,y:30,width:368,height:270},{x:16,y:310,width:368,height:270},{x:16,y:590,width:368,height:270},{x:16,y:870,width:368,height:270}], footerH:160 },
   strip_4_loose:    { cW:400, cH:1700, slots:[{x:45,y:70,width:310,height:240},{x:45,y:370,width:310,height:240},{x:45,y:670,width:310,height:240},{x:45,y:970,width:310,height:240}], footerH:460 },
   strip_4_sq:       { cW:400, cH:1800, slots:[{x:30,y:50,width:340,height:340},{x:30,y:430,width:340,height:340},{x:30,y:810,width:340,height:340},{x:30,y:1190,width:340,height:340}], footerH:210 },
+  editorial_4:      { cW:500, cH:1460, slots:[{x:36,y:130,width:390,height:250},{x:74,y:425,width:390,height:250},{x:36,y:720,width:390,height:250},{x:74,y:1015,width:390,height:250}], footerH:195 },
   strip_6:          { cW:400, cH:1900, slots:[{x:30,y:50,width:340,height:255},{x:30,y:340,width:340,height:255},{x:30,y:630,width:340,height:255},{x:30,y:920,width:340,height:255},{x:30,y:1210,width:340,height:255},{x:30,y:1500,width:340,height:255}], footerH:200 },
   strip_6_compact:  { cW:400, cH:1680, slots:[{x:16,y:30,width:368,height:235},{x:16,y:275,width:368,height:235},{x:16,y:520,width:368,height:235},{x:16,y:765,width:368,height:235},{x:16,y:1010,width:368,height:235},{x:16,y:1255,width:368,height:235}], footerH:190 },
   strip_6_loose:    { cW:400, cH:2100, slots:[{x:40,y:60,width:320,height:240},{x:40,y:360,width:320,height:240},{x:40,y:660,width:320,height:240},{x:40,y:960,width:320,height:240},{x:40,y:1260,width:320,height:240},{x:40,y:1560,width:320,height:240}], footerH:300 },
+  editorial_6:      { cW:500, cH:1240, slots:[{x:32,y:130,width:210,height:250},{x:258,y:130,width:210,height:250},{x:52,y:410,width:210,height:250},{x:238,y:410,width:210,height:250},{x:32,y:690,width:210,height:250},{x:258,y:690,width:210,height:250}], footerH:300 },
 }
 
 function resolve(name: string, slots: number): { theme: FrameTheme; geom: GeomLayout } {
@@ -76,17 +80,20 @@ function resolve(name: string, slots: number): { theme: FrameTheme; geom: GeomLa
     else if (nl.includes('tall') || nl.includes('narrow'))                     geomKey = 'duo_portrait_tall'
     else                                                                        geomKey = 'duo_portrait'
   } else if (slots === 3) {
-    if (nl.includes('compact') || nl.includes('tight'))                        geomKey = 'strip_3_compact'
+    if (nl.includes('editorial'))                                               geomKey = 'editorial_3'
+    else if (nl.includes('compact') || nl.includes('tight'))                   geomKey = 'strip_3_compact'
     else if (nl.includes('loose') || nl.includes('airy'))                      geomKey = 'strip_3_loose'
     else if (nl.includes('square') || nl.includes('sq'))                       geomKey = 'strip_3_sq'
     else                                                                        geomKey = 'strip_3'
   } else if (slots === 4) {
-    if (nl.includes('compact') || nl.includes('tight'))                        geomKey = 'strip_4_compact'
+    if (nl.includes('editorial'))                                               geomKey = 'editorial_4'
+    else if (nl.includes('compact') || nl.includes('tight'))                   geomKey = 'strip_4_compact'
     else if (nl.includes('loose') || nl.includes('airy'))                      geomKey = 'strip_4_loose'
     else if (nl.includes('square') || nl.includes('sq'))                       geomKey = 'strip_4_sq'
     else                                                                        geomKey = 'collage_4'
   } else if (slots === 6) {
-    if (nl.includes('compact') || nl.includes('tight'))                        geomKey = 'strip_6_compact'
+    if (nl.includes('editorial'))                                               geomKey = 'editorial_6'
+    else if (nl.includes('compact') || nl.includes('tight'))                   geomKey = 'strip_6_compact'
     else if (nl.includes('loose') || nl.includes('airy'))                      geomKey = 'strip_6_loose'
     else                                                                        geomKey = 'strip_6'
   } else {
@@ -94,7 +101,8 @@ function resolve(name: string, slots: number): { theme: FrameTheme; geom: GeomLa
   }
 
   let themeKey: string
-  if      (nl.includes('film') || nl.includes('noir') || nl.includes('cinema'))        themeKey = 'film'
+  if      (nl.includes('editorial') || nl.includes('peach stories'))                   themeKey = 'editorial'
+  else if (nl.includes('film') || nl.includes('noir') || nl.includes('cinema'))        themeKey = 'film'
   else if (nl.includes('cyber') || nl.includes('electric'))                            themeKey = 'cyber'
   else if (nl.includes('vintage') || nl.includes('retro') || nl.includes('sepia'))     themeKey = 'vintage'
   else if (nl.includes('modern') || nl.includes('minimal'))                            themeKey = 'modern'
@@ -136,6 +144,7 @@ export function FramePreview({ name, slots, previewWidth = 64, inactive = false 
   const outerPad = 6
   const shadowId = `dash-shdw-${name.replace(/\W/g, '')}`
   const isWide = cW > cH
+  const isEditorial = name.toLowerCase().includes('editorial')
 
   return (
     <svg
@@ -181,6 +190,16 @@ export function FramePreview({ name, slots, previewWidth = 64, inactive = false 
         </>
       )}
 
+      {isEditorial && (
+        <g>
+          <rect x={6} y={6} width={278} height={88} fill="#FF6B5A" />
+          <text x={28} y={43} fontFamily="Arial, sans-serif" fontSize={18} fontWeight="900" fill="#FFFFFF" letterSpacing={2}>PEACH</text>
+          <text x={28} y={72} fontFamily="Arial, sans-serif" fontSize={26} fontWeight="900" fill="#FFFFFF" letterSpacing={1}>STORIES</text>
+          <rect x={430} y={26} width={42} height={42} fill="#E8A13A" />
+          <text x={408} y={84} textAnchor="end" fontFamily="Arial, sans-serif" fontSize={10} fontWeight="700" fill="#6E4434" letterSpacing={1.5}>EDITION 01</text>
+        </g>
+      )}
+
       {/* Corner marks */}
       {theme.cornerDecor && slotDefs.map((slot, i) => {
         const m=4, len=14, t=1.5
@@ -217,8 +236,19 @@ export function FramePreview({ name, slots, previewWidth = 64, inactive = false 
         <>
           <rect x={outerPad} y={footerBaseY} width={cW-outerPad*2} height={footerH-outerPad} fill={theme.footerBg} />
           <rect x={outerPad+24} y={footerBaseY+12} width={cW-(outerPad+24)*2} height={1.5} fill={theme.footerLine} />
-          <text x={cW/2} y={footerBaseY+(footerH>150?55:38)} textAnchor="middle" fontSize={footerH>150?18:14} fontFamily="Arial, sans-serif" fontWeight="900" fill={theme.brandColor} letterSpacing={2.5}>BERTPIXX</text>
-          {footerH > 120 && <text x={cW/2} y={footerBaseY+88} textAnchor="middle" fontSize={10} fontFamily="Arial, sans-serif" fill={theme.subColor} letterSpacing={2}>MEMORIES CAPTURED</text>}
+          {isEditorial ? (
+            <>
+              <text x={30} y={footerBaseY+70} fontSize={28} fontFamily="Arial, sans-serif" fontWeight="900" fill="#3B1D12" letterSpacing={2}>BERTPIXX</text>
+              <text x={30} y={footerBaseY+103} fontSize={11} fontFamily="Arial, sans-serif" fontWeight="700" fill="#FF6B5A" letterSpacing={2}>PEACH STORIES</text>
+              <text x={470} y={footerBaseY+67} textAnchor="end" fontSize={11} fontFamily="Arial, sans-serif" fontWeight="700" fill="#A57C6B" letterSpacing={1.5}>EDITION 01</text>
+              <text x={470} y={footerBaseY+98} textAnchor="end" fontSize={10} fontFamily="Arial, sans-serif" fill="#6E4434">BERTPIXX PHOTOBOOTH</text>
+            </>
+          ) : (
+            <>
+              <text x={cW/2} y={footerBaseY+(footerH>150?55:38)} textAnchor="middle" fontSize={footerH>150?18:14} fontFamily="Arial, sans-serif" fontWeight="900" fill={theme.brandColor} letterSpacing={2.5}>BERTPIXX</text>
+              {footerH > 120 && <text x={cW/2} y={footerBaseY+88} textAnchor="middle" fontSize={10} fontFamily="Arial, sans-serif" fill={theme.subColor} letterSpacing={2}>MEMORIES CAPTURED</text>}
+            </>
+          )}
         </>
       )}
 

@@ -69,6 +69,15 @@ const LAYOUTS = {
     ],
     overlays: [],
   },
+  editorial_3: {
+    width: 500, height: 1200,
+    slots: [
+      { x: 36, y: 130, width: 400, height: 250 },
+      { x: 64, y: 420, width: 400, height: 250 },
+      { x: 36, y: 710, width: 400, height: 250 },
+    ],
+    overlays: [],
+  },
   // ── 4 slot ───────────────────────────────────────────────────────────────
   collage_4: {
     width: 400, height: 1500,
@@ -110,6 +119,16 @@ const LAYOUTS = {
     ],
     overlays: [],
   },
+  editorial_4: {
+    width: 500, height: 1460,
+    slots: [
+      { x: 36, y: 130,  width: 390, height: 250 },
+      { x: 74, y: 425,  width: 390, height: 250 },
+      { x: 36, y: 720,  width: 390, height: 250 },
+      { x: 74, y: 1015, width: 390, height: 250 },
+    ],
+    overlays: [],
+  },
   // ── 6 slot ───────────────────────────────────────────────────────────────
   strip_6: {
     width: 400, height: 1900,
@@ -144,6 +163,18 @@ const LAYOUTS = {
       { x: 40, y: 960,  width: 320, height: 240 },
       { x: 40, y: 1260, width: 320, height: 240 },
       { x: 40, y: 1560, width: 320, height: 240 },
+    ],
+    overlays: [],
+  },
+  editorial_6: {
+    width: 500, height: 1240,
+    slots: [
+      { x: 32,  y: 130, width: 210, height: 250 },
+      { x: 258, y: 130, width: 210, height: 250 },
+      { x: 52,  y: 410, width: 210, height: 250 },
+      { x: 238, y: 410, width: 210, height: 250 },
+      { x: 32,  y: 690, width: 210, height: 250 },
+      { x: 258, y: 690, width: 210, height: 250 },
     ],
     overlays: [],
   },
@@ -310,6 +341,13 @@ const seedData = async () => {
       slots: 3,
       isActive: true,
     },
+    {
+      name: 'PEACH EDITORIAL 3',
+      description: 'Tiga foto asimetris bergaya halaman majalah Peach Stories.',
+      layout: LAYOUTS.editorial_3,
+      slots: 3,
+      isActive: true,
+    },
 
     // ════════════════════════════════════════════════════════
     // 4-SLOT TEMPLATES  (paket PREMIUM)
@@ -426,6 +464,13 @@ const seedData = async () => {
       slots: 4,
       isActive: true,
     },
+    {
+      name: 'PEACH EDITORIAL 4',
+      description: 'Empat foto bertingkat dengan ritme editorial playful.',
+      layout: LAYOUTS.editorial_4,
+      slots: 4,
+      isActive: true,
+    },
 
     // ════════════════════════════════════════════════════════
     // 6-SLOT TEMPLATES  (paket ULTIMATE)
@@ -532,6 +577,13 @@ const seedData = async () => {
       name: 'SLATE COMPACT STRIP 6',
       description: 'Strip abu profesional 6 foto rapat.',
       layout: LAYOUTS.strip_6_compact,
+      slots: 6,
+      isActive: true,
+    },
+    {
+      name: 'PEACH EDITORIAL 6',
+      description: 'Enam foto dalam grid majalah dua kolom yang dinamis.',
+      layout: LAYOUTS.editorial_6,
       slots: 6,
       isActive: true,
     },

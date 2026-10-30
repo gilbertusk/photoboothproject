@@ -36,6 +36,7 @@ export const StripComposer = forwardRef<StripComposerRef, StripComposerProps>(
     const [isLoading, setIsLoading] = useState(true)
 
     const name = templateName || 'classic'
+    const isEditorial = name.toLowerCase().includes('editorial')
 
     // Same geometry + theme as the frame shown on TemplateScreen
     const geom = useMemo(() => resolveGeometry(layout, slots, name), [layout, slots, name])
@@ -130,6 +131,15 @@ export const StripComposer = forwardRef<StripComposerRef, StripComposerProps>(
                 {theme.accentTopH > 0 && theme.accentTop !== 'none' && (
                   <Rect x={0} y={0} width={cW} height={theme.accentTopH} fill={theme.accentTop} />
                 )}
+                {isEditorial && (
+                  <>
+                    <Rect x={0} y={0} width={284} height={94} fill="#FF6B5A" />
+                    <Text text="PEACH" x={24} y={20} fontSize={18} fontStyle="bold" fill="#FFFFFF" letterSpacing={2} />
+                    <Text text="STORIES" x={24} y={48} fontSize={27} fontStyle="bold" fill="#FFFFFF" letterSpacing={1} />
+                    <Rect x={430} y={24} width={42} height={42} fill="#E8A13A" />
+                    <Text text="EDITION 01" x={306} y={76} width={102} align="right" fontSize={10} fontStyle="bold" fill="#6E4434" letterSpacing={1.5} />
+                  </>
+                )}
               </>
             )}
           </Layer>
@@ -215,6 +225,34 @@ export const StripComposer = forwardRef<StripComposerRef, StripComposerProps>(
           {/* Layer 4: Branded footer (same thresholds as FramePreview) */}
           <Layer>
             {!backgroundImg && footerH > 50 && (
+              isEditorial ? (
+                <>
+                  <Rect x={30} y={footerBaseY + 16} width={cW - 60} height={2} fill="#3B1D12" />
+                  <Text
+                    text="BERTPIXX"
+                    x={30}
+                    y={footerBaseY + 42}
+                    width={250}
+                    align="left"
+                    fontSize={28}
+                    fontFamily="'Space Grotesk', Arial, sans-serif"
+                    fontStyle="bold"
+                    fill="#3B1D12"
+                    letterSpacing={2}
+                  />
+                  <Text text="PEACH STORIES" x={30} y={footerBaseY + 82} width={250} fontSize={11} fontStyle="bold" fill="#FF6B5A" letterSpacing={2} />
+                  <Text text="EDITION 01" x={310} y={footerBaseY + 48} width={160} align="right" fontSize={11} fontStyle="bold" fill="#A57C6B" letterSpacing={1.5} />
+                  <Text
+                    text={new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
+                    x={310}
+                    y={footerBaseY + 78}
+                    width={160}
+                    align="right"
+                    fontSize={10}
+                    fill="#6E4434"
+                  />
+                </>
+              ) : (
               <>
                 <Rect
                   x={30}
@@ -266,6 +304,7 @@ export const StripComposer = forwardRef<StripComposerRef, StripComposerProps>(
                   </>
                 )}
               </>
+              )
             )}
           </Layer>
         </Stage>

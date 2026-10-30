@@ -375,6 +375,26 @@ export const THEMES: Record<string, FrameTheme> = {
     roundCorners: 10,
     outerDarkBg:  '#1A0A2A',
   },
+  // ── bertpixx Peach Editorial — playful magazine composition ──────────────
+  editorial: {
+    canvasBg:     '#FFF8F3',
+    canvasBorder: '#F6D3C3',
+    accentTop:    '#FF6B5A',
+    accentTopH:   0,
+    slotFill:     '#FFEADF',
+    slotBorder:   '#3B1D12',
+    slotX:        '#A57C6B80',
+    numBadgeBg:   '#FF6B5A',
+    numBadgeText: '#ffffff',
+    footerBg:     '#FFF8F3',
+    footerLine:   '#3B1D12',
+    brandColor:   '#3B1D12',
+    subColor:     '#A57C6B',
+    cornerDecor:  false,
+    filmHoles:    false,
+    roundCorners: 0,
+    outerDarkBg:  '#FFE4D6',
+  },
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -468,6 +488,15 @@ const GEOMETRIES: Record<string, GeomLayout> = {
     ],
     footerH: 80,
   },
+  editorial_3: {
+    cW: 500, cH: 1200,
+    slots: [
+      { x: 36, y: 130, width: 400, height: 250 },
+      { x: 64, y: 420, width: 400, height: 250 },
+      { x: 36, y: 710, width: 400, height: 250 },
+    ],
+    footerH: 240,
+  },
   // ── 4 slots ──────────────────────────────────────────────
   collage_4: {             // classic 4-photo strip
     cW: 400, cH: 1500,
@@ -509,6 +538,16 @@ const GEOMETRIES: Record<string, GeomLayout> = {
     ],
     footerH: 210,
   },
+  editorial_4: {
+    cW: 500, cH: 1460,
+    slots: [
+      { x: 36, y: 130,  width: 390, height: 250 },
+      { x: 74, y: 425,  width: 390, height: 250 },
+      { x: 36, y: 720,  width: 390, height: 250 },
+      { x: 74, y: 1015, width: 390, height: 250 },
+    ],
+    footerH: 195,
+  },
   // ── 6 slots ──────────────────────────────────────────────
   strip_6: {               // classic 6-photo strip
     cW: 400, cH: 1900,
@@ -546,6 +585,18 @@ const GEOMETRIES: Record<string, GeomLayout> = {
     ],
     footerH: 300,
   },
+  editorial_6: {
+    cW: 500, cH: 1240,
+    slots: [
+      { x: 32,  y: 130, width: 210, height: 250 },
+      { x: 258, y: 130, width: 210, height: 250 },
+      { x: 52,  y: 410, width: 210, height: 250 },
+      { x: 238, y: 410, width: 210, height: 250 },
+      { x: 32,  y: 690, width: 210, height: 250 },
+      { x: 258, y: 690, width: 210, height: 250 },
+    ],
+    footerH: 300,
+  },
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -562,18 +613,21 @@ export function resolveTheme(name: string, slots: number): { theme: FrameTheme; 
     else if (nl.includes('tall') || nl.includes('narrow'))                  geomKey = 'duo_portrait_tall'
     else                                                                     geomKey = 'duo_portrait'
   } else if (slots === 3) {
-    if (nl.includes('wide') || nl.includes('horizontal'))                   geomKey = 'strip_3_wide'
+    if (nl.includes('editorial'))                                            geomKey = 'editorial_3'
+    else if (nl.includes('wide') || nl.includes('horizontal'))              geomKey = 'strip_3_wide'
     else if (nl.includes('compact') || nl.includes('tight'))                geomKey = 'strip_3_compact'
     else if (nl.includes('loose') || nl.includes('airy') || nl.includes('spaced')) geomKey = 'strip_3_loose'
     else if (nl.includes('square') || nl.includes('sq'))                    geomKey = 'strip_3_sq'
     else                                                                     geomKey = 'strip_3'
   } else if (slots === 4) {
-    if (nl.includes('compact') || nl.includes('tight'))                     geomKey = 'strip_4_compact'
+    if (nl.includes('editorial'))                                            geomKey = 'editorial_4'
+    else if (nl.includes('compact') || nl.includes('tight'))                geomKey = 'strip_4_compact'
     else if (nl.includes('loose') || nl.includes('airy') || nl.includes('spaced')) geomKey = 'strip_4_loose'
     else if (nl.includes('square') || nl.includes('sq'))                    geomKey = 'strip_4_sq'
     else                                                                     geomKey = 'collage_4'
   } else if (slots === 6) {
-    if (nl.includes('compact') || nl.includes('tight'))                     geomKey = 'strip_6_compact'
+    if (nl.includes('editorial'))                                            geomKey = 'editorial_6'
+    else if (nl.includes('compact') || nl.includes('tight'))                geomKey = 'strip_6_compact'
     else if (nl.includes('loose') || nl.includes('airy') || nl.includes('spaced')) geomKey = 'strip_6_loose'
     else                                                                     geomKey = 'strip_6'
   } else {
@@ -582,7 +636,8 @@ export function resolveTheme(name: string, slots: number): { theme: FrameTheme; 
 
   // ── Pick theme ─────────────────────────────────────────────────────────────
   let themeKey: string
-  if      (nl.includes('film') || nl.includes('noir') || nl.includes('cinema'))        themeKey = 'film'
+  if      (nl.includes('editorial') || nl.includes('peach stories'))                   themeKey = 'editorial'
+  else if (nl.includes('film') || nl.includes('noir') || nl.includes('cinema'))        themeKey = 'film'
   else if (nl.includes('cyber') || nl.includes('electric') || nl.includes('yellow'))   themeKey = 'cyber'
   else if (nl.includes('vintage') || nl.includes('retro') || nl.includes('sepia'))     themeKey = 'vintage'
   else if (nl.includes('modern') || nl.includes('minimal'))                            themeKey = 'modern'
@@ -674,6 +729,7 @@ export function FramePreview({
   const shadowId = `shdw-${name.replace(/\W/g, '')}`
 
   const isWide = cW > cH  // landscape-ish canvas
+  const isEditorial = name.toLowerCase().includes('editorial')
 
   return (
     <svg
@@ -752,6 +808,17 @@ export function FramePreview({
             fill={theme.accentTop}
           />
         </>
+      )}
+
+      {/* Peach Editorial masthead: one bold gesture, restrained elsewhere */}
+      {isEditorial && (
+        <g>
+          <rect x={6} y={6} width={278} height={88} fill="#FF6B5A" />
+          <text x={28} y={43} fontFamily="Arial, sans-serif" fontSize={18} fontWeight="900" fill="#FFFFFF" letterSpacing={2}>PEACH</text>
+          <text x={28} y={72} fontFamily="Arial, sans-serif" fontSize={26} fontWeight="900" fill="#FFFFFF" letterSpacing={1}>STORIES</text>
+          <rect x={430} y={26} width={42} height={42} fill="#E8A13A" />
+          <text x={408} y={84} textAnchor="end" fontFamily="Arial, sans-serif" fontSize={10} fontWeight="700" fill="#6E4434" letterSpacing={1.5}>EDITION 01</text>
+        </g>
       )}
 
       {/* ── Corner-crop marks (classic / polaroid) ──────────────────── */}
@@ -843,37 +910,46 @@ export function FramePreview({
             width={cW - (outerPad + 24) * 2} height={1.5}
             fill={theme.footerLine}
           />
-          {/* Brand */}
-          <text
-            x={cW / 2} y={footerBaseY + (footerH > 150 ? 55 : 38)}
-            textAnchor="middle"
-            fontSize={footerH > 150 ? 18 : 14}
-            fontFamily="'Space Grotesk', Arial, sans-serif"
-            fontWeight="900"
-            fill={theme.brandColor}
-            letterSpacing={2.5}
-          >
-            BERTPIXX
-          </text>
-          {footerH > 120 && (
-            <text
-              x={cW / 2} y={footerBaseY + 88}
-              textAnchor="middle"
-              fontSize={10}
-              fontFamily="'Space Grotesk', Arial, sans-serif"
-              fontWeight="600"
-              fill={theme.subColor}
-              letterSpacing={2}
-            >
-              MEMORIES CAPTURED ✦
-            </text>
-          )}
-          {/* Decorative dots */}
-          {footerH > 130 && (
+          {isEditorial ? (
             <>
-              <circle cx={cW / 2 - 42} cy={footerBaseY + footerH - 30} r={2.5} fill={theme.footerLine} />
-              <circle cx={cW / 2}       cy={footerBaseY + footerH - 30} r={2.5} fill={theme.brandColor} opacity={0.7} />
-              <circle cx={cW / 2 + 42} cy={footerBaseY + footerH - 30} r={2.5} fill={theme.footerLine} />
+              <text x={30} y={footerBaseY + 70} fontSize={28} fontFamily="'Space Grotesk', Arial, sans-serif" fontWeight="900" fill="#3B1D12" letterSpacing={2}>BERTPIXX</text>
+              <text x={30} y={footerBaseY + 103} fontSize={11} fontFamily="'Space Grotesk', Arial, sans-serif" fontWeight="700" fill="#FF6B5A" letterSpacing={2}>PEACH STORIES</text>
+              <text x={470} y={footerBaseY + 67} textAnchor="end" fontSize={11} fontFamily="'Space Grotesk', Arial, sans-serif" fontWeight="700" fill="#A57C6B" letterSpacing={1.5}>EDITION 01</text>
+              <text x={470} y={footerBaseY + 98} textAnchor="end" fontSize={10} fontFamily="'Space Grotesk', Arial, sans-serif" fill="#6E4434">BERTPIXX PHOTOBOOTH</text>
+            </>
+          ) : (
+            <>
+              <text
+                x={cW / 2} y={footerBaseY + (footerH > 150 ? 55 : 38)}
+                textAnchor="middle"
+                fontSize={footerH > 150 ? 18 : 14}
+                fontFamily="'Space Grotesk', Arial, sans-serif"
+                fontWeight="900"
+                fill={theme.brandColor}
+                letterSpacing={2.5}
+              >
+                BERTPIXX
+              </text>
+              {footerH > 120 && (
+                <text
+                  x={cW / 2} y={footerBaseY + 88}
+                  textAnchor="middle"
+                  fontSize={10}
+                  fontFamily="'Space Grotesk', Arial, sans-serif"
+                  fontWeight="600"
+                  fill={theme.subColor}
+                  letterSpacing={2}
+                >
+                  MEMORIES CAPTURED ✦
+                </text>
+              )}
+              {footerH > 130 && (
+                <>
+                  <circle cx={cW / 2 - 42} cy={footerBaseY + footerH - 30} r={2.5} fill={theme.footerLine} />
+                  <circle cx={cW / 2} cy={footerBaseY + footerH - 30} r={2.5} fill={theme.brandColor} opacity={0.7} />
+                  <circle cx={cW / 2 + 42} cy={footerBaseY + footerH - 30} r={2.5} fill={theme.footerLine} />
+                </>
+              )}
             </>
           )}
         </>

@@ -36,10 +36,32 @@ test('seed data publishes all Peach Editorial layouts', () => {
   }
 })
 
+test('editorial layouts can be upserted without deleting existing templates', () => {
+  const source = read('backend/src/seed-editorial-templates.ts')
+  const packageJson = read('backend/package.json')
+
+  assert.match(source, /updateOne/)
+  assert.match(source, /upsert:\s*true/)
+  assert.doesNotMatch(source, /deleteMany/)
+  assert.match(packageJson, /"seed:editorial"/)
+})
+
 test('printed composition includes editorial artwork, not geometry alone', () => {
   const source = read('photobooth-app/src/components/canvas/StripComposer.tsx')
 
   assert.match(source, /isEditorial/)
   assert.match(source, /EDITION 01/)
   assert.match(source, /PEACH STORIES/)
+})
+
+test('both previews show the same Peach Editorial masthead and footer copy', () => {
+  for (const path of [
+    'photobooth-app/src/components/canvas/FramePreview.tsx',
+    'dashboard/src/components/canvas/FramePreview.tsx',
+  ]) {
+    const source = read(path)
+    assert.match(source, /PEACH STORIES/, path)
+    assert.match(source, /EDITION 01/, path)
+    assert.match(source, /BERTPIXX PHOTOBOOTH/, path)
+  }
 })
