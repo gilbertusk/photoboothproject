@@ -81,7 +81,7 @@ export function Sidebar() {
       <div className="px-6 pb-6 pt-2 shrink-0 flex flex-col gap-1.5 select-none bg-transparent">
         {/* Launch Booth Button */}
         <button
-          className="w-full h-11 bg-sway-accent-dim hover:bg-sway-accent-dim/90 active:scale-[0.98] text-sway-text font-bebas text-[18px] tracking-[0.05em] rounded-[4px] flex items-center justify-center transition-all duration-200 uppercase border-none shadow-sm cursor-pointer select-none"
+          className="w-full h-11 bg-sway-accent hover:bg-sway-accent/90 active:scale-[0.98] text-white font-bebas text-[18px] tracking-[0.05em] rounded-[4px] flex items-center justify-center transition-all duration-200 uppercase border-none shadow-sm cursor-pointer select-none"
         >
           LAUNCH BOOTH
         </button>

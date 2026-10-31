@@ -74,7 +74,7 @@ export function GifGenerator({ photos, onComplete, onError }: GifGeneratorProps)
       
       <div className="w-full bg-sway-border-dim h-2 rounded-full overflow-hidden mt-6 mb-2">
         <div 
-          className="bg-sway-accent h-full transition-all duration-300 ease-out shadow-[0_0_8px_#ff6b5a]"
+          className="bg-sway-accent h-full transition-all duration-300 ease-out "
           style={{ width: `${progress}%` }}
         />
       </div>

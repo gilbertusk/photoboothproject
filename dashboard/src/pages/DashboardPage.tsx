@@ -170,14 +170,14 @@ export function DashboardPage() {
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#ff6b5a" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#ff6b5a" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#e5483a" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#e5483a" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#fbe3d8" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" vertical={false} />
                 <XAxis
                   dataKey="date"
-                  tick={{ fill: '#a57c6b', fontSize: 11, fontFamily: 'Space Grotesk' }}
+                  tick={{ fill: '#71717a', fontSize: 11, fontFamily: 'Space Grotesk' }}
                   axisLine={false}
                   tickLine={false}
                 />
@@ -185,9 +185,9 @@ export function DashboardPage() {
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#ffffff',
-                    border: '1px solid #f6d3c3',
+                    border: '1px solid #e4e4e7',
                     borderRadius: 4,
-                    color: '#3b1d12',
+                    color: '#18181b',
                     fontFamily: 'Space Grotesk',
                     fontSize: 12
                   }}
@@ -196,7 +196,7 @@ export function DashboardPage() {
                 <Area
                   type="monotone"
                   dataKey="value"
-                  stroke="#ff6b5a"
+                  stroke="#e5483a"
                   strokeWidth={2}
                   fillOpacity={1}
                   fill="url(#colorRevenue)"
@@ -208,7 +208,7 @@ export function DashboardPage() {
                           cx={cx}
                           cy={cy}
                           r={4}
-                          fill="#ff6b5a"
+                          fill="#e5483a"
                           stroke="#ffffff"
                           strokeWidth={2}
                           key="last-dot"

@@ -231,7 +231,7 @@ export function SettingsPage() {
                     disabled={isSaving}
                   />
                   {errors.branding_name && (
-                    <p className="text-xs text-rose-400 font-semibold">{errors.branding_name.message}</p>
+                    <p className="text-xs text-rose-600 font-semibold">{errors.branding_name.message}</p>
                   )}
                 </div>
 
@@ -315,7 +315,7 @@ export function SettingsPage() {
                       </span>
                     </div>
                     {errors.session_countdown && (
-                      <p className="text-xs text-rose-400 font-semibold">{errors.session_countdown.message}</p>
+                      <p className="text-xs text-rose-600 font-semibold">{errors.session_countdown.message}</p>
                     )}
                     <span className="text-[11px] text-sway-dim mt-1.5 block leading-normal">
                       Waktu jeda sebelum shutter kamera aktif.
@@ -340,7 +340,7 @@ export function SettingsPage() {
                       </span>
                     </div>
                     {errors.session_interval && (
-                      <p className="text-xs text-rose-400 font-semibold">{errors.session_interval.message}</p>
+                      <p className="text-xs text-rose-600 font-semibold">{errors.session_interval.message}</p>
                     )}
                     <span className="text-[11px] text-sway-dim mt-1.5 block leading-normal">
                       Waktu istirahat pemain antar pengambilan gambar.
@@ -366,7 +366,7 @@ export function SettingsPage() {
                     </span>
                   </div>
                   {errors.inactive_timeout && (
-                    <p className="text-xs text-rose-400 font-semibold">{errors.inactive_timeout.message}</p>
+                    <p className="text-xs text-rose-600 font-semibold">{errors.inactive_timeout.message}</p>
                   )}
                   <span className="text-[11px] text-sway-dim mt-1.5 block leading-normal">
                     Kembali ke welcome screen jika tidak ada aktivitas.
@@ -401,7 +401,7 @@ export function SettingsPage() {
                     disabled={isSaving}
                   />
                   {errors.message_welcome && (
-                    <p className="text-xs text-rose-400 font-semibold">{errors.message_welcome.message}</p>
+                    <p className="text-xs text-rose-600 font-semibold">{errors.message_welcome.message}</p>
                   )}
                 </div>
 
@@ -423,7 +423,7 @@ export function SettingsPage() {
                     disabled={isSaving}
                   />
                   {errors.message_thankyou && (
-                    <p className="text-xs text-rose-400 font-semibold">{errors.message_thankyou.message}</p>
+                    <p className="text-xs text-rose-600 font-semibold">{errors.message_thankyou.message}</p>
                   )}
                 </div>
               </div>

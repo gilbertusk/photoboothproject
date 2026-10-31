@@ -205,21 +205,21 @@ export function TransactionsPage() {
     switch (status) {
       case 'PAID':
         return (
-          <span className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
+          <span className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-sway-success" />
             PAID
           </span>
         )
       case 'PENDING':
         return (
-          <span className="bg-amber-50 border border-amber-200 text-amber-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
+          <span className="bg-amber-500/10 border border-amber-500/30 text-amber-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-sway-gold" />
             PENDING
           </span>
         )
       case 'FAILED':
         return (
-          <span className="bg-red-50 border border-red-200 text-red-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
+          <span className="bg-red-500/10 border border-red-500/30 text-red-700 text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-[4px] font-bold inline-flex items-center gap-1.5 leading-none select-none">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-sway-error" />
             FAILED
           </span>

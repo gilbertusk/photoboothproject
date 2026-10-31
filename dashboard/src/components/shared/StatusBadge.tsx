@@ -26,7 +26,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       // Failed / Alert states
       case 'FAILED':
       case 'DESTRUCTIVE':
-        return 'bg-rose-500/10 text-rose-700 border-rose-500/20 hover:bg-rose-500/20'
+        return 'bg-rose-500/10 text-rose-600 border-rose-500/20 hover:bg-rose-500/20'
       
       // Expired / Quota Full states
       case 'EXPIRED':

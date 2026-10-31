@@ -262,7 +262,7 @@ export function PricingPage() {
       {/* FORM DIALOG MODAL (ADD / EDIT) */}
       {isFormOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-sway-text/40 backdrop-blur-xs px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/40 backdrop-blur-xs px-4"
           onClick={(e) => e.target === e.currentTarget && closeForm()}
         >
           <div className="w-[480px] bg-sway-card border border-sway-border rounded p-7 flex flex-col justify-between scrollbar-none shadow-2xl">
@@ -514,7 +514,7 @@ export function PricingPage() {
       {/* CONFIRM DELETE DIALOG */}
       {deletingPackage !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-sway-text/40 backdrop-blur-xs px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/40 backdrop-blur-xs px-4"
           onClick={(e) => e.target === e.currentTarget && setDeletingPackage(null)}
         >
           <div className="w-[400px] bg-sway-card border border-sway-border rounded p-6 shadow-2xl">

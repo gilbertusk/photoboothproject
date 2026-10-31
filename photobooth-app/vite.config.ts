@@ -19,8 +19,8 @@ export default defineConfig({
         description: 'Web-based Photobooth PWA for iPad',
         display: 'standalone',
         orientation: 'any',
-        background_color: '#fff7f2',
-        theme_color: '#fff7f2',
+        background_color: '#fafafa',
+        theme_color: '#fafafa',
         icons: [
           {
             src: '/pwa-192x192.png',

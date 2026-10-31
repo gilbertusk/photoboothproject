@@ -41,7 +41,7 @@ export function FilterOverlay({ currentFilter, onFilterChange }: FilterOverlayPr
             >
               {/* Premium gradient preview with the corresponding filter */}
               <div
-                className="w-full h-full bg-gradient-to-br from-[#ffbdb3] via-[#ffeadf] to-[#fff7f2]"
+                className="w-full h-full bg-gradient-to-br from-zinc-200 via-zinc-100 to-white"
                 style={{ filter: filterPreviewStyle[filter] }}
               />
             </div>

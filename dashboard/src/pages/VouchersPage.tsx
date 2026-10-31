@@ -624,7 +624,7 @@ export function VouchersPage() {
 
       {/* Add / Edit Voucher Modal */}
       {isFormOpen && (
-        <div className="fixed inset-0 bg-sway-text/40 flex items-center justify-center z-50 p-4 transition-all duration-300 backdrop-blur-sm">
+        <div className="fixed inset-0 bg-zinc-950/40 flex items-center justify-center z-50 p-4 transition-all duration-300 backdrop-blur-sm">
           <div className="w-[460px] bg-sway-card border border-sway-border rounded-[6px] p-7 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
             {/* Header */}
             <div className="flex justify-between items-center select-none">
@@ -844,7 +844,7 @@ export function VouchersPage() {
 
       {/* Delete Confirmation Modal (Bespoke Sway Style) */}
       {deletingVoucher && (
-        <div className="fixed inset-0 bg-sway-text/40 flex items-center justify-center z-50 p-4 transition-all duration-300 backdrop-blur-sm">
+        <div className="fixed inset-0 bg-zinc-950/40 flex items-center justify-center z-50 p-4 transition-all duration-300 backdrop-blur-sm">
           <div className="w-[420px] bg-sway-card border border-sway-border rounded-[6px] p-7 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 font-grotesk">
             <h3 className="font-bebas text-[28px] text-sway-text tracking-wide leading-none mt-1">
               HAPUS VOUCHER
