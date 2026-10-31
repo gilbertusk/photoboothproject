@@ -20,7 +20,7 @@ export function TemplateScreen() {
 
   // Redirect if no session
   useEffect(() => {
-    if (!sessionId) navigate('/')
+    if (!sessionId) navigate('/kiosk')
   }, [sessionId, navigate])
 
   // Fetch all active templates

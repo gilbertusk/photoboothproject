@@ -20,6 +20,11 @@ export const getBranches = async (req: AuthRequest, res: Response): Promise<void
   sendSuccess(res, branches, 'Branches retrieved');
 };
 
+export const getPublicBranches = async (_req: unknown, res: Response): Promise<void> => {
+  const branches = await Branch.find({ isActive: true }).select('name address -_id').sort({ name: 1 }).lean();
+  sendSuccess(res, branches, 'Active branches retrieved');
+};
+
 export const createBranch = async (req: AuthRequest, res: Response): Promise<void> => {
   const parsed = branchSchema.safeParse(req.body);
   if (!parsed.success) { sendError(res, formatZodError(parsed.error), 400); return; }

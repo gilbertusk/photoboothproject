@@ -36,7 +36,7 @@ export function OutputScreen() {
   // Redirect if session state is missing
   useEffect(() => {
     if (!sessionId || !stripUrl) {
-      navigate('/')
+      navigate('/kiosk')
     }
   }, [sessionId, stripUrl, navigate])
 

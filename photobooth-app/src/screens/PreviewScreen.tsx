@@ -53,7 +53,7 @@ export function PreviewScreen() {
   // Redirect if session state is missing
   useEffect(() => {
     if (!sessionId || !selectedPackage || !selectedTemplate || capturedPhotos.length === 0) {
-      navigate('/')
+      navigate('/kiosk')
     }
   }, [sessionId, selectedPackage, selectedTemplate, capturedPhotos, navigate])
 
@@ -226,7 +226,7 @@ export function PreviewScreen() {
   const handleCancelSession = () => {
     if (window.confirm('Batalkan sesi ini dan kembali ke menu utama?')) {
       resetSession()
-      navigate('/')
+      navigate('/kiosk')
     }
   }
 

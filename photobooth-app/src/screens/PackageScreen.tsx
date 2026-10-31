@@ -127,7 +127,7 @@ export function PackageScreen() {
 
   const handleBack = () => {
     resetSession()
-    navigate('/')
+    navigate('/kiosk')
   }
 
   if (isLoading) {

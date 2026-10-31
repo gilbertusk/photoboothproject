@@ -14,10 +14,10 @@ export function AppLayout() {
     if (timerRef.current) clearTimeout(timerRef.current)
 
     // Only set inactivity timer if NOT on welcome screen
-    if (location.pathname !== '/') {
+    if (location.pathname !== '/kiosk') {
       timerRef.current = setTimeout(() => {
         resetSession()
-        navigate('/', { replace: true })
+        navigate('/kiosk', { replace: true })
       }, INACTIVITY_TIMEOUT)
     }
   }, [location.pathname, navigate, resetSession])

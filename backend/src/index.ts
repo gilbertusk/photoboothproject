@@ -37,6 +37,7 @@ import { validateVoucher } from './controllers/voucher.controller';
 import { sendSuccess, sendError } from './utils/response';
 import { getLocalIp } from './utils/ip';
 import { getSettings } from './controllers/setting.controller';
+import { getPublicBranches } from './controllers/branch.controller';
 import { sendPhotoEmail } from './services/email.service';
 import { Session } from './models/session.model';
 import { uploadFile } from './services/storage.service';
@@ -165,6 +166,8 @@ app.get('/api/public/templates', async (_req, res) => {
 app.post('/api/public/vouchers/validate', validateVoucher);
 
 app.get('/api/public/settings', getSettings);
+
+app.get('/api/public/branches', getPublicBranches);
 
 app.post('/api/public/upload', kioskAuth, publicUpload.single('image'), async (req, res): Promise<void> => {
   if (!req.file) {

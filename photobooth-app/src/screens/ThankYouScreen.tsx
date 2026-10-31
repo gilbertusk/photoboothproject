@@ -20,7 +20,7 @@ export function ThankYouScreen() {
   useEffect(() => {
     if (secondsLeft <= 0) {
       resetSession()
-      navigate('/')
+      navigate('/kiosk')
       return
     }
 
@@ -33,7 +33,7 @@ export function ThankYouScreen() {
 
   const handleStartAgain = () => {
     resetSession()
-    navigate('/')
+    navigate('/kiosk')
   }
 
   const progress = secondsLeft / 10

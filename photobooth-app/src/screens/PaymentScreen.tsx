@@ -29,7 +29,7 @@ export function PaymentScreen() {
 
   const handleCancel = () => {
     resetSession()
-    navigate('/')
+    navigate('/kiosk')
   }
 
   if (!sessionId || !qrUrl || !selectedPackage) {

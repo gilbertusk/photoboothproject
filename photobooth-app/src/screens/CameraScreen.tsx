@@ -36,7 +36,7 @@ export function CameraScreen() {
   const [retakeIndex, setRetakeIndex]                   = useState<number | null>(null)
 
   useEffect(() => {
-    if (!sessionId || !selectedPackage) navigate('/')
+    if (!sessionId || !selectedPackage) navigate('/kiosk')
   }, [sessionId, selectedPackage, navigate])
 
   // Initialize local retakeIndex from store (set by PreviewScreen when replacing individual photo)
@@ -115,7 +115,7 @@ export function CameraScreen() {
       setIsAutoSequenceRunning(false)
       setIsCountdownActive(false)
       resetSession()
-      navigate('/')
+      navigate('/kiosk')
     }
   }
 

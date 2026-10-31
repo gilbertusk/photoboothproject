@@ -204,3 +204,18 @@ test('branch admins get 403 on owner-only configuration routes over HTTP', async
     await new Promise(resolve => server.close(resolve));
   }
 });
+
+test('public branch list exposes only active branches with public fields', async () => {
+  const { Branch } = require('../dist/models/branch.model');
+  const { getPublicBranches } = require('../dist/controllers/branch.controller');
+  const original = Branch.find;
+  let filter; let fields;
+  Branch.find = (f) => { filter = f; const c = chain([{ name: 'Mall A', address: 'Jl. A' }]); c.select = (s) => { fields = s; return c; }; return c; };
+  try {
+    const res = response();
+    await getPublicBranches({}, res);
+    assert.deepEqual(filter, { isActive: true });
+    assert.equal(fields, 'name address -_id');
+    assert.equal(res.body.data[0].name, 'Mall A');
+  } finally { Branch.find = original; }
+});

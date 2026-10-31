@@ -18,6 +18,7 @@ export default defineConfig({
         short_name: 'bertpixx',
         description: 'Web-based Photobooth PWA for iPad',
         display: 'standalone',
+        start_url: '/kiosk',
         orientation: 'any',
         background_color: '#fafafa',
         theme_color: '#fafafa',

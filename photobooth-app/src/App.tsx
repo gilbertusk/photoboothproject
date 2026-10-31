@@ -17,6 +17,7 @@ import { BookingPage } from '@/screens/BookingPage'
 import { TestimonialPage } from '@/screens/TestimonialPage'
 import { GuestBookScreen } from '@/screens/GuestBookScreen'
 import { KioskSetupScreen } from '@/screens/KioskSetupScreen'
+import { LandingPage } from '@/screens/LandingPage'
 import { api } from '@/lib/api'
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route path="/" element={<WelcomeScreen />} />
+        <Route path="/kiosk" element={<WelcomeScreen />} />
         <Route path="/packages" element={<PackageScreen />} />
         <Route path="/payment" element={<PaymentScreen />} />
         <Route path="/template" element={<TemplateScreen />} />
@@ -44,11 +45,12 @@ function App() {
         <Route path="/preview" element={<PreviewScreen />} />
         <Route path="/output" element={<OutputScreen />} />
         <Route path="/thankyou" element={<ThankYouScreen />} />
-        <Route path="/gallery/:shareToken" element={<GalleryScreen />} />
       </Route>
 
       {/* Public marketing pages (no kiosk session required) */}
       <Route element={<PublicLayout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/gallery/:shareToken" element={<GalleryScreen />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/booking" element={<BookingPage />} />
         <Route path="/testimonial" element={<TestimonialPage />} />

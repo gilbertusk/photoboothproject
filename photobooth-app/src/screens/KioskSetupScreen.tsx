@@ -63,7 +63,7 @@ export function KioskSetupScreen() {
           <div role="status" className="rounded border border-sway-border bg-sway-card p-4 space-y-3">
             <p className="font-bold">Terhubung sebagai “{verified.name}”</p>
             <p className="text-sm text-sway-dim">Cabang: {kioskBranchName(verified) ?? '—'}</p>
-            <Button variant="accent" onClick={() => navigate('/', { replace: true })}>Mulai kiosk</Button>
+            <Button variant="accent" onClick={() => navigate('/kiosk', { replace: true })}>Mulai kiosk</Button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3">
