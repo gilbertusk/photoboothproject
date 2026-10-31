@@ -1,10 +1,43 @@
 import { useNavigate } from 'react-router-dom'
 import { useSettings } from '@/hooks/useSettings'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
-import { Button } from '@/components/shared/Button'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import { KioskInfo, getKioskToken, kioskBranchName } from '@/lib/kiosk'
+import { cn } from '@/lib/utils'
+import { ArrowRight } from 'lucide-react'
+
+const STEPS = [
+  { n: '01', label: 'Pilih paket' },
+  { n: '02', label: 'Foto 4 pose' },
+  { n: '03', label: 'Cetak & unduh' },
+]
+
+const FRAME_TONES = [
+  ['from-[#f6d5cf] to-[#eaa59a]', 'from-[#ecebe8] to-[#cfccc6]', 'from-[#f3e2c4] to-[#ddb878]', 'from-[#f6d5cf] to-[#e5483a]/60'],
+  ['from-[#ecebe8] to-[#cfccc6]', 'from-[#f6d5cf] to-[#e5483a]/60', 'from-[#ecebe8] to-[#b9b5ae]', 'from-[#f3e2c4] to-[#ddb878]'],
+]
+
+function Strip({ tones, className }: { tones: string[]; className?: string }) {
+  return (
+    <div
+      aria-hidden
+      className={cn(
+        'w-[150px] xl:w-[170px] bg-white p-2.5 pb-3 rounded-[3px] shadow-[0_24px_50px_-18px_rgba(24,24,27,0.35)] ring-1 ring-zinc-900/5',
+        className
+      )}
+    >
+      <div className="flex flex-col gap-2">
+        {tones.map((t, i) => (
+          <div key={i} className={cn('aspect-[4/3] rounded-[2px] bg-gradient-to-br', t)} />
+        ))}
+      </div>
+      <div className="mt-3 text-center font-bebas text-[18px] leading-none tracking-[0.12em] text-sway-text">
+        BERTPIXX
+      </div>
+    </div>
+  )
+}
 
 export function WelcomeScreen() {
   const navigate = useNavigate()
@@ -26,76 +59,68 @@ export function WelcomeScreen() {
     )
   }
 
+  const kioskLabel = kiosk
+    ? [kiosk.name, kioskBranchName(kiosk)].filter(Boolean).join(' · ')
+    : hasToken ? '' : 'Kiosk belum terhubung'
+
   return (
-    <div className="h-screen w-full flex flex-col lg:flex-row bg-sway-bg text-sway-text select-none overflow-hidden">
-      {/* LEFT SIDE: Branding + Pills (40% on large, full width on mobile) */}
-      <div className="w-full lg:w-[40%] flex flex-col justify-center px-6 lg:px-12 py-12 lg:py-8 bg-sway-bg animate-fadeIn text-left z-10 border-b lg:border-b-0 lg:border-r border-sway-border-dim">
-        <span className="font-grotesk text-[12px] uppercase text-sway-accent tracking-[0.2em] mb-4 block font-extrabold">
-          BERTPIXX
+    <div className="relative h-screen w-full flex flex-col bg-sway-bg text-sway-text select-none overflow-hidden">
+      {/* Header */}
+      <header className="relative z-10 flex h-16 shrink-0 items-center justify-between px-8 lg:px-12">
+        <span className="font-bebas text-[26px] leading-none tracking-[0.08em]">BERTPIXX</span>
+        <span className="flex items-center gap-2 font-grotesk text-[11px] font-medium text-sway-dim">
+          {kiosk && <span className="h-1.5 w-1.5 rounded-full bg-sway-success" />}
+          {kioskLabel}
         </span>
+      </header>
 
-        <h1 className="font-bebas text-[48px] lg:text-[72px] text-sway-text leading-none select-none text-left mb-6 font-bold tracking-tight">
-          ABADIKAN MOMEN
-        </h1>
-
-        <p className="font-grotesk text-[14px] text-sway-dim mt-2 max-w-sm mb-8 lg:mb-12 leading-relaxed">
-          Foto strip instan, bayar QRIS, cetak langsung
-        </p>
-
-        {/* INFO PILLS */}
-        <div className="flex flex-row lg:flex-col gap-3 max-w-md lg:max-w-[240px] flex-wrap">
-          <div className="bg-sway-surface border border-sway-border-dim rounded px-4 py-2.5 font-grotesk text-[11px] uppercase tracking-wider text-sway-dim font-bold text-center flex-1 lg:flex-initial">
-            QRIS PAYMENT
-          </div>
-          <div className="bg-sway-surface border border-sway-border-dim rounded px-4 py-2.5 font-grotesk text-[11px] uppercase tracking-wider text-sway-dim font-bold text-center flex-1 lg:flex-initial">
-            INSTANT PRINT
-          </div>
-          <div className="bg-sway-surface border border-sway-border-dim rounded px-4 py-2.5 font-grotesk text-[11px] uppercase tracking-wider text-sway-dim font-bold text-center flex-1 lg:flex-initial">
-            DIGITAL COPY
-          </div>
-        </div>
-      </div>
-
-      {/* RIGHT SIDE: Strip Illustration + CTA (60% on large, full width on mobile) */}
-      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center p-8 lg:p-12 bg-sway-bg relative overflow-hidden z-10">
-        {/* STRIP ILLUSTRATION */}
-        <div className="relative w-[280px] lg:w-[320px] h-[220px] lg:h-[280px] flex items-center justify-center mb-10 lg:mb-16 scale-90 lg:scale-110">
-          {/* Left Frame */}
-          <div className="absolute w-[120px] lg:w-[140px] h-[180px] lg:h-[210px] border border-sway-border rounded opacity-30 bg-sway-card/50 transform -rotate-[12deg] -translate-x-[50px] lg:-translate-x-[60px] pointer-events-none flex flex-col justify-between p-2 shadow-xl">
-            <div className="flex-1 border-b border-sway-border-dim mb-1" />
-            <div className="flex-1 border-b border-sway-border-dim mb-1" />
-            <div className="flex-1" />
+      {/* Stage */}
+      <main className="relative z-10 flex flex-1 items-center justify-center px-8 min-h-0">
+        <div className="grid w-full max-w-[1180px] items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
+          <div className="hidden lg:flex justify-end">
+            <Strip tones={FRAME_TONES[0]} className="-rotate-[8deg] animate-slideUp" />
           </div>
 
-          {/* Right Frame */}
-          <div className="absolute w-[120px] lg:w-[140px] h-[180px] lg:h-[210px] border border-sway-border rounded opacity-30 bg-sway-card/50 transform rotate-[12deg] translate-x-[50px] lg:translate-x-[60px] pointer-events-none flex flex-col justify-between p-2 shadow-xl">
-            <div className="flex-1 border-b border-sway-border-dim mb-1" />
-            <div className="flex-1 border-b border-sway-border-dim mb-1" />
-            <div className="flex-1" />
+          <div className="flex flex-col items-center text-center animate-fadeIn">
+            <span className="font-grotesk text-[11px] font-bold uppercase tracking-[0.3em] text-sway-accent">
+              Photobooth
+            </span>
+            <h1 className="mt-4 font-bebas text-[72px] sm:text-[96px] xl:text-[120px] leading-[0.88] tracking-[0.01em]">
+              Abadikan<br />momen
+            </h1>
+            <p className="mt-5 max-w-[340px] font-grotesk text-[15px] leading-relaxed text-sway-dim">
+              Foto strip instan, bayar QRIS, cetak langsung di tempat.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => navigate('/packages')}
+              className="group mt-9 flex h-16 w-[300px] items-center justify-between rounded-full bg-sway-accent pl-8 pr-2 font-grotesk text-[15px] font-bold uppercase tracking-[0.18em] text-white shadow-[0_14px_30px_-12px_rgba(229,72,58,0.7)] transition-transform duration-150 active:scale-[0.97] cursor-pointer"
+            >
+              Mulai sesi
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 transition-transform duration-200 group-hover:translate-x-0.5">
+                <ArrowRight className="h-5 w-5" />
+              </span>
+            </button>
           </div>
 
-          {/* Center Frame */}
-          <div className="absolute w-[120px] lg:w-[140px] h-[180px] lg:h-[210px] border border-sway-accent rounded bg-sway-card z-20 pointer-events-none flex flex-col justify-between p-2 lg:p-2.5 shadow-2xl">
-            <div className="flex-1 border-b border-sway-border-dim mb-2" />
-            <div className="flex-1 border-b border-sway-border-dim mb-2" />
-            <div className="flex-1" />
+          <div className="hidden lg:flex justify-start">
+            <Strip tones={FRAME_TONES[1]} className="rotate-[8deg] animate-slideUp" />
           </div>
         </div>
+      </main>
 
-        {/* "MULAI SESI" button */}
-        <Button
-          variant="accent"
-          size="lg"
-          onClick={() => navigate('/packages')}
-          className="w-full max-w-[280px]"
-        >
-          MULAI SESI
-        </Button>
-
-        <p className="absolute bottom-4 right-6 font-grotesk text-[10px] uppercase tracking-wider text-sway-ghost">
-          {kiosk ? `${kiosk.name} · ${kioskBranchName(kiosk) ?? ''}` : hasToken ? '' : 'Kiosk belum terhubung'}
-        </p>
-      </div>
+      {/* Steps */}
+      <footer className="relative z-10 shrink-0 px-8 pb-8 lg:pb-10">
+        <ol className="mx-auto grid max-w-[560px] grid-cols-3 divide-x divide-sway-border border-t border-sway-border pt-5">
+          {STEPS.map((s) => (
+            <li key={s.n} className="flex flex-col items-center gap-1 px-3 text-center">
+              <span className="font-bebas text-[22px] leading-none text-sway-accent">{s.n}</span>
+              <span className="font-grotesk text-[12px] font-medium text-sway-muted">{s.label}</span>
+            </li>
+          ))}
+        </ol>
+      </footer>
     </div>
   )
 }
